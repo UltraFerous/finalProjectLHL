@@ -6,7 +6,7 @@ CREATE TABLE users (
   id SERIAL PRIMARY KEY NOT NULL,
   username VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
-  type INTEGER NOT NULL,
+  admin BOOLEAN DEFAULT false,
   password VARCHAR(255) NOT NULL,
   description VARCHAR(255),
   city VARCHAR(255) NOT NULL,
