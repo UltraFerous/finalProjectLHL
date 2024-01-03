@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS organizations CASCADE;
 CREATE TABLE organizations (
   id SERIAL PRIMARY KEY NOT NULL,
   name TEXT NOT NULL,
-  description VARCHAR(255),
+  description TEXT,
   website VARCHAR(255),
   user_id INTEGER,
   image VARCHAR(255) NOT NULL,
