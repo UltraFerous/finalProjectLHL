@@ -2,7 +2,7 @@
 //import axios from 'axios';
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import NavBar from "./components/NavBar";
+import Header from "./components/Header";
 import Home from "./pages/Home";
 import ProjectList from "./pages/ProjectList";
 import Project from "./pages/Project";
@@ -17,6 +17,7 @@ import RegisterUser from "./pages/RegisterUser";
 import OrgProfile from "./pages/OrgProfile";
 import CreateOrg from "./pages/CreateOrg";
 
+
 //data will be the string we send from our server
 //const apiCall = () => {
 //  axios.get('http://localhost:8080').then((data) => {
@@ -28,7 +29,7 @@ import CreateOrg from "./pages/CreateOrg";
 function App() {
   return (
     <>
-      <NavBar />
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/projects">
