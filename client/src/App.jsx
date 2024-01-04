@@ -16,6 +16,7 @@ import UserProfile from "./pages/UserProfile";
 import RegisterUser from "./pages/RegisterUser";
 import OrgProfile from "./pages/OrgProfile";
 import CreateOrg from "./pages/CreateOrg";
+import { UserProvider} from './context/UserContext';
 
 
 //data will be the string we send from our server
@@ -28,7 +29,7 @@ import CreateOrg from "./pages/CreateOrg";
 
 function App() {
   return (
-    <>
+    <UserProvider>
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -50,7 +51,7 @@ function App() {
         <Route path="/org/create" element={<CreateOrg />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </>
+    </UserProvider>
   );
 }
 
