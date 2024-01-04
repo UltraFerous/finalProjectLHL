@@ -16,7 +16,7 @@ const createOrgWithValues = (name, description, website, user_id, image) => {
 };
 
 const createOrgWithObject = (orgObj) => {
-  const {name, description, website, user_id, image} = userObj;
+  const {name, description, website, user_id, image} = orgObj;
   return db
   .query(`
   INSERT INTO organizations (name, description, website, user_id, image) VALUES
