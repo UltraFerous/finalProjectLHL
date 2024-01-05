@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS projects CASCADE;
 CREATE TABLE projects (
   id SERIAL PRIMARY KEY NOT NULL,
   name TEXT NOT NULL,
-  description VARCHAR(255),
+  description TEXT,
   status INTEGER,
   online BOOLEAN DEFAULT true,
   organization_id INTEGER,
