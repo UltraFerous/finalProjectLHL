@@ -24,8 +24,9 @@ export default function Project() {
 
   return (
     <>
-      <h1>Project Details Page</h1>
-      <h2>{project && project[0].name}</h2>
+      <h1>{project && project[0].name}</h1>
+      <h3>Project Contributors</h3>
+      <h3>Project Updates</h3>
     </>
   );
 }
