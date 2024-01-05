@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { projectDataSearchID } = require('../db/queries/projects.js');
 
 // import query helper functions and use them in routes
 
@@ -18,9 +19,8 @@ router.get('/:id', async (req, res) => {
   const project_id = req.params.id;
 
   try {
-    const projectData = projectDataSearchID(project_id);
+    const projectData = await projectDataSearchID(project_id);
     console.log(projectData);
-
   // Check if projectData exists
   if (projectData.length > 0) {
     res.status(200).json(projectData);
@@ -34,12 +34,12 @@ router.get('/:id', async (req, res) => {
 });
 
 // edit individual project details page
-router.get('/id/edit', (req, res) => {
+router.get('/:id/edit', (req, res) => {
 
 });
 
 // project application page
-router.get('/id/apply', (req, res) => {
+router.get('/:id/apply', (req, res) => {
 
 });
 

@@ -1,5 +1,5 @@
 // load .env data into process.env
-require('dotenv').config();
+require('dotenv').config({ path: '../.env' });
 
 // web server config
 const express = require('express');
@@ -7,6 +7,7 @@ const app = express();
 const morgan = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 const PORT = process.env.SERVER_PORT || 8080;
 
@@ -36,9 +37,14 @@ app.use('/users', usersRoutes);
 app.use('/api/org', orgsApiRoutes);
 app.use('/org', orgsRoutes);
 
-app.get('/', (req, res) => {
-  res.send('Hello from our server!')
-})
+// Fallback route for handling client-side routing
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../index.html'));
+});
+
+//app.get('/', (req, res) => {
+//    res.send('Hello from our server!')
+//})
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`)
