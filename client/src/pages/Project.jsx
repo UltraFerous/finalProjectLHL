@@ -23,7 +23,7 @@ export default function Project() {
   return (
     <>
       <h1>Project Details Page</h1>
-      <h2>{project && <h2>{project[0].name}</h2>}</h2>
+      <h2>{project && project[0].name}</h2>
     </>
   );
 }
