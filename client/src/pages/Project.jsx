@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 export default function Project() {
 
@@ -7,14 +8,15 @@ export default function Project() {
   const [project, setProject] = useState(null);
 
   useEffect(() => {
-    const fetchProjectDetails = async () => {
-      try {
-        const response = await fetch(`http://localhost:8080/projects/${id}`);
-        const data = await response.json();
-        setProject(data);
-      } catch (error) {
-        console.error('Error fetching project details:', error);
-      }
+    const fetchProjectDetails = () => {
+      axios.get(`http://localhost:8080/projects/${id}`)
+        .then((response) => {
+          const data = response.data;
+          setProject(data);
+        })
+        .catch((error) => {
+          console.error('Error fetching project details:', error);
+        });
     };
 
     fetchProjectDetails();
