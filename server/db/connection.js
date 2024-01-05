@@ -1,5 +1,6 @@
 // load .env data into process.env
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: '../.env' });
 
 const { Pool } = require('pg');
 
