@@ -54,3 +54,23 @@ const findTagsForUser = (userID) => {
     console.log('Error:', err);
   });
 };
+
+const findPostsForUser = (userID) => {
+  return db
+  .query(`
+  SELECT
+  posts.project_id, posts.text
+  FROM posts
+  JOIN linked_users_posts
+  ON posts.id = linked_users_posts.post_id
+  WHERE linked_users_posts.user_id = $1
+  `, [userID])
+  .then(result => {
+    return result.rows;
+  })
+  .catch(err => {
+    console.log('Error:', err);
+  });
+};
+
+module.exports = { findProjectAdmin, findUsersByTag, findTagsForUser, findPostsForUser };

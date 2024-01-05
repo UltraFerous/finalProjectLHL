@@ -48,5 +48,39 @@ const projectDataSearchName = function(name) {
     });
 };
 
+const findPostsForProject = (projectID) => {
+  return db
+  .query(`
+  SELECT
+  linked_users_posts.user_id, posts.text
+  FROM posts
+  JOIN linked_users_posts
+  ON posts.id = linked_users_posts.post_id
+  WHERE posts.project_id = $1
+  `, [projectID])
+  .then(result => {
+    return result.rows;
+  })
+  .catch(err => {
+    console.log('Error:', err);
+  });
+};
 
-module.exports = { allProjectData, projectDataSearchID, projectDataSearchName };
+const findApplicationsForProject = (projectID) => {
+  return db
+  .query(`
+  SELECT
+  *
+  FROM applications
+  WHERE applications.project_id = $1
+  `, [projectID])
+  .then(result => {
+    return result.rows;
+  })
+  .catch(err => {
+    console.log('Error:', err);
+  });
+};
+
+
+module.exports = { allProjectData, projectDataSearchID, projectDataSearchName, findPostsForProject, findApplicationsForProject };

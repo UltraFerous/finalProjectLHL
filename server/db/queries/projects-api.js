@@ -16,7 +16,7 @@ const createProjectWithValues = (name, description, status, organization_id, ima
 };
 
 const createProjectWithObject = (projectObj) => {
-  const {name, description, status, organization_id, image} = userObj;
+  const {name, description, status, organization_id, image} = projectObj;
   return db
   .query(`
   INSERT INTO projects (name, description, status, organization_id, image) VALUES
