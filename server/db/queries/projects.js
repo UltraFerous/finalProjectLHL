@@ -20,7 +20,7 @@ const projectDataSearchID = function(id) {
   return db
     .query(`
     SELECT
-    *, organizations.name
+    projects.*, organizations.name
     FROM projects
     JOIN organizations
     ON projects.organization_id = organizations.id 
