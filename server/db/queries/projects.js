@@ -107,8 +107,11 @@ const findDevelopersWithProject = (projectID) => {
   return db
   .query(`
   SELECT
-  developers_with_projects.user_id
+  developers_with_projects.user_id,
+  users.username
   FROM developers_with_projects
+  JOIN users
+  ON developers_with_projects.user_id = users.id
   WHERE developers_with_projects.project_id = $1
   `, [projectID])
   .then(result => {
