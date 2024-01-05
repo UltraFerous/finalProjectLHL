@@ -48,5 +48,23 @@ const orgDataSearchName = function(name) {
     });
 };
 
+const checkOrgAdmin = function(orgID) {
+  return db
+    .query(`
+    SELECT
+    user_id, users.username
+    FROM organizations
+    JOIN users
+    ON users.id = organizations.user_id
+    WHERE organizations.id = $1 
+    `, [orgID])
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((err) => {
+      console.log("ERROR:", err.message);
+    });
+};
+
 
 module.exports = { allOrgData, orgDataSearchID, orgDataSearchName };

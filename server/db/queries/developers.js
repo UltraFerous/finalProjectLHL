@@ -41,7 +41,7 @@ const findTagsForUser = (userID) => {
   return db
   .query(`
   SELECT
-  tags.tag_name, assigned_tags_users.tag_id
+  assigned_tags_users.tag_id, tags.tag_name
   FROM tags
   JOIN assigned_tags_users
   ON assigned_tags_users.tag_id = tags.id

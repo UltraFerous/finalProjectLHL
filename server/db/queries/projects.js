@@ -20,10 +20,12 @@ const projectDataSearchID = function(id) {
   return db
     .query(`
     SELECT
-    *
+    *, organizations.name
     FROM projects
-    WHERE projects.id = $1`, 
-    [id])
+    JOIN organizations
+    ON projects.organization_id = organizations.id 
+    WHERE projects.id = $1
+    `, [id])
     .then((result) => {
       console.log('Database query result:', result.rows);
       return result.rows;
@@ -83,5 +85,38 @@ const findApplicationsForProject = (projectID) => {
   });
 };
 
+const findTagsForProject = (projectID) => {
+  return db
+  .query(`
+  SELECT
+  assigned_tags_projects.tag_id, tags.tag_name
+  FROM tags
+  JOIN assigned_tags_projects
+  ON assigned_tags_projects.tag_id = tags.id
+  WHERE assigned_tags_projects.project_id = $1
+  `, [projectID])
+  .then(result => {
+    return result.rows;
+  })
+  .catch(err => {
+    console.log('Error:', err);
+  });
+};
 
-module.exports = { allProjectData, projectDataSearchID, projectDataSearchName, findPostsForProject, findApplicationsForProject };
+const findDevelopersWithProject = (projectID) => {
+  return db
+  .query(`
+  SELECT
+  developers_with_projects.user_id
+  FROM developers_with_projects
+  WHERE developers_with_projects.project_id = $1
+  `, [projectID])
+  .then(result => {
+    return result.rows;
+  })
+  .catch(err => {
+    console.log('Error:', err);
+  });
+};
+
+module.exports = { allProjectData, projectDataSearchID, projectDataSearchName, findPostsForProject, findApplicationsForProject, findTagsForProject, findDevelopersWithProject };

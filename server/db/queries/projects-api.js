@@ -30,4 +30,45 @@ const createProjectWithObject = (projectObj) => {
   });
 };
 
-module.exports = { createProjectWithValues, createProjectWithObject };
+const modifyProjectWithValues = (projectID, name, description, status, organization_id, image) => {
+  return db
+  .query(`
+  UPDATE organizations
+    SET 
+    name = $2,
+    description = $3,
+    status = $4,
+    organization_id = $5,
+    image = $6
+    WHERE organizations.id = $1;
+  `, [projectID, name, description, status, organization_id, image])
+  .then(result => {
+    return result.rows[0];
+  })
+  .catch(err => {
+    console.log('Error:', err);
+  });
+};
+
+const modifyProjectWithObject = (projectID, projectObj) => {
+  const {name, description, status, organization_id, image} = projectObj;
+  return db
+  .query(`
+  UPDATE organizations
+    SET 
+    name = $2,
+    description = $3,
+    website = $4,
+    user_id = $5,
+    image = $6
+    WHERE organizations.id = $1;
+  `, [projectID, orgObj, name, description, status, organization_id, image])
+  .then(result => {
+    return result.rows[0];
+  })
+  .catch(err => {
+    console.log('Error:', err);
+  });
+};
+
+module.exports = { createProjectWithValues, createProjectWithObject, modifyProjectWithValues, modifyProjectWithObject };
