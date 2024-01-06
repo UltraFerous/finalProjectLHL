@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { projectDataSearchID } = require('../db/queries/projects.js');
+const { projectDataSearchID, findDevelopersWithProject, findTagsForProject } = require('../db/queries/projects.js');
 
 // import query helper functions and use them in routes
 
@@ -18,17 +18,27 @@ router.get('/create', (req, res) => {
 router.get('/:id', async (req, res) => {
   const project_id = req.params.id;
 
-  projectDataSearchID(project_id)
-    .then((projectData) => {
-      console.log(projectData);
+  let responseArray = [];
 
-      // Check if projectData exists
-      if (projectData.length > 0) {
-        res.status(200).json(projectData);
-      } else {
-        res.status(404).json({ error: 'Project not found' });
-      }
+  // call first query helper func
+  projectDataSearchID(project_id)
+    .then(projectData  => {
+      console.log('projectData:', projectData);
+      responseArray.push(projectData);
+      // call second query helper func
+      return findDevelopersWithProject(project_id);
     })
+    .then(developerData => {
+      console.log('developerData:', developerData);
+      responseArray.push(developerData);
+      // call third query helper func
+      return findTagsForProject(project_id);
+    })
+    .then(projectTagData => {
+      console.log('projectTagData:', projectTagData);
+      responseArray.push(projectTagData);
+    })
+    .then(() => res.status(200).json(responseArray))
     .catch((err) => {
       console.error("ERROR:", err.message);
       res.status(500).json({ error: 'Internal server error' });
