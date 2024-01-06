@@ -13,7 +13,8 @@ router.get('/create', (req, res) => {
 
 });
 
-// login page
+// login page - I don't think we need this route because react router renders the page
+//and we don't need to query any data to display on the page
 router.get('/login', (req, res) => {
 
 });
