@@ -11,7 +11,7 @@ export default function Project() {
   useEffect(() => {
     const fetchProjectDetails = () => {
       axios
-        .get(`http://localhost:8080/projects/${id}`)
+        .get(`http://localhost:8080/projects/${id}/details`)
         .then((response) => {
           const data = response.data;
 
