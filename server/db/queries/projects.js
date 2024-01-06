@@ -27,7 +27,6 @@ const projectDataSearchID = function(id) {
     WHERE projects.id = $1
     `, [id])
     .then((result) => {
-      console.log('Database query result:', result.rows);
       return result.rows;
     })
     .catch((err) => {
