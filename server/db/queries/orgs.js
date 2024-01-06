@@ -67,4 +67,4 @@ const checkOrgAdmin = function(orgID) {
 };
 
 
-module.exports = { allOrgData, orgDataSearchID, orgDataSearchName };
+module.exports = { allOrgData, orgDataSearchID, orgDataSearchName, checkOrgAdmin };
