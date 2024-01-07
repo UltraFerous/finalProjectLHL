@@ -48,6 +48,22 @@ const orgDataSearchName = function(name) {
     });
 };
 
+const orgDoubleCheck = function(name) {
+  return db
+    .query(`
+    SELECT
+    *
+    FROM organizations
+    WHERE lower(organizations.name) LIKE lower($1)
+    `, [name])
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((err) => {
+      console.log("ERROR2:", err.message);
+    });
+};
+
 const checkOrgAdmin = function(orgID) {
   return db
     .query(`
@@ -67,4 +83,4 @@ const checkOrgAdmin = function(orgID) {
 };
 
 
-module.exports = { allOrgData, orgDataSearchID, orgDataSearchName, checkOrgAdmin };
+module.exports = { allOrgData, orgDataSearchID, orgDataSearchName, checkOrgAdmin, orgDoubleCheck };
