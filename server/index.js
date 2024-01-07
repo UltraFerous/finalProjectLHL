@@ -8,13 +8,22 @@ const morgan = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
+const cookieSession = require('cookie-session');
 
 const PORT = process.env.SERVER_PORT || 8080;
 
 // express middleware
-app.use(cors())
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true,
+}));
 app.use(morgan('dev'));
 app.use(bodyParser.json());
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1, key2'],
+  maxAge: 24 * 60 * 60 * 1000, // Example: 1 day
+}));
 
 // separated routes for each resource
 const usersApiRoutes = require('./routes/users-api');
