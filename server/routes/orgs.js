@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { orgDataSearchID } = require('../db/queries/orgs.js');
-
+const { createOrgWithObject } = require('../db/queries/orgs-api.js');
 // import query helper functions and use them in routes
 
 // organization details page
@@ -27,7 +27,6 @@ router.get('/:id', (req, res) => {
 
 // create organization page
 router.get('/create', (req, res) => {
-
 });
 
 module.exports = router;
