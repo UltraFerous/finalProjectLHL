@@ -53,7 +53,7 @@ export default function LogInUser() {
         <label htmlFor="username">Username</label>
         <input name="username" id="username" value={username} onChange={onChange} />
         <label htmlFor="password">Password</label>
-        <input name="password" id="password" value={password}onChange={onChange} />
+        <input name="password" id="password" value={password} onChange={onChange} />
         <button type="submit">Sign in</button>
       </form>
     </>
