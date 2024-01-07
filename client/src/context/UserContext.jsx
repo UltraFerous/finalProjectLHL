@@ -7,8 +7,8 @@ export const UserProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
   //functions related to user go here
-  const updateCurrentUser = () => {
-    /// code to setUser goes here
+  const updateCurrentUser = (userData) => {
+    setUser(userData);
   };
 
   const updateLoading = (status) => {

@@ -41,7 +41,7 @@ const userDataSearchName = function(name) {
       *
     FROM users
     JOIN developers_information ON user_id = users.id
-    WHERE lower(users.username) LIKE lower('%$1%')
+    WHERE lower(users.username) = lower($1)
     `, [name])
     .then((result) => {
       return result.rows;
