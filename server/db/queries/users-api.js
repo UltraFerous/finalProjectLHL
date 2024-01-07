@@ -6,12 +6,16 @@ const createUserWithValues = (username, email, admin, password, description, cit
   .query(`
   INSERT INTO users (username, email, admin, password, description, city, province, country, image) VALUES
   ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+  RETURNING id, username, email, admin, description, city, province, country, image
   `, [username, email, admin, password, description, city, province, country, image])
   .then(result => {
-    return result.rows[0];
+    const createdUser = result.rows[0];
+      console.log('User created successfully:', createdUser);
+      return createdUser;
   })
   .catch(err => {
-    console.log('Error:', err);
+    console.log('Error during user creation:', err);
+    throw err; // rethrow the error to be caught in the calling function
   });
 };
 

@@ -15,6 +15,7 @@ export default function RegisterUser() {
     city: "",
     province: "",
     country: "",
+    image: "",
     linkedin: "",
     github: "",
     website: "",
@@ -29,6 +30,7 @@ export default function RegisterUser() {
     city,
     province,
     country,
+    image,
     linkedin,
     github,
     website,
@@ -55,11 +57,12 @@ export default function RegisterUser() {
     axios
       .post(
         "http://localhost:8080/api/users/register",
-        {
-          registrationData,
-        },
+        registrationData, // Send properties directly
         {
           withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
       )
       .then((response) => {
@@ -141,6 +144,8 @@ export default function RegisterUser() {
           value={country}
           onChange={onChange}
         />
+        <label htmlFor="image">Image URL</label>
+        <input name="image" id="image" value={image} onChange={onChange} />
         {admin !== null && !admin && (
           <>
             <label htmlFor="linkedin">LinkedIn URL</label>
