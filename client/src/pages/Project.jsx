@@ -1,12 +1,22 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { useParams, Link } from "react-router-dom";
+import UserContext from "../context/UserContext";
 import axios from "axios";
+
 
 export default function Project() {
   const { id } = useParams();
   const [project, setProject] = useState(null);
   const [tags, setTags] = useState([]);
   const [contributors, setContributors] = useState([]);
+  const [projectAdmin, setprojectAdmin] = useState([]);
+  const { user } = useContext(UserContext);
+
+  const isProjectAdmin = () => {
+    if(user) {
+      return user && projectAdmin === user.id;
+    }
+  }
 
   useEffect(() => {
     const fetchProjectDetails = () => {
@@ -20,6 +30,7 @@ export default function Project() {
             const projectDetails = data[0];
             const contributorsArray = data[1];
             const tagsArray = data[2];
+            const adminArray = data[3];
 
             // Check if projectDetails is an array with expected properties
             if (Array.isArray(projectDetails) && projectDetails.length > 0) {
@@ -38,6 +49,9 @@ export default function Project() {
                   <div key={tag.tag_id}>{tag.tag_name}</div>
                 )));
               }
+
+              setprojectAdmin(adminArray[0].id);
+
             } else {
               setProject({});
             }
@@ -61,11 +75,16 @@ export default function Project() {
       <h1>{project && project.name}</h1>
       <h2>{project && project.orgname}</h2>
       <ul>{tags}</ul>
+      {isProjectAdmin() && (
+        <Link to={`/projects/${project && project.id}/edit`}>Edit Project</Link>
+      )}
       <p>{project && project.description}</p>
       <img src={project && project.image} />
+      {user && (
+        <Link to={`/projects/${project.id}/apply`}>Apply to Work on This Project</Link>
+      )}
       <h3>Project Contributors</h3>
       {contributors}
-      <h3>Project Updates</h3>
     </>
   );
 }
