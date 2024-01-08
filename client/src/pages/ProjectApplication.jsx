@@ -6,9 +6,14 @@ import UserContext from "../context/UserContext";
 export default function ProjectApplication() {
   const { id } = useParams();
   const [project, setProject] = useState(null);
-  const [applicationData, setApplicationData] = useState({ text: "" });
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
+  const [applicationData, setApplicationData] = useState({
+    user_id: null,
+    project_id: null,
+    text: "",
+    status: 1
+  });
 
   const { text } = applicationData;
 
@@ -62,7 +67,13 @@ export default function ProjectApplication() {
     };
 
     fetchProjectDetails();
-  }, [id]);
+
+    setApplicationData((prevState) => ({
+      ...prevState,
+      user_id: user.id,
+      project_id: id,
+    }));
+  }, [id, user.id]);
 
   return (
     <>
