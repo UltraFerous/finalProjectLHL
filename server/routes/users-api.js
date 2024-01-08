@@ -14,9 +14,6 @@ router.use(
 );
 // import query helper functions and use them in routes
 
-// create new user
-router.post("/", (req, res) => {});
-
 // edit user profile
 router.patch("/:id", (req, res) => {});
 

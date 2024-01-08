@@ -8,7 +8,9 @@ export const UserProvider = ({ children }) => {
 
   //functions related to user go here
   const updateCurrentUser = (userData) => {
+    console.log(userData);
     setUser(userData);
+    console.log(user);
   };
 
   const updateLoading = (status) => {

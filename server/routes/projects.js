@@ -44,22 +44,24 @@ router.get('/:id/details', async (req, res) => {
   // call first query helper func
   projectDataSearchID(project_id)
     .then(projectData  => {
+      console.log('projectData:', projectData);
       responseArray.push(projectData);
       // call second query helper func
       return findDevelopersWithProject(project_id);
     })
     .then(developerData => {
+      console.log('developerData:', developerData);
       responseArray.push(developerData);
       // call third query helper func
       return findTagsForProject(project_id);
     })
     .then(projectTagData => {
-
+      console.log('projectTagData:', projectTagData);
       responseArray.push(projectTagData);
       return findProjectAdmin(project_id);
     })
     .then(projectAdminData => {
-
+      console.log('projectAdminData:', projectAdminData);
       responseArray.push(projectAdminData);
     })
     .then(() => res.status(200).json(responseArray))
