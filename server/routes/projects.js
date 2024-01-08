@@ -7,7 +7,14 @@ const{ findProjectAdmin } =require('../db/queries/developers.js');
 
 // projects list page
 router.get('/', (req, res) => {
-
+  allProjectData()
+  .then((allProjectData) => {
+    res.status(200).json(allProjectData);
+  })
+  .catch((err) => {
+    console.error("ERROR:", err.message);
+    res.status(500).json({ error: 'Internal server error' });
+  });
 });
 
 // create project page
@@ -20,7 +27,6 @@ router.get('/:id/apply', (req, res) => {
 
   projectDataSearchID(project_id)
     .then((projectData) => {
-
       // Check if projectData exists
       if (projectData.length > 0) {
         res.status(200).json(projectData);
@@ -72,7 +78,6 @@ router.get('/:id/details', async (req, res) => {
 
 // edit individual project details page
 router.get('/:id/edit', (req, res) => {
-
 });
 
 

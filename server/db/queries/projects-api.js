@@ -30,18 +30,17 @@ const createProjectWithObject = (projectObj) => {
   });
 };
 
-const modifyProjectWithValues = (projectID, name, description, status, organization_id, image) => {
+const modifyProjectWithValues = (projectID, name, description, status, image) => {
   return db
   .query(`
-  UPDATE organizations
+  UPDATE projects
     SET 
     name = $2,
     description = $3,
     status = $4,
-    organization_id = $5,
-    image = $6
-    WHERE organizations.id = $1;
-  `, [projectID, name, description, status, organization_id, image])
+    image = $5
+    WHERE projects.id = $1;
+  `, [projectID, name, description, status, image])
   .then(result => {
     return result.rows[0];
   })
@@ -51,18 +50,18 @@ const modifyProjectWithValues = (projectID, name, description, status, organizat
 };
 
 const modifyProjectWithObject = (projectID, projectObj) => {
-  const {name, description, status, organization_id, image} = projectObj;
+  const {name, description, status, image} = projectObj;
+  console.log("HERE IS OUR DATA: ", projectObj)
   return db
   .query(`
-  UPDATE organizations
+  UPDATE projects
     SET 
     name = $2,
     description = $3,
-    website = $4,
-    user_id = $5,
-    image = $6
-    WHERE organizations.id = $1;
-  `, [projectID, orgObj, name, description, status, organization_id, image])
+    status = $4,
+    image = $5
+    WHERE projects.id = $1;
+  `, [Number(projectID), name, description, status, image])
   .then(result => {
     return result.rows[0];
   })
