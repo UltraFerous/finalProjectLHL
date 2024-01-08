@@ -6,7 +6,7 @@ const{ findProjectAdmin } =require('../db/queries/developers.js');
 // import query helper functions and use them in routes
 
 // projects list page
-router.get('/api/projects', (req, res) => {
+router.get('/', (req, res) => {
 
 });
 

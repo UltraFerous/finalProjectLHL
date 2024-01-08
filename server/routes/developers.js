@@ -5,7 +5,7 @@ const { allUserData } = require("../db/queries/users.js");
 // import query helper functions and use them in routes
 
 // developers list page
-router.get('/api/developers', (req, res) => {
+router.get('/', (req, res) => {
   
   allUserData()
     .then((userData) => {
@@ -17,7 +17,7 @@ router.get('/api/developers', (req, res) => {
       console.error("ERROR:", err.message);
       res.status(500).json({ error: 'Internal server error' });
     });
-    
+
 });
 
 module.exports = router;

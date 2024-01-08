@@ -9,7 +9,7 @@ export default function DeveloperList() {
   useEffect(() => {
     const fetchCardDetails = () => {
       axios
-        .get("http://localhost:8080/api/developers")
+        .get("http://localhost:8080/developers")
         .then((response) => {
           const data = response.data;
 
