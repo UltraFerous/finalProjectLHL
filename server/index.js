@@ -63,7 +63,8 @@ app.get('/api', (req, res) => {
     })
     .then(userData => {
       console.log('userData:', userData);
-      responseArray.push(userData);
+      const developersArray = userData.filter((user) => !user.admin);
+      responseArray.push(developersArray);
     })
     .then(() => res.status(200).json(responseArray))
     .catch((err) => {

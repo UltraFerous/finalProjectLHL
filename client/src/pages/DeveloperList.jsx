@@ -1,13 +1,36 @@
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react"
+import DeveloperCardList from "../components/DeveloperCardList";
+import axios from "axios";
 
 export default function DeveloperList() {
+
+  const [developers, setDevelopers] = useState([]);
+
+  useEffect(() => {
+    const fetchCardDetails = () => {
+      axios
+        .get("http://localhost:8080/developers")
+        .then((response) => {
+          const data = response.data;
+
+          // Check if data is an array
+          if (Array.isArray(data) && data.length >= 1) {
+            // Set the state with the received data
+            setDevelopers(data);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching project & developer info:", error);
+        });
+    };
+
+    fetchCardDetails();
+  }, []);
+
   return (
     <>
-      <h1>Developer List Page</h1>
-      <h2>Developer Search Results</h2>
-      <Link to='/users/1'>Developer 1</Link>
-      <br/>
-      <Link to='/users/2'>Developer 2</Link>
+      <h2>Your Search Results</h2>
+      <DeveloperCardList featuredDevelopers={developers} />
     </>
   );
 }
