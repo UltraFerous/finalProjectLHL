@@ -1,5 +1,7 @@
 // load .env data into process.env
 require('dotenv').config({ path: '../.env' });
+const { allProjectData } = require("./db/queries/projects.js");
+const { allUserData } = require("./db/queries/users.js");
 
 // web server config
 const express = require('express');
@@ -46,14 +48,36 @@ app.use('/users', usersRoutes);
 app.use('/api/org', orgsApiRoutes);
 app.use('/org', orgsRoutes);
 
-// Fallback route for handling client-side routing
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../index.html'));
-});
+// Home Page
+app.get('/api', (req, res) => {
 
-//app.get('/', (req, res) => {
-//    res.send('Hello from our server!')
-//})
+  let responseArray = [];
+
+  // call first query helper func
+  allProjectData()
+    .then(projectData  => {
+      console.log('projectData:', projectData);
+      responseArray.push(projectData);
+      // call second query helper func
+      return allUserData();
+    })
+    .then(userData => {
+      console.log('userData:', userData);
+      responseArray.push(userData);
+    })
+    .then(() => res.status(200).json(responseArray))
+    .catch((err) => {
+      console.error("ERROR:", err.message);
+      res.status(500).json({ error: 'Internal server error' });
+    });
+})
+
+// Fallback route for handling client-side routing
+//app.get('*', (req, res) => {
+//  res.sendFile(path.resolve(__dirname, '../index.html'));
+//});
+
+
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`)
