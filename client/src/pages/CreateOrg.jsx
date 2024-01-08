@@ -17,7 +17,6 @@ export default function CreateOrg() {
         ...data,
         [e.target.name]: value
       });
-      console.log(data);
     };
   
     const handleSubmit = (e) => {
@@ -39,7 +38,7 @@ export default function CreateOrg() {
     <>
       <h1>Create New Organization Page</h1>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="email">
+        <label htmlFor="name">
           Name
           <input
             type="text"

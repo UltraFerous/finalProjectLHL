@@ -12,7 +12,6 @@ router.get('/', (req, res) => {
 
 // create project page
 router.get('/create', (req, res) => {
-
 });
 
 // project application page
