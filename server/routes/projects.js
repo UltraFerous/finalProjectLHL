@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { projectDataSearchID, findDevelopersWithProject, findTagsForProject } = require('../db/queries/projects.js');
+const{ findProjectAdmin } =require('../db/queries/developers.js');
 
 // import query helper functions and use them in routes
 
@@ -55,6 +56,11 @@ router.get('/:id/details', async (req, res) => {
     .then(projectTagData => {
 
       responseArray.push(projectTagData);
+      return findProjectAdmin(project_id);
+    })
+    .then(projectAdminData => {
+
+      responseArray.push(projectAdminData);
     })
     .then(() => res.status(200).json(responseArray))
     .catch((err) => {
