@@ -29,4 +29,18 @@ const addTagToDeveloper = (userID, tagID) => {
   });
 };
 
-module.exports = { createDeveloperInformation, addTagToDeveloper };
+const removeTagFromUser = (userID, tagID) => {
+  return db
+  .query(`
+  DELETE FROM assigned_tags_users WHERE 
+  user_id = $1 AND tag_id = $2
+  `, [userID, tagID])
+  .then(result => {
+    return result.rows;
+  })
+  .catch(err => {
+    console.log('Error:', err);
+  });
+};
+
+module.exports = { createDeveloperInformation, addTagToDeveloper, removeTagFromUser };

@@ -85,4 +85,24 @@ const addTagToProject = (projectID, tagID) => {
   });
 };
 
-module.exports = { createProjectWithValues, createProjectWithObject, modifyProjectWithValues, modifyProjectWithObject, addTagToProject };
+const removeTagFromProject = (projectID, tagID) => {
+  return db
+  .query(`
+  DELETE FROM assigned_tags_projects WHERE 
+  project_id = $1 AND tag_id = $2
+  `, [projectID, tagID])
+  .then(result => {
+    return result.rows;
+  })
+  .catch(err => {
+    console.log('Error:', err);
+  });
+};
+
+module.exports = { createProjectWithValues, 
+                    createProjectWithObject, 
+                    modifyProjectWithValues, 
+                    modifyProjectWithObject, 
+                    addTagToProject, 
+                    removeTagFromProject 
+                };
