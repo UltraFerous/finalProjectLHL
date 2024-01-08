@@ -5,9 +5,11 @@ export default function DeveloperCardList(props) {
     return (
       <Card
         key={developer.id}
+        id={developer.id}
         imageSource={developer.image}
         title={developer.username}
         description={developer.description}
+        type="users"
       />
     );
   });

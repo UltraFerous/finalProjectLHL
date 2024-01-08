@@ -5,9 +5,11 @@ export default function ProjectCardList(props) {
     return (
       <Card
         key={project.id}
+        id={project.id}
         imageSource={project.image}
         title={project.name}
         description={project.description}
+        type="projects"
       />
     );
   });
