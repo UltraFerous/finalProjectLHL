@@ -13,15 +13,16 @@ router.get('/create', (req, res) => {
 
 });
 
-// login page - I don't think we need this route because react router renders the page
-//and we don't need to query any data to display on the page
+// login page
 router.get('/login', (req, res) => {
-
+  //I don't think we need this route because react router renders the page
+  //and we don't need to query any data to display on the page
 });
 
 // registration page
 router.get('/register', (req, res) => {
-
+ //I don't think we need this route because react router renders the page
+  //and we don't need to query any data to display on the page
 });
 
 module.exports = router;
