@@ -29,7 +29,7 @@ export default function CreateOrg() {
         image: data.image,
       };
       console.log("Sumbitted:", userData);
-      axios.post("http://localhost:8080/api/org", userData).then((response) => {
+      axios.post("/api/org", userData).then((response) => {
         console.log(response.status, response.data.token);
       });
     };

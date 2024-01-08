@@ -29,7 +29,7 @@ export default function ProjectApplication() {
 
     axios
       .post(
-        `http://localhost:8080/api/projects/${id}apply`,
+        `http://localhost:8080/api/projects/${id}/apply`,
         applicationData, // Send properties directly
         {
           withCredentials: true,
