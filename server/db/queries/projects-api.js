@@ -71,4 +71,38 @@ const modifyProjectWithObject = (projectID, projectObj) => {
   });
 };
 
-module.exports = { createProjectWithValues, createProjectWithObject, modifyProjectWithValues, modifyProjectWithObject };
+const addTagToProject = (projectID, tagID) => {
+  return db
+  .query(`
+  INSERT INTO assigned_tags_projects (project_id, tag_id) VALUES  
+  ($1, $2) 
+  `, [projectID, tagID])
+  .then(result => {
+    return result.rows;
+  })
+  .catch(err => {
+    console.log('Error:', err);
+  });
+};
+
+const removeTagFromProject = (projectID, tagID) => {
+  return db
+  .query(`
+  DELETE FROM assigned_tags_projects WHERE 
+  project_id = $1 AND tag_id = $2
+  `, [projectID, tagID])
+  .then(result => {
+    return result.rows;
+  })
+  .catch(err => {
+    console.log('Error:', err);
+  });
+};
+
+module.exports = { createProjectWithValues, 
+                    createProjectWithObject, 
+                    modifyProjectWithValues, 
+                    modifyProjectWithObject, 
+                    addTagToProject, 
+                    removeTagFromProject 
+                };
