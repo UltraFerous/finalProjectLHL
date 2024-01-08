@@ -42,7 +42,7 @@ app.use('/api/users', usersApiRoutes);
 app.use('/users', usersRoutes);
 app.use('/api/projects', projectsApiRoutes);
 app.use('/projects', projectsRoutes);
-app.use('/developers', developersRoutes);
+app.use('/api/developers', developersRoutes);
 app.use('/api/users', usersApiRoutes);
 app.use('/users', usersRoutes);
 app.use('/api/org', orgsApiRoutes);
@@ -63,7 +63,8 @@ app.get('/api', (req, res) => {
     })
     .then(userData => {
       console.log('userData:', userData);
-      responseArray.push(userData);
+      const developersArray = userData.filter((user) => !user.admin);
+      responseArray.push(developersArray);
     })
     .then(() => res.status(200).json(responseArray))
     .catch((err) => {

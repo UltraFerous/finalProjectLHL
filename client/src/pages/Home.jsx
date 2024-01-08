@@ -14,8 +14,8 @@ export default function Home() {
         .then((response) => {
           const data = response.data;
           console.log("client received data:", data);
-          let projectsArray = data[0];
-          let developersArray = data[1];
+          let projectsArray;
+          let developersArray;
 
           // Check if data is an array
           if (Array.isArray(data) && data.length >= 1) {
@@ -30,11 +30,7 @@ export default function Home() {
 
           // Check if developersArray is an array with expected properties
           if (Array.isArray(developersArray) && developersArray.length > 0) {
-            setDevelopers([
-              developersArray[0],
-              developersArray[1],
-              developersArray[2],
-            ]);
+            setDevelopers(developersArray.length >= 3 ? developersArray.slice(0, 3) : developersArray);
           }
         })
 
