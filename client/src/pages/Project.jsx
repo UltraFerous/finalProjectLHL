@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
-import UserContext from "../context/UserContext";
+import { UserContext } from "../context/UserContext";
 import axios from "axios";
 
 export default function Project() {
