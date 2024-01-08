@@ -71,4 +71,18 @@ const modifyProjectWithObject = (projectID, projectObj) => {
   });
 };
 
-module.exports = { createProjectWithValues, createProjectWithObject, modifyProjectWithValues, modifyProjectWithObject };
+const addTagToProject = (projectID, tagID) => {
+  return db
+  .query(`
+  INSERT INTO assigned_tags_projects (project_id, tag_id) VALUES  
+  ($1, $2) 
+  `, [projectID, tagID])
+  .then(result => {
+    return result.rows;
+  })
+  .catch(err => {
+    console.log('Error:', err);
+  });
+};
+
+module.exports = { createProjectWithValues, createProjectWithObject, modifyProjectWithValues, modifyProjectWithObject, addTagToProject };

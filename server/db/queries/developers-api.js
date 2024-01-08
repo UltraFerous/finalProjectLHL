@@ -15,4 +15,18 @@ const createDeveloperInformation = (userID, linkedin, github, website) => {
   });
 };
 
-module.exports = { createDeveloperInformation };
+const addTagToDeveloper = (userID, tagID) => {
+  return db
+  .query(`
+  INSERT INTO assigned_tags_users (user_id, tag_id) VALUES 
+  ($1, $2) 
+  `, [userID, tagID])
+  .then(result => {
+    return result.rows;
+  })
+  .catch(err => {
+    console.log('Error:', err);
+  });
+};
+
+module.exports = { createDeveloperInformation, addTagToDeveloper };
