@@ -1,9 +1,8 @@
-import Card from "./Card";
+import SummaryCard from "./Card";
 
 export default function DeveloperCardList(props) {
-  const developerList = props.featuredDevelopers.map((developer) => {
-    return (
-      <Card
+  const developerList = props.featuredDevelopers.map((developer) => (
+      <SummaryCard
         key={developer.id}
         id={developer.id}
         imageSource={developer.image}
@@ -11,8 +10,8 @@ export default function DeveloperCardList(props) {
         description={developer.description}
         type="users"
       />
-    );
-  });
+    )
+  );
 
-  return <ul>{developerList}</ul>;
+  return <ul class="d-flex p-2 justify-content-center">{developerList}</ul>;
 }
