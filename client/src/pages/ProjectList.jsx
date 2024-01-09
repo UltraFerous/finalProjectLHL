@@ -29,7 +29,7 @@ export default function ProjectList() {
 
   return (
     <>
-      <h2>Your Search Results</h2>
+      <h2 className="text-center mt-5">Your Search Results</h2>
       <ProjectCardList featuredProjects={projects} />
     </>
   );

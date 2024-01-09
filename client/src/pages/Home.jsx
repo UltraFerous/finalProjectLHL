@@ -60,16 +60,16 @@ export default function Home() {
   return (
     <>
       <div style={heroStyle}>
-        <h1 class="text-center">Connecting Developers and Charities for a Brighter Future</h1>
+        <h1 className="text-center">Connecting Developers and Charities for a Brighter Future</h1>
       </div>
       <div>
-        <h2 class="text-center mt-5">Search for Inspiration</h2>
-        <p class="text-center">What would you like to search for?</p>
+        <h2 className="text-center mt-5">Search for Inspiration</h2>
+        <p className="text-center">What would you like to search for?</p>
       </div>
       <SearchContainer />
-      <h2 class="text-center">Featured Projects</h2>
+      <h2 className="text-center">Featured Projects</h2>
       <ProjectCardList featuredProjects={projects} />
-      <h2 class="text-center">Featured Developers</h2>
+      <h2 className="text-center">Featured Developers</h2>
       <DeveloperCardList featuredDevelopers={developers} />
     </>
   );
