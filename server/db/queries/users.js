@@ -38,9 +38,10 @@ const userDataSearchName = function(name) {
   return db
     .query(`
     SELECT
-      *
+    users.*, organizations.id AS organization_id
     FROM users
-    JOIN developers_information ON user_id = users.id
+    JOIN organizations ON organizations.user_id = users.id
+    JOIN developers_information ON developers_information.user_id = users.id
     WHERE lower(users.username) = lower($1)
     `, [name])
     .then((result) => {
