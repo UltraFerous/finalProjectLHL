@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createProjectWithObject, modifyProjectWithObject } = require('../db/queries/projects-api.js');
+const { createProjectWithObject, modifyProjectWithObject, applyForProject } = require('../db/queries/projects-api.js');
 
 // import query helper functions and use them in routes
 
@@ -32,7 +32,14 @@ router.patch('/:id', (req, res) => {
 
 // submit project application
 router.post('/:id/apply', (req, res) => {
-
+  applyForProject(req.body)
+  .then(() => {
+    res.status(200);
+  })
+  .catch((err) => {
+    console.error("ERROR:", err.message);
+    res.status(500).json({ error: 'Internal server error' });
+  })
 });
 
 module.exports = router;

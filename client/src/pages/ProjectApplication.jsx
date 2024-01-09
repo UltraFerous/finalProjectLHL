@@ -11,8 +11,7 @@ export default function ProjectApplication() {
   const [applicationData, setApplicationData] = useState({
     user_id: null,
     project_id: null,
-    text: "",
-    status: 1
+    text: ""
   });
 
   const { text } = applicationData;
