@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export default function SearchBar() {
+export default function SearchBar(props) {
 
   const [searchInput, setSearchInput] = useState("");
 

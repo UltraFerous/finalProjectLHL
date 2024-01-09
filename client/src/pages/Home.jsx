@@ -14,7 +14,6 @@ export default function Home() {
         .get("http://localhost:8080/api")
         .then((response) => {
           const data = response.data;
-          console.log("client received data:", data);
           let projectsArray;
           let developersArray;
 
