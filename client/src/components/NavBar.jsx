@@ -7,7 +7,10 @@ import appLogo from '../images/good-dev-logo-white.png';
 
 export default function NavBar() {
   return (
-    <Navbar bg="primary" data-bs-theme="dark">
+    <Navbar
+      bg="primary"
+      data-bs-theme="dark"
+    >
       <Container>
         <Navbar.Brand href="#home">
           <NavLink to="/">
@@ -30,16 +33,15 @@ export default function NavBar() {
           <Button
             as={NavLink}
             to="/users/login"
-            variant="light"
-            className="login"
+            variant="outline-light"
           >
             Log In
           </Button>
           <Button
             as={NavLink}
             to="/users/register"
-            variant="light"
-            className="register ms-3"
+            variant="outline-light"
+            className="ms-3"
           >
             Register
           </Button>
