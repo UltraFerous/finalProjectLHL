@@ -14,7 +14,12 @@ export default function NavBar() {
     axios.post("http://localhost:8080/api/users/logout", {}, { withCredentials: true })
     .then((response) => {
       if (response.status === 200) {
+        // Clear user info from local storage
+        localStorage.removeItem('user');
+
+        // Update user state
         updateCurrentUser(null);
+        
         // Redirect to the home page
         navigate("/");
       } else {

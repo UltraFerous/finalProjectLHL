@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const cookieSession = require("cookie-session");
 const bodyParser = require("body-parser");
-const { userDataSearchName } = require("../db/queries/users.js");
+const { userDataSearchName, userDataSearchID } = require("../db/queries/users.js");
 const { createUserWithValues } = require("../db/queries/users-api.js");
 
 router.use(
