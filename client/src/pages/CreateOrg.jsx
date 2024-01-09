@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
+import { UserContext } from "../context/UserContext";
 // INSERT INTO organizations (name, description, website, user_id, image) VALUES
 
 export default function CreateOrg() {
+  const { user } = useContext(UserContext) 
     const [data, setData] = useState({
       name: "",
       description: "",
       website: "",
-      user_id: 3,
+      user_id: user,
       image: "",
     });
   
@@ -25,7 +27,7 @@ export default function CreateOrg() {
         name: data.name,
         description: data.description,
         website: data.website,
-        user_id: 3,
+        user_id: user,
         image: data.image,
       };
       console.log("Sumbitted:", userData);

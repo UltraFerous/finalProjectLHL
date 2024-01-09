@@ -103,7 +103,7 @@ const applyForProject = (applicationObj) => {
   return db
     .query(`
   INSERT INTO applications (user_id, project_id, text) VALUES
-  $1, $2, $3
+  ($1, $2, $3)
   `, [user_id, project_id, text])
     .then(result => {
       return result.rows;
