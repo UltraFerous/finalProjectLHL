@@ -17,9 +17,6 @@ router.use(
 // edit user profile
 router.patch("/:id", (req, res) => {});
 
-// delete user profile
-router.delete("/:id", (req, res) => {});
-
 // log user in
 router.post("/login", (req, res) => {
   const { username, password } = req.body;

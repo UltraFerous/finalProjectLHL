@@ -29,9 +29,4 @@ router.patch('/:id', (req, res) => {
 
 });
 
-// delete organization
-router.delete('/:id', (req, res) => {
-
-});
-
 module.exports = router;
