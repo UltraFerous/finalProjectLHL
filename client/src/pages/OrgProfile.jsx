@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Image, Button } from "react-bootstrap";
 import dogPhoto from "../images/dog-photo.jpg"
 import userOne from "../images/user-1.jpg";
 import userTwo from "../images/user-2.jpg";
@@ -27,69 +27,65 @@ export default function OrgProfile() {
     fetchOrgDetails();
   }, [id])
 
+  // display a blank page while fetching data
   if (!org) {
     return null;
   }
 
   return (
     <>
-      <Container className="mt-5">
-        <Row className="text-center mb-5">
-          <h1>{org[0].name}</h1>
-        </Row>
-        <Row>
-          <Col xs={6}>
-            <Row className="mb-5">
-              <img
-                src={dogPhoto}
-                alt="Organization Image"
-                className="proj-org-images"
-              />
+      <Container className="my-5">
+        <Row className="d-flex justify-content-center">
+          <Col md={6} className="mx-auto">
+            <Row className="mb-4 text-center">
+              <h1 className="fw-semibold">{org[0].name}</h1>
             </Row>
-            <Row>
+            <Row className="mb-4">
+              <Col>
+                <Image
+                  src={dogPhoto}
+                  rounded
+                  fluid
+                />
+              </Col>
+            </Row>
+            <Row className="mb-5">
               <p>{org[0].description}</p>
             </Row>
-          </Col>
-          <Col>
             <Row className="mb-2">
               <h5>Administrators</h5>
             </Row>
-            <Row className="mb-2 d-flex align-items-center">
-              <Col xs="auto">
-                <img
+            <Row className="mb-4 d-flex align-items-center">
+              <Col md={2}>
+                <Image
                   src={userOne}
+                  roundedCircle
+                  fluid
                   alt="User One"
-                  className="user-profile-images"
                 />
               </Col>
-              <Col xs="auto">
+              <Col>
                 <span>John Doe, President</span>
               </Col>
             </Row>
-            <Row className="mb-5 d-flex align-items-center">
-              <Col xs="auto">
-                <img
+            <Row className="mb-4 d-flex align-items-center">
+              <Col md={2}>
+                <Image
                   src={userTwo}
+                  roundedCircle
+                  fluid
                   alt="User One"
-                  className="user-profile-images"
                 />
               </Col>
-              <Col xs="auto">
+              <Col>
                 <span>Jane Doe, Marketing Director</span>
               </Col>
             </Row>
-            <Row className="mb-2">
-              <h5>Contact {org[0].name}</h5>
-            </Row>
-            <Row className="mb-2">
-              <a href={org[0].website}>
-                <Button variant="success">{org[0].name} website</Button>
-              </a>
+            <Row className="mb-5">
+              <Button variant="success">Contact Organization</Button>
             </Row>
             <Row>
-              <a href={org[0].website}>
-                <Button variant="success">Email {org[0].name}</Button>
-              </a>
+              <h5>Projects</h5>
             </Row>
           </Col>
         </Row>
