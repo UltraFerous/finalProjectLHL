@@ -1,0 +1,64 @@
+// Custom.scss
+// Option A: Include all of Bootstrap
+
+// Include any default variable overrides here (though functions won't be available)
+
+$primary: #208C27;
+$success: #208C27;
+$white: #fff;
+
+$font-family-sans-serif: 'Inter', sans-serif;
+
+$navbar-dark-color: $white;
+$navbar-dark-hover-color: #ffffff80;
+$navbar-dark-active-color: $white;
+
+$link-decoration: none;
+$link-hover-decoration: none;
+
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+
+// Then add additional custom code here
+
+// buttons
+
+.btn-outline-light {
+  --bs-btn-color: #fff;
+  --bs-btn-border-color: #fff;
+  --bs-btn-hover-color: #208c27;
+  --bs-btn-hover-bg: #fff;
+  --bs-btn-hover-border-color: #fff;
+  --bs-btn-focus-shadow-rgb: 248, 249, 250;
+  --bs-btn-active-color: #208c27;
+  --bs-btn-active-bg: #fff;
+  --bs-btn-active-border-color: #fff;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+
+.btn-success {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #208C27;
+  --bs-btn-border-color: #208C27;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #419d47;
+  --bs-btn-hover-border-color: #36983d;
+  --bs-btn-focus-shadow-rgb: 27, 119, 33;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #4da352;
+  --bs-btn-active-border-color: #36983d;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #208C27;
+  --bs-btn-disabled-border-color: #208C27;
+}
+
+// images
+
+.proj-org-images {
+  border-radius: 8%;
+}
+
+.user-profile-images {
+  border-radius: 50%;
+  width: 75px;
+}
