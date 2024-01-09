@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import UserContext from "../context/UserContext";
+import { UserContext } from "../context/UserContext";
 
 export default function ProjectApplication() {
   const { id } = useParams();
@@ -11,8 +11,7 @@ export default function ProjectApplication() {
   const [applicationData, setApplicationData] = useState({
     user_id: null,
     project_id: null,
-    text: "",
-    status: 1
+    text: ""
   });
 
   const { text } = applicationData;
@@ -29,7 +28,7 @@ export default function ProjectApplication() {
 
     axios
       .post(
-        `http://localhost:8080/api/projects/${id}apply`,
+        `http://localhost:8080/api/projects/${id}/apply`,
         applicationData, // Send properties directly
         {
           withCredentials: true,

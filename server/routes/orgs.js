@@ -25,8 +25,4 @@ router.get('/:id', (req, res) => {
     });
 });
 
-// create organization page
-router.get('/create', (req, res) => {
-});
-
 module.exports = router;

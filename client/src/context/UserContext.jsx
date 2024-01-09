@@ -1,20 +1,29 @@
 import { createContext, useState, useEffect } from "react";
+import axios from "axios";
 
-const UserContext = createContext();
+export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   //functions related to user go here
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
   const updateCurrentUser = (userData) => {
-    console.log(userData);
     setUser(userData);
-    console.log(user);
+    localStorage.setItem('user', JSON.stringify(userData));
   };
 
-  const updateLoading = (status) => {
-    setLoading(status);
+  const updateUserWithCookie = () => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
   };
 
   return (
@@ -22,8 +31,7 @@ export const UserProvider = ({ children }) => {
       value={{
         user,
         updateCurrentUser,
-        loading,
-        updateLoading, //all the states and functions that we want to export and use in other files go in here, destructured
+        updateUserWithCookie,
       }}
     >
       {children}
@@ -31,4 +39,4 @@ export const UserProvider = ({ children }) => {
   );
 };
 
-export default UserContext;
+export default UserProvider;

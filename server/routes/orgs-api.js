@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { createOrgWithObject } = require('../db/queries/orgs-api.js');
-const { orgDataSearchName, orgDoubleCheck } = require('../db/queries/orgs.js');
+const { orgDoubleCheck } = require('../db/queries/orgs.js');
 // import query helper functions and use them in routes
 
 // create new organization
@@ -9,9 +9,9 @@ router.post('/', (req, res) => {
   console.log("GOT:", req.body);
 
   orgDoubleCheck(req.body.name)
-    .then((projectData) => {
-      // Check if projectData exists
-      if (projectData.length > 0) {
+    .then((orgData) => {
+      // Check if orgData exists
+      if (orgData.length > 0) {
         res.status(404).json({ error: 'Organization Name Already In Use' });
       } else {
         return createOrgWithObject(req.body);
@@ -26,11 +26,6 @@ router.post('/', (req, res) => {
 
 // edit organization details
 router.patch('/:id', (req, res) => {
-
-});
-
-// delete organization
-router.delete('/:id', (req, res) => {
 
 });
 

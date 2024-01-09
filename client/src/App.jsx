@@ -50,7 +50,7 @@ function App() {
         <Route path="/org/create" element={<CreateOrg />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </UserProvider>
+    </>
   );
 }
 

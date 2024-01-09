@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const cookieSession = require("cookie-session");
 const bodyParser = require("body-parser");
-const { userDataSearchName } = require("../db/queries/users.js");
+const { userDataSearchName, userDataSearchID } = require("../db/queries/users.js");
 const { createUserWithValues } = require("../db/queries/users-api.js");
 
 router.use(
@@ -16,9 +16,6 @@ router.use(
 
 // edit user profile
 router.patch("/:id", (req, res) => {});
-
-// delete user profile
-router.delete("/:id", (req, res) => {});
 
 // log user in
 router.post("/login", (req, res) => {
@@ -54,6 +51,7 @@ router.post("/login", (req, res) => {
 // log user out
 router.post("/logout", (req, res) => {
   req.session = null;
+  res.sendStatus(200); // Sending a success status response
 });
 
 // register new user
