@@ -43,13 +43,27 @@ export default function Home() {
     fetchCardDetails();
   }, []);
 
+  const heroStyle = {
+    backgroundImage: 'url("../public/hero-image.webp")',
+    height: '400px',
+    width: '100%',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    color: '#135317',
+    textAlign: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    paddingBottom: '10%',
+  };
+
   return (
     <>
-      <div>
+      <div style={heroStyle}>
         <h1 class="text-center">Connecting Developers and Charities for a Brighter Future</h1>
       </div>
       <div>
-        <h2 class="text-center">Search for Inspiration</h2>
+        <h2 class="text-center mt-5">Search for Inspiration</h2>
         <p class="text-center">What would you like to search for?</p>
       </div>
       <SearchContainer />
