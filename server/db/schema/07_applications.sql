@@ -7,7 +7,7 @@ CREATE TABLE applications (
   user_id INTEGER,
   project_id INTEGER,
   text TEXT,
-  status INTEGER,
+  status BOOLEAN DEFAULT 0,
   FOREIGN KEY(user_id) REFERENCES users(id),
   FOREIGN KEY(project_id) REFERENCES projects(id)
 );
