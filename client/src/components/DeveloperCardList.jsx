@@ -13,5 +13,5 @@ export default function DeveloperCardList(props) {
     )
   );
 
-  return <ul class="d-flex p-2 justify-content-center">{developerList}</ul>;
+  return <ul className="d-flex p-2 justify-content-center">{developerList}</ul>;
 }

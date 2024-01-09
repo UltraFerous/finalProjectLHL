@@ -35,8 +35,8 @@ router.post("/login", (req, res) => {
         req.session.userId = user.id;
 
         //Send user data as response
-        const { id, username, email } = user;
-        res.status(200).json({ user: { id, username, email } });
+        const { id, username, email, organization_id } = user;
+        res.status(200).json({ user: { id, username, email, organization_id } });
       } else {
         // Passwords don't match
         res.status(401).json({ error: "Incorrect password" });
