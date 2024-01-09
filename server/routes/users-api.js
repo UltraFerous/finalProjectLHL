@@ -54,6 +54,7 @@ router.post("/login", (req, res) => {
 // log user out
 router.post("/logout", (req, res) => {
   req.session = null;
+  res.sendStatus(200); // Sending a success status response
 });
 
 // register new user
