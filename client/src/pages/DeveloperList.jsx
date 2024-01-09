@@ -20,7 +20,7 @@ export default function DeveloperList() {
           }
         })
         .catch((error) => {
-          console.error("Error fetching project & developer info:", error);
+          console.error("Error fetching developer info:", error);
         });
     };
 

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { projectDataSearchID, findDevelopersWithProject, findTagsForProject } = require('../db/queries/projects.js');
+const { projectDataSearchID, findDevelopersWithProject, findTagsForProject, allProjectData } = require('../db/queries/projects.js');
 const{ findProjectAdmin } =require('../db/queries/developers.js');
 
 // import query helper functions and use them in routes
