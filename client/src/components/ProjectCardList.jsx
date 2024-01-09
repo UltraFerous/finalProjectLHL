@@ -13,5 +13,5 @@ export default function ProjectCardList(props) {
     )
   );
 
-  return <ul class="d-flex p-2 justify-content-center">{projectList}</ul>;
+  return <ul className="d-flex p-2 justify-content-center">{projectList}</ul>;
 }

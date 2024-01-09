@@ -1,30 +1,32 @@
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 export default function SearchBar(props) {
-
   const [searchInput, setSearchInput] = useState("");
 
   const onSubmit = (e) => {
-
-  }
+    e.preventDefault();
+    // Your search logic here
+  };
 
   const onChange = (e) => {
-    setSearchInput((prevState) => ({
-      ...prevState,
-      [e.target.id]: e.target.value,
-    }));
-  }
+    setSearchInput(e.target.value);
+  };
 
   return (
-    <form onSubmit={onSubmit}>
-        <input
-        placeholder="Type keyword here"
-          name="searchInput"
-          id="searchInput"
+    <Form onSubmit={onSubmit} className="d-flex flex-column align-items-center mb-4 mt-4">
+      <Form.Group controlId="searchInput" className="mb-3">
+        <Form.Control
+          type="text"
+          placeholder="Type keyword here"
           value={searchInput}
           onChange={onChange}
         />
-      <button type="submit">Submit Search</button>
-    </form>
+      </Form.Group>
+      <Button variant="primary" type="submit" className="text-white">
+        Submit Search
+      </Button>
+    </Form>
   );
 }

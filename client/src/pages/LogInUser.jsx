@@ -2,6 +2,8 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 export default function LogInUser() {
   const { updateCurrentUser } = useContext(UserContext);
@@ -47,15 +49,31 @@ export default function LogInUser() {
   }
 
   return (
-    <>
-      <h1>Sign In</h1>
-      <form onSubmit={onSubmit}>
-        <label htmlFor="username">Username</label>
-        <input name="username" id="username" value={username} onChange={onChange} />
-        <label htmlFor="password">Password</label>
-        <input name="password" id="password" value={password} onChange={onChange} />
-        <button type="submit">Sign in</button>
-      </form>
-    </>
+    <div className="mt-5">
+      <h1 className="text-center mb-4">Sign In</h1>
+      <Form onSubmit={onSubmit} className="d-flex flex-column align-items-center mb-4">
+        <Form.Group controlId="username" className="mb-3">
+          <Form.Label>Username</Form.Label>
+          <Form.Control
+            type="text"
+            name="username"
+            value={username}
+            onChange={onChange}
+          />
+        </Form.Group>
+        <Form.Group controlId="password" className="mb-3">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            name="password"
+            value={password}
+            onChange={onChange}
+          />
+        </Form.Group>
+        <Button type="submit" variant="primary" className="text-white mt-3">
+          Sign in
+        </Button>
+      </Form>
+    </div>
   );
 }
