@@ -4,6 +4,7 @@ import DeveloperCardList from "../components/DeveloperCardList";
 import SearchContainer from "../components/SearchContainer";
 import axios from "axios";
 
+
 export default function Home() {
   const [projects, setProjects] = useState([]);
   const [developers, setDevelopers] = useState([]);
@@ -45,16 +46,16 @@ export default function Home() {
   return (
     <>
       <div>
-        <h1>Connecting Developers and Charities for a Brighter Future</h1>
+        <h1 class="text-center">Connecting Developers and Charities for a Brighter Future</h1>
       </div>
       <div>
-        <h2>Search for Inspiration</h2>
-        <p>What would you like to search for?</p>
+        <h2 class="text-center">Search for Inspiration</h2>
+        <p class="text-center">What would you like to search for?</p>
       </div>
       <SearchContainer />
-      <h2>Featured Projects</h2>
+      <h2 class="text-center">Featured Projects</h2>
       <ProjectCardList featuredProjects={projects} />
-      <h2>Featured Developers</h2>
+      <h2 class="text-center">Featured Developers</h2>
       <DeveloperCardList featuredDevelopers={developers} />
     </>
   );

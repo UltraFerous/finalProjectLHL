@@ -10,7 +10,7 @@ export default function BrowseTags(props) {
 
   return (
     showTags && (<div>
-      <p>Or would you like to browse by category?</p>
+      <p class="text-center">Or would you like to browse by category?</p>
       <button value="react">React</button>
       <button value="ruby">Ruby</button>
       <button value="css">CSS</button>
