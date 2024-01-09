@@ -9314,6 +9314,9 @@ textarea.form-control-lg {
   --bs-btn-disabled-bg: #208C27;
   --bs-btn-disabled-border-color: #208C27; }
 
+.proj-org-images {
+  border-radius: 8%; }
+
 .user-profile-images {
   border-radius: 50%;
   width: 75px; }

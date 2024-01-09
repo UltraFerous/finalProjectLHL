@@ -1,4 +1,7 @@
-import { NavLink } from 'react-router-dom';
+import { useContext, useState } from "react";
+import { NavLink, useNavigate } from 'react-router-dom';
+import UserContext from "../context/UserContext";
+import axios from "axios";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -6,13 +9,39 @@ import Button from 'react-bootstrap/Button';
 import appLogo from '../images/good-dev-logo-white.png';
 
 export default function NavBar() {
+  const { updateCurrentUser } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const logoutUser = (e) => {
+    e.preventDefault();
+
+    axios.post("http://localhost:8080/api/users/logout", {}, { withCredentials: true })
+      .then((response) => {
+        if (response.status === 200) {
+          // Clear user info from local storage
+          localStorage.removeItem('user');
+
+          // Update user state
+          updateCurrentUser(null);
+
+          // Redirect to the home page
+          navigate("/");
+        } else {
+          console.error("Logout failed");
+        }
+      })
+      .catch((error) => {
+        console.error("Error during logout:", error.message);
+      });
+  }
+
   return (
     <Navbar
       bg="primary"
       data-bs-theme="dark"
     >
       <Container>
-        <Navbar.Brand href="#home">
+        <Navbar.Brand>
           <NavLink to="/">
             <img
               src={appLogo}
@@ -27,6 +56,11 @@ export default function NavBar() {
           </Nav.Link>
           <Nav.Link as={NavLink} to="/developers">
             Developers
+          </Nav.Link>
+          {/* Ideally, the Profile is beside the Log Out button
+          and is a photo of the user */}
+          <Nav.Link as={NavLink} to="#">
+            Profile
           </Nav.Link>
         </Nav>
         <Nav>
@@ -43,7 +77,14 @@ export default function NavBar() {
             variant="outline-light"
             className="ms-3"
           >
-            Register
+            Sign Up
+          </Button>
+          <Button
+            onClick={logoutUser}
+            variant="outline-light"
+            className="ms-3"
+          >
+            Log Out
           </Button>
         </Nav>
       </Container>

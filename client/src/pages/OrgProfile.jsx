@@ -40,7 +40,11 @@ export default function OrgProfile() {
         <Row>
           <Col xs={6}>
             <Row className="mb-5">
-              <img src={dogPhoto} alt="Organization Image" />
+              <img
+                src={dogPhoto}
+                alt="Organization Image"
+                className="proj-org-images"
+              />
             </Row>
             <Row>
               <p>{org[0].description}</p>
@@ -75,15 +79,17 @@ export default function OrgProfile() {
               </Col>
             </Row>
             <Row className="mb-2">
-              <h5>Website</h5>
+              <h5>Contact {org[0].name}</h5>
             </Row>
-            <Row className="mb-5">
-              <a href={org[0].website}>{org[0].name}</a>
+            <Row className="mb-2">
+              <a href={org[0].website}>
+                <Button variant="success">{org[0].name} website</Button>
+              </a>
             </Row>
-            <Row xs="auto">
-              <Button variant="success">
-                Contact {org[0].name}
-              </Button>
+            <Row>
+              <a href={org[0].website}>
+                <Button variant="success">Email {org[0].name}</Button>
+              </a>
             </Row>
           </Col>
         </Row>
