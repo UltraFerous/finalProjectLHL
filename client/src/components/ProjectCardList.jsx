@@ -1,9 +1,8 @@
-import Card from "./Card";
+import SummaryCard from "./Card";
 
 export default function ProjectCardList(props) {
-  const projectList = props.featuredProjects.map((project) => {
-    return (
-      <Card
+  const projectList = props.featuredProjects.map((project) => (
+      <SummaryCard
         key={project.id}
         id={project.id}
         imageSource={project.image}
@@ -11,8 +10,8 @@ export default function ProjectCardList(props) {
         description={project.description}
         type="projects"
       />
-    );
-  });
+    )
+  );
 
-  return <ul>{projectList}</ul>;
+  return <ul class="d-flex p-2 justify-content-center">{projectList}</ul>;
 }
