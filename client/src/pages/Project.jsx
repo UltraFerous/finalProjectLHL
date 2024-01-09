@@ -5,6 +5,7 @@ import axios from "axios";
 
 export default function Project() {
   const { id } = useParams();
+  console.log("id:", id);
   const [project, setProject] = useState(null);
   const [tags, setTags] = useState([]);
   const [contributors, setContributors] = useState([]);
@@ -78,12 +79,12 @@ export default function Project() {
       <h1>{project && project.name}</h1>
       <h2>{project && project.orgname}</h2>
       <ul>{tags}</ul>
-      {isProjectAdmin() && (
+      {project && user && isProjectAdmin() && (
         <Link to={`/projects/${project && project.id}/edit`}>Edit Project</Link>
       )}
       <p>{project && project.description}</p>
       <img src={project && project.image} />
-      {user && (
+      {user && project && (
         <Link to={`/projects/${project.id}/apply`}>
           Apply to Work on This Project
         </Link>
