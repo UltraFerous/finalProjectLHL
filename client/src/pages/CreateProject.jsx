@@ -19,15 +19,15 @@ export default function CreateProject() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const userData = {
+    const projectData = {
       name: data.name,
       description: data.description,
       status: 1,
       organization_id: 1,
       image: data.image,
     };
-    console.log("Sumbitted:", userData);
-    axios.post("/api/projects", userData).then((response) => {
+    console.log("Sumbitted:", projectData);
+    axios.post("/api/projects", projectData).then((response) => {
       console.log(response.status, response.data.token);
     });
   };

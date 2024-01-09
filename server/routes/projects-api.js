@@ -1,14 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const { createProjectWithObject } = require('../db/queries/projects-api.js');
+const { createProjectWithObject, modifyProjectWithObject } = require('../db/queries/projects-api.js');
 
 // import query helper functions and use them in routes
 
 // create new project
 router.post('/', (req, res) => {
-  console.log("GOT THE PROJECT ", req.body);
   createProjectWithObject(req.body)
-  .then((postData) => {
+  .then((projectData) => {
     res.status(200);
   })
   .catch((err) => {
@@ -19,7 +18,16 @@ router.post('/', (req, res) => {
 
 // edit individual project details
 router.patch('/:id', (req, res) => {
-
+  console.log("GOT IT ", req.body.id, req.body)
+  modifyProjectWithObject(req.body.id, req.body)
+  .then((projectData) => {
+    console.log("All DONE!")
+    res.status(200);
+  })
+  .catch((err) => {
+    console.error("ERROR:", err.message);
+    res.status(500).json({ error: 'Internal server error' });
+  });
 });
 
 // delete individual project
