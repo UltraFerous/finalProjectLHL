@@ -98,10 +98,60 @@ const removeTagFromProject = (projectID, tagID) => {
   });
 };
 
+const applyForProject = (userID, projectID, applicationText) => {
+  return db
+  .query(`
+  INSERT INTO applications (user_id, project_id, text) VALUES
+  $1, $2, $3
+  `, [userID, projectID, applicationText])
+  .then(result => {
+    return result.rows;
+  })
+  .catch(err => {
+    console.log('Error:', err);
+  });
+};
+
+const acceptUserForProject = (userID, projectID) => {
+  return db
+  .query(`
+  UPDATE applications
+  SET 
+  status = 1
+  WHERE user_id = $1 AND project_id = $2
+  `, [userID, projectID])
+  .then(result => {
+    return result.rows;
+  })
+  .catch(err => {
+    console.log('Error:', err);
+  });
+};
+
+const removeUserFromProject = (userID, projectID) => {
+  return db
+  .query(`
+  UPDATE applications
+  SET 
+  status = 0
+  WHERE user_id = $1 AND project_id = $2
+  `, [userID, projectID])
+  .then(result => {
+    return result.rows;
+  })
+  .catch(err => {
+    console.log('Error:', err);
+  });
+};
+
+
 module.exports = { createProjectWithValues, 
                     createProjectWithObject, 
                     modifyProjectWithValues, 
                     modifyProjectWithObject, 
                     addTagToProject, 
-                    removeTagFromProject 
+                    removeTagFromProject, 
+                    applyForProject,
+                    acceptUserForProject,
+                    removeUserFromProject
                 };
