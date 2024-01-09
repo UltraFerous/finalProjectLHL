@@ -17,9 +17,6 @@ router.use(
 // edit user profile
 router.patch("/:id", (req, res) => {});
 
-// delete user profile
-router.delete("/:id", (req, res) => {});
-
 // log user in
 router.post("/login", (req, res) => {
   const { username, password } = req.body;
@@ -54,6 +51,7 @@ router.post("/login", (req, res) => {
 // log user out
 router.post("/logout", (req, res) => {
   req.session = null;
+  res.sendStatus(200); // Sending a success status response
 });
 
 // register new user

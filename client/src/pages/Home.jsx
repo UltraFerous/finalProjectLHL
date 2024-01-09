@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import ProjectCardList from "../components/ProjectCardList";
 import DeveloperCardList from "../components/DeveloperCardList";
+import SearchContainer from "../components/SearchContainer";
 import axios from "axios";
 
 export default function Home() {
@@ -13,7 +14,6 @@ export default function Home() {
         .get("http://localhost:8080/api")
         .then((response) => {
           const data = response.data;
-          console.log("client received data:", data);
           let projectsArray;
           let developersArray;
 
@@ -51,6 +51,7 @@ export default function Home() {
         <h2>Search for Inspiration</h2>
         <p>What would you like to search for?</p>
       </div>
+      <SearchContainer />
       <h2>Featured Projects</h2>
       <ProjectCardList featuredProjects={projects} />
       <h2>Featured Developers</h2>

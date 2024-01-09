@@ -30,11 +30,6 @@ router.patch('/:id', (req, res) => {
   });
 });
 
-// delete individual project
-router.delete('/:id', (req, res) => {
-
-});
-
 // submit project application
 router.post('/:id/apply', (req, res) => {
 

@@ -17,10 +17,6 @@ router.get('/', (req, res) => {
   });
 });
 
-// create project page
-router.get('/create', (req, res) => {
-});
-
 // project application page
 router.get('/:id/apply', (req, res) => {
   const project_id = req.params.id;
@@ -71,11 +67,5 @@ router.get('/:id/details', async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     });
 });
-
-// edit individual project details page
-router.get('/:id/edit', (req, res) => {
-});
-
-
 
 module.exports = router;
