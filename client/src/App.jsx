@@ -1,8 +1,7 @@
 //App.js
 //import axios from 'axios';
 import { Route, Routes } from "react-router-dom";
-import "./App.css";
-import Header from "./components/Header";
+import NavBar from "./components/NavBar";
 import Home from "./pages/Home";
 import ProjectList from "./pages/ProjectList";
 import Project from "./pages/Project";
@@ -16,8 +15,8 @@ import UserProfile from "./pages/UserProfile";
 import RegisterUser from "./pages/RegisterUser";
 import OrgProfile from "./pages/OrgProfile";
 import CreateOrg from "./pages/CreateOrg";
-import { UserProvider} from './context/UserContext';
-
+import { UserProvider } from './context/UserContext';
+import "./styles/App.css"
 
 //data will be the string we send from our server
 //const apiCall = () => {
@@ -30,7 +29,7 @@ import { UserProvider} from './context/UserContext';
 function App() {
   return (
     <UserProvider>
-      <Header />
+      <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/projects">
@@ -44,7 +43,7 @@ function App() {
           <Route index element={<NotFound />} />
           <Route path="login" element={<LogInUser />} />
           <Route path=":id" element={<UserProfile />} />
-          <Route path="register" element={<RegisterUser/>} />
+          <Route path="register" element={<RegisterUser />} />
         </Route>
         <Route path="/developers" element={<DeveloperList />} />
         <Route path="/org/:id" element={<OrgProfile />} />
