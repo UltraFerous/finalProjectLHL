@@ -16,8 +16,7 @@ import UserProfile from "./pages/UserProfile";
 import RegisterUser from "./pages/RegisterUser";
 import OrgProfile from "./pages/OrgProfile";
 import CreateOrg from "./pages/CreateOrg";
-import UserProvider, { UserContext} from "./context/UserContext"
-import { useContext} from "react";
+import TempLinks from "./components/TempLinks";
 
 
 //data will be the string we send from our server
@@ -32,6 +31,7 @@ function App() {
   return (
     <>
       <Header />
+      <TempLinks />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/projects">
