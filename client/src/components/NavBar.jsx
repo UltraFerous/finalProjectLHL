@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { NavLink, useNavigate } from 'react-router-dom';
-import UserContext from "../context/UserContext";
+import { UserContext } from "../context/UserContext";
 import axios from "axios";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
