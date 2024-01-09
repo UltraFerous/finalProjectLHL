@@ -33,8 +33,8 @@ router.patch('/:id', (req, res) => {
 // submit project application
 router.post('/:id/apply', (req, res) => {
   applyForProject(req.body)
-  .then(() => {
-    res.status(200);
+  .then((response) => {
+    res.status(200).json(response);
   })
   .catch((err) => {
     console.error("ERROR:", err.message);
