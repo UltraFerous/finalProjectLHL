@@ -11,14 +11,14 @@ export default function BrowseTags(props) {
   return (
     showTags && (<div>
       <p>Or would you like to browse by category?</p>
-      <div>React</div>
-      <div>Ruby</div>
-      <div>CSS</div>
-      <div>Express</div>
-      <div>Node</div>
-      <div>PostgreSQL</div>
-      <div>Material UI</div>
-      <div>OAuth</div>
+      <button value="react">React</button>
+      <button value="ruby">Ruby</button>
+      <button value="css">CSS</button>
+      <button value="Express">Express</button>
+      <button value="Node">Node</button>
+      <button value="PostgreSQL">PostgreSQL</button>
+      <button value="Material UI">Material UI</button>
+      <button value="OAuth">OAuth</button>
     </div>
     )
   );

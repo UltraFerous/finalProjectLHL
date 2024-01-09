@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 export default function TempLinks() {
   return (
     <nav>
-      <p>Temporary Links Component</p>
+      <h2>Temporary Links Component</h2>
       <p>Project & developer data cards are all links, so use those to go to details pages (from Home Page)</p>
       <ul>
         <li><NavLink to='/projects'>Project List</NavLink></li>
