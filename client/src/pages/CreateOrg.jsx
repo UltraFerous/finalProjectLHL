@@ -39,7 +39,7 @@ export default function CreateOrg() {
 
   return (
     <div className="mt-5">
-      <h1 className="text-center mb-4">Create New Organization Page</h1>
+      <h1 className="text-center mb-4">Create New Organization</h1>
       <Form
       onSubmit={handleSubmit}
       className="d-flex flex-column align-items-center mb-4"
@@ -83,7 +83,7 @@ export default function CreateOrg() {
             onChange={handleChange}
           />
         </Form.Group>
-        <Button type="submit" className="text-white">Create Org</Button>
+        <Button type="submit" className="text-white">Create Organization</Button>
       </Form>
     </div>
   );
