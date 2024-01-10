@@ -82,5 +82,21 @@ const checkOrgAdmin = function(orgID) {
     });
 };
 
+const browseOrgs = function(name) {
+  return db
+    .query(`
+    SELECT
+    *
+    FROM organizations
+    WHERE lower(organizations.name) ILIKE '%$1%'
+    `, [name])
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((err) => {
+      console.log("ERROR:", err.message);
+    });
+};
 
-module.exports = { allOrgData, orgDataSearchID, orgDataSearchName, checkOrgAdmin, orgDoubleCheck };
+
+module.exports = { allOrgData, orgDataSearchID, orgDataSearchName, checkOrgAdmin, orgDoubleCheck, browseOrgs };

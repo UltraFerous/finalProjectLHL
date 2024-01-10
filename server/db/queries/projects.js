@@ -121,4 +121,49 @@ const findDevelopersWithProject = (projectID) => {
   });
 };
 
-module.exports = { allProjectData, projectDataSearchID, projectDataSearchName, findPostsForProject, findApplicationsForProject, findTagsForProject, findDevelopersWithProject };
+const findUsersWithProject = (userID) => {
+  return db
+  .query(`
+  SELECT
+  users.*
+  FROM users
+  JOIN developers_with_projects
+  ON users.id = developers_with_projects.user_id
+  WHERE developers_with_projects.project_id = $1
+  `, [userID])
+  .then(result => {
+    return result.rows;
+  })
+  .catch(err => {
+    console.log('Error:', err);
+  });
+};
+
+const browseProjects = function(name) {
+  return db
+    .query(`
+    SELECT
+    projects.*, organizations.name as orgname
+    FROM projects
+    JOIN organizations
+    ON projects.organization_id = organizations.id 
+    WHERE lower(projects.name) ILIKE '%$1%'
+    `, [name])
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((err) => {
+      console.log("ERROR:", err.message);
+    });
+};
+
+module.exports = { allProjectData, 
+  projectDataSearchID, 
+  projectDataSearchName, 
+  findPostsForProject, 
+  findApplicationsForProject, 
+  findTagsForProject, 
+  findDevelopersWithProject,
+  findUsersWithProject,
+  browseProjects
+ };
