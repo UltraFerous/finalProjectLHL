@@ -1,4 +1,4 @@
 INSERT INTO users (username, email, admin, password, description, city, province, country, image) VALUES
-('JohnDoe', 'johndoe@example.com', false, 'password123', 'A senior developer who is well versed in programming languages like Python, Java, and C++.', 'New York City', 'NY', 'USA', 'https://cdn.pixabay.com/photo/2017/06/18/19/48/avatar-2398516_960_720x720.png'),
-('jane_smith', 'janesmith@example.com', false, 'qwerty1234', 'An experienced backend developer with knowledge in PHP, Ruby, and NodeJS.', 'Los Angeles', 'CA', 'USA', 'profile-pic.png'),
-('admin', 'admin@example.com', true, 'supersecret', 'A junior developer with strong frontend skills in HTML, CSS, and JavaScript.', 'San Francisco', 'CA', 'USA', 'admin-photo.gif');
+('JohnDoe', 'johndoe@example.com', false, 'password123', 'A senior developer who is well versed in programming languages like Python, Java, and C++.', 'New York City', 'NY', 'USA', 'https://res.cloudinary.com/dphmoqr9f/image/upload/v1704906798/LHL%20Final%20Project/Users/user-1.jpg'),
+('JaneSmith', 'janesmith@example.com', false, 'qwerty1234', 'An experienced backend developer with knowledge in PHP, Ruby, and NodeJS.', 'Los Angeles', 'CA', 'USA', 'https://res.cloudinary.com/dphmoqr9f/image/upload/v1704906816/LHL%20Final%20Project/Users/user-2.jpg'),
+('HollyHunter', 'hollyhunter@example.com', true, 'supersecret', 'A junior developer with strong frontend skills in HTML, CSS, and JavaScript.', 'San Francisco', 'CA', 'USA', 'https://res.cloudinary.com/dphmoqr9f/image/upload/v1704906816/LHL%20Final%20Project/Users/user-2.jpg');
