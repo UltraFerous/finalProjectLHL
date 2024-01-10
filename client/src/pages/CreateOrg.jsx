@@ -22,6 +22,7 @@ export default function CreateOrg() {
       ...data,
       [e.target.name]: value,
     });
+    console.log(user);
   };
 
   const handleSubmit = (e) => {

@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import ProjectCardList from "../components/ProjectCardList";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 
 export default function ProjectList() {
-
+  const { user } = useContext(UserContext);
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
@@ -30,11 +31,13 @@ export default function ProjectList() {
 
   return (
     <>
+      { user && user.organization_id > 0 &&
       <Link to='/projects/create' className="d-flex p-4 justify-content-center">
         <button className="text-white btn btn-primary btn-lg"> 
           Create Project 
         </button>
       </Link>
+      }
       <h2 className="text-center mt-5">Your Search Results</h2>
       <ProjectCardList featuredProjects={projects} />
     </>
