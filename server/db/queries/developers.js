@@ -73,6 +73,22 @@ const findPostsForUser = (userID) => {
   });
 };
 
+const findUserProjects = (userID) => {
+  return db
+  .query(`
+  SELECT
+  projects.*
+  FROM projects
+  JOIN developers_with_projects
+  ON projects.id = developers_with_projects.project_id
+  WHERE developers_with_projects.user_id = $1
+  `, [userID])
+  .then(result => {
+    return result.rows;
+  })
+  .catch(err => {
+    console.log('Error:', err);
+  });
+};
 
-
-module.exports = { findProjectAdmin, findUsersByTag, findTagsForUser, findPostsForUser };
+module.exports = { findProjectAdmin, findUsersByTag, findTagsForUser, findPostsForUser, findUserProjects };
