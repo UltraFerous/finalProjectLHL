@@ -59,10 +59,10 @@ export default function NavBar() {
           {/* Ideally, the Profile is beside the Log Out button
           and is a photo of the user */}
           {user && (
-            <Nav.Link as={NavLink} to="#">
-              Profile
-            </Nav.Link>
-          )}
+  <Nav.Link as={NavLink} to={`/users/${user.id}`}>
+    Profile
+  </Nav.Link>
+)}
         </Nav>
         <Nav>
           {!user && (
