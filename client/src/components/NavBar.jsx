@@ -9,7 +9,7 @@ import Button from "react-bootstrap/Button";
 import appLogo from "../images/good-dev-logo-white.png";
 
 export default function NavBar() {
-  const { updateCurrentUser, user } = useContext(UserContext);
+  const { updateCurrentUser, user, userLoaded } = useContext(UserContext);
 
   const navigate = useNavigate();
 

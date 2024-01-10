@@ -17,7 +17,10 @@ router.post('/', (req, res) => {
         return createOrgWithObject(req.body);
       }
     })
-    .then(() => { res.status(200); })
+    .then((orgObject) => {
+      console.log(orgObject);
+      const { id } = orgObject
+      res.status(200).json({ id }); })
     .catch((err) => {
       console.error("ERROR:", err.message);
       res.status(500).json({ error: 'Internal server error' });

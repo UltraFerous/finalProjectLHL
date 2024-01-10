@@ -1,82 +1,104 @@
 import { useState, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 // INSERT INTO organizations (name, description, website, user_id, image) VALUES
 
 export default function CreateOrg() {
-  const { user } = useContext(UserContext);
-    const [data, setData] = useState({
-      name: "",
-      description: "",
-      website: "",
-      image: "",
+  const { user, updateCurrentUserWithOrg } = useContext(UserContext);
+  const navigate = useNavigate();
+  const [data, setData] = useState({
+    name: "",
+    description: "",
+    website: "",
+    image: "",
+  });
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setData({
+      ...data,
+      [e.target.name]: value,
     });
-  
-    const handleChange = (e) => {
-      const value = e.target.value;
-      setData({
-        ...data,
-        [e.target.name]: value
-      });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const userData = {
+      name: data.name,
+      description: data.description,
+      website: data.website,
+      user_id: user.id,
+      image: data.image,
+      org_id: null,
     };
-  
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      const userData = {
-        name: data.name,
-        description: data.description,
-        website: data.website,
-        user_id: user.id,
-        image: data.image,
-      };
-      console.log("Sumbitted:", userData);
-      axios.post("/api/org", userData).then((response) => {
-        console.log(response.status, response.data.token);
-      });
-    };
+    console.log("Sumbitted:", userData);
+    axios.post("/api/org", userData).then((response) => {
+      const orgId = response.data.id;
+      console.log(response.status, response.data.token);
+      // Update the user state with the new orgId
+      updateCurrentUserWithOrg(orgId);
+      // Redirect to the home page
+      navigate("/");
+    });
+  };
 
   return (
-    <>
-      <h1>Create New Organization Page</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="name">
-          Name
-          <input
+    <div className="mt-5">
+      <h1 className="text-center mb-4">Create New Organization</h1>
+      <Form
+        onSubmit={handleSubmit}
+        className="d-flex flex-column align-items-center mb-4"
+      >
+        <Form.Group controlId="name" style={{ width: "450px" }}>
+          <Form.Label>Name</Form.Label>
+          <Form.Control
             type="text"
             name="name"
             value={data.name}
             onChange={handleChange}
           />
-        </label>
-        <label htmlFor="description">
-          Description
-          <input
+        </Form.Group>
+
+        <Form.Group controlId="description" style={{ width: "450px" }}>
+          <Form.Label>Description</Form.Label>
+          <Form.Control
             type="text"
             name="description"
             value={data.description}
             onChange={handleChange}
           />
-        </label>
-        <label htmlFor="website">
-          Website
-          <input
+        </Form.Group>
+
+        <Form.Group controlId="website" style={{ width: "450px" }}>
+          <Form.Label>Website</Form.Label>
+          <Form.Control
             type="text"
             name="website"
             value={data.website}
             onChange={handleChange}
           />
-        </label>
-        <label htmlFor="image">
-          Image
-          <input
+        </Form.Group>
+
+        <Form.Group
+          controlId="image"
+          style={{ width: "450px" }}
+          className="mb-5"
+        >
+          <Form.Label>Image</Form.Label>
+          <Form.Control
             type="text"
             name="image"
             value={data.image}
             onChange={handleChange}
           />
-        </label>
-        <button type="submit">Create Org</button>
-      </form>
-    </>
+        </Form.Group>
+        <Button type="submit" className="text-white">
+          Create Organization
+        </Button>
+      </Form>
+    </div>
   );
 }

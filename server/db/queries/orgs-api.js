@@ -21,6 +21,7 @@ const createOrgWithObject = (orgObj) => {
   .query(`
   INSERT INTO organizations (name, description, website, user_id, image) VALUES
   ($1, $2, $3, $4, $5)
+  RETURNING id
   `, [name, description, website, user_id, image])
   .then(result => {
     return result.rows[0];
