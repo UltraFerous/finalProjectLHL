@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { orgDataSearchID } = require('../db/queries/orgs.js');
+const { orgDataSearchID, allOrgData } = require('../db/queries/orgs.js');
 const { createOrgWithObject } = require('../db/queries/orgs-api.js');
 // import query helper functions and use them in routes
 
@@ -24,5 +24,16 @@ router.get('/:id', (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     });
 });
+
+router.get('/', (req, res) => {
+  allOrgData()
+  .then((allOrgData) => {
+    res.status(200).json(allOrgData);
+  })
+  .catch((err) => {
+    console.error("ERROR:", err.message);
+    res.status(500).json({ error: 'Internal server error' });
+  });
+})
 
 module.exports = router;
