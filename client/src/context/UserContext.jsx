@@ -8,7 +8,7 @@ export const UserProvider = ({ children }) => {
 
   //functions related to user go here
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
+    const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
       setUserLoaded(true);
@@ -17,15 +17,26 @@ export const UserProvider = ({ children }) => {
 
   const updateCurrentUser = (userData) => {
     setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData));
+    localStorage.setItem("user", JSON.stringify(userData));
   };
 
   const updateUserWithCookie = () => {
-    const storedUser = localStorage.getItem('user');
+    const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
       setUserLoaded(true);
     }
+  };
+
+  const updateCurrentUserWithOrg = (orgId) => {
+    setUser((prevUser) => {
+      const updatedUser = {
+        ...prevUser,
+        user: { ...prevUser.user, organization_id: orgId },
+      };
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      return updatedUser;
+    });
   };
 
   useEffect(() => {
@@ -39,6 +50,7 @@ export const UserProvider = ({ children }) => {
         userLoaded,
         updateCurrentUser,
         updateUserWithCookie,
+        updateCurrentUserWithOrg
       }}
     >
       {children}
