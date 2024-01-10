@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { projectDataSearchID, findDevelopersWithProject, findTagsForProject, allProjectData } = require('../db/queries/projects.js');
+const { projectDataSearchID, findUsersWithProject, findTagsForProject, allProjectData } = require('../db/queries/projects.js');
 const{ findProjectAdmin } =require('../db/queries/developers.js');
 
 // import query helper functions and use them in routes
@@ -47,7 +47,7 @@ router.get('/:id/details', async (req, res) => {
     .then(projectData  => {
       responseArray.push(projectData);
       // call second query helper func
-      return findDevelopersWithProject(project_id);
+      return findUsersWithProject(project_id);
     })
     .then(developerData => {
       responseArray.push(developerData);
