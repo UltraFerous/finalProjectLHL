@@ -31,7 +31,7 @@ export default function OrgList() {
 
   return (
     <>
-    { user && user.organization_id === 0 &&
+    { user && user.organization_id === undefined &&
       <Link to='/org/create' className="d-flex p-4 justify-content-center">
         <button className="text-white btn btn-primary btn-lg"> 
           Create Organization 
