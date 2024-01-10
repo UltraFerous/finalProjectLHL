@@ -120,7 +120,7 @@ const findUsersWithProject = (projectID) => {
   });
 };
 
-const browseProjects = function(name) {
+const browseProjects = function(searchTerm) {
   return db
     .query(`
     SELECT
@@ -132,8 +132,8 @@ const browseProjects = function(name) {
     JOIN tags ON assigned_tags_projects.tag_id = tags.id
     WHERE lower(projects.name) ILIKE '%$1%'
     OR
-    lower(tags.tag_name) ILIKE '%$1%'
-    `, [name])
+    lower(tags.tag_name) ILIKE '%$2%'
+    `, [searchTerm, searchTerm])
     .then((result) => {
       return result.rows;
     })

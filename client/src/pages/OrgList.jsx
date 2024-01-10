@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import OrgCardList from "../components/OrgCardList";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function OrgList() {
 
@@ -29,6 +30,11 @@ export default function OrgList() {
 
   return (
     <>
+      <Link to='/org/create' className="d-flex p-4 justify-content-center">
+        <button className="text-white btn btn-primary btn-lg"> 
+          Create Organization 
+        </button>
+      </Link>
       <h2 className="text-center mt-5">Your Search Results</h2>
       <OrgCardList orgs={orgs} />
     </>

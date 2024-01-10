@@ -30,9 +30,9 @@ export default function ProjectList() {
 
   return (
     <>
-      <Link to='/projects/create'>
-        <button class="text-white btn btn-primary"> 
-          New Project 
+      <Link to='/projects/create' className="d-flex p-4 justify-content-center">
+        <button className="text-white btn btn-primary btn-lg"> 
+          Create Project 
         </button>
       </Link>
       <h2 className="text-center mt-5">Your Search Results</h2>

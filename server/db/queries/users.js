@@ -70,7 +70,7 @@ const browseUsers = function(name) {
     });
 };
 
-const browseUsersTag = function(name) {
+const browseUsersTag = function(searchTerm) {
   return db
     .query(`
     SELECT
@@ -80,8 +80,8 @@ const browseUsersTag = function(name) {
     JOIN tags ON assigned_tags_users.tag_id = tags.id
     WHERE lower(users.username) ILIKE '%$1%'
     OR
-    lower(tags.tag_name) ILIKE '%$1%'
-    `, [name])
+    lower(tags.tag_name) ILIKE '%$2%'
+    `, [searchTerm, searchTerm])
     .then((result) => {
       return result.rows;
     })
