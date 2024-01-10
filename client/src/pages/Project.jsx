@@ -13,15 +13,7 @@ export default function Project() {
   const { user, userLoaded } = useContext(UserContext);
 
   const isProjectAdmin = () => {
-    if (
-      userLoaded &&
-      user &&
-      Array.isArray(projectAdmin) &&
-      projectAdmin.length > 0
-    ) {
-      return projectAdmin.includes(user.id);
-    }
-    return false;
+      return projectAdmin === user.id;
   };
 
   useEffect(() => {
@@ -43,7 +35,6 @@ export default function Project() {
 
               // Map contributors if contributorsArray is an array
               if (Array.isArray(contributorsArray)) {
-                console.log(contributorsArray);
                 const contributorList = contributorsArray.map(
                   (contributor) => ({
                     id: contributor.id,
@@ -116,7 +107,7 @@ export default function Project() {
             <Row className="mb-4">
               <p>{project && project.description}</p>
             </Row>
-            {user && project && (
+            {user && project && !isProjectAdmin() && (
               <Link to={`/projects/${project.id}/apply`}>
                 <Button variant="primary" className="text-white mb-5">Apply to Work on This Project</Button>
               </Link>
@@ -149,7 +140,7 @@ export default function Project() {
 
             {project && user && isProjectAdmin() && (
               <Link to={`/projects/${project && project.id}/edit`}>
-                Edit Project
+                <Button variant="primary" className="text-white mb-5">Edit Project</Button>
               </Link>
             )}
 
