@@ -43,11 +43,15 @@ export default function Project() {
 
               // Map contributors if contributorsArray is an array
               if (Array.isArray(contributorsArray)) {
-                setContributors(
-                  contributorsArray.map((contributor) => (
-                    <div key={contributor.user_id}>{contributor.username}</div>
-                  ))
+                console.log(contributorsArray);
+                const contributorList = contributorsArray.map(
+                  (contributor) => ({
+                    id: contributor.id,
+                    name: contributor.username,
+                    image: contributor.image,
+                  })
                 );
+                setContributors(contributorList);
               }
 
               // Map tags if tagsArray is an array
@@ -81,52 +85,77 @@ export default function Project() {
     <>
       <Container className="my-5">
         <Row className="d-flex justify-content-center">
-          <Col md={6} className="mx-auto">
+          <Col md={7} className="mx-auto">
             <Row className="mb-4 text-center">
               <h1 className="fw-semibold">{project && project.name}</h1>
             </Row>
             <Row className="mb-4 text-center">
               <h3>{project && project.orgname}</h3>
             </Row>
-          </Col>
-        </Row>
-        <Row className="mb-5">
-          {tags.map((tag) => (
-            <Col className="col-auto" key={tag.id}>
-              <Button size="sm">{tag.name}</Button>
-            </Col>
-          ))}
-        </Row>
-        <Row className="mb-4 mx-auto">
-          <Col className="text-center">
-            <Image
-              src={project && project.image}
-              rounded
-              fluid
-              style={{ maxHeight: "500px", display: "inline-block" }}
-              className="mx-auto"
-            />
-          </Col>
-        </Row>
-        <Row className="mb-4">
-          <p className="text-center">{project && project.description}</p>
-        </Row>
-        <h5>Project Contributors</h5>
-        {contributors}
-        
-        {project && user && isProjectAdmin() && (
-          <Link to={`/projects/${project && project.id}/edit`}>
-            Edit Project
-          </Link>
-        )}
 
-        {user && project && (
-          <Link to={`/projects/${project.id}/apply`}>
-            Apply to Work on This Project
-          </Link>
-        )}
-        
-        
+            <Row className="mb-5">
+              <Col className="d-flex justify-content-center">
+                {tags.map((tag) => (
+                  <Button size="sm" key={tag.id} style={{ margin: "10px" }}>
+                    {tag.name}
+                  </Button>
+                ))}
+              </Col>
+            </Row>
+            <Row className="mb-4 mx-auto">
+              <Col className="text-center">
+                <Image
+                  src={project && project.image}
+                  rounded
+                  fluid
+                  style={{ maxHeight: "500px", display: "inline-block" }}
+                  className="mx-auto"
+                />
+              </Col>
+            </Row>
+            <Row className="mb-4">
+              <p>{project && project.description}</p>
+            </Row>
+            {user && project && (
+              <Link to={`/projects/${project.id}/apply`}>
+                <Button variant="primary" className="text-white mb-5">Apply to Work on This Project</Button>
+              </Link>
+            )}
+            <Row className="mb-3">
+              <h5>Project Contributors</h5>
+            </Row>
+            <Row className="mb-5" style={{ marginTop: "10px" }}>
+              {contributors.map((contributor) => (
+                <Col className="col-auto" key={contributor.id}>
+                  <div
+                    className="d-flex flex-row align-items-center"
+                    style={{ marginRight: "10px" }}
+                  >
+                    <Image
+                      src={contributor.image}
+                      roundedCircle
+                      style={{
+                        width: "80px",
+                        height: "80px",
+                        marginRight: "10px",
+                      }}
+                      alt="User Image"
+                    />
+                    <h6>{contributor.name}</h6>
+                  </div>
+                </Col>
+              ))}
+            </Row>
+
+            {project && user && isProjectAdmin() && (
+              <Link to={`/projects/${project && project.id}/edit`}>
+                Edit Project
+              </Link>
+            )}
+
+            
+          </Col>
+        </Row>
       </Container>
     </>
   );
