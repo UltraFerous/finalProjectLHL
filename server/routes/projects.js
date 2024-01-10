@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { projectDataSearchID, findDevelopersWithProject, findTagsForProject, allProjectData } = require('../db/queries/projects.js');
+const { projectDataSearchID, findDevelopersWithProject, findTagsForProject, allProjectData, browseProjects } = require('../db/queries/projects.js');
 const{ findProjectAdmin } =require('../db/queries/developers.js');
 
 // import query helper functions and use them in routes
@@ -15,6 +15,20 @@ router.get('/', (req, res) => {
     console.error("ERROR:", err.message);
     res.status(500).json({ error: 'Internal server error' });
   });
+});
+
+// project search
+router.get('/search/:searchTerm', (req, res) => {
+  const searchTerm = req.params.searchTerm;
+
+  browseProjects(searchTerm)
+    .then(projectData => {
+      res.status(200).json(projectData);
+    })
+    .catch(err => {
+      console.error("ERROR:", err.message);
+      res.status(500).json({ error: "Internal server error" });
+    });
 });
 
 // project application page

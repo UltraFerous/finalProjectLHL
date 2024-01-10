@@ -43,8 +43,6 @@ app.use('/users', usersRoutes);
 app.use('/api/projects', projectsApiRoutes);
 app.use('/projects', projectsRoutes);
 app.use('/developers', developersRoutes);
-app.use('/api/users', usersApiRoutes);
-app.use('/users', usersRoutes);
 app.use('/api/org', orgsApiRoutes);
 app.use('/org', orgsRoutes);
 
