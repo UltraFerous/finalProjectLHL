@@ -13,6 +13,7 @@ import UserProfile from "./pages/UserProfile";
 import RegisterUser from "./pages/RegisterUser";
 import OrgProfile from "./pages/OrgProfile";
 import CreateOrg from "./pages/CreateOrg";
+import OrgList from "./pages/OrgList";
 import { UserProvider } from './context/UserContext';
 import "./styles/App.css"
 
@@ -38,6 +39,7 @@ function App() {
         <Route path="/developers" element={<DeveloperList />} />
         <Route path="/org/:id" element={<OrgProfile />} />
         <Route path="/org/create" element={<CreateOrg />} />
+        <Route path="/orgs" element={<OrgList />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

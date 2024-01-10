@@ -56,6 +56,9 @@ export default function NavBar() {
           <Nav.Link as={NavLink} to="/developers">
             Developers
           </Nav.Link>
+          <Nav.Link as={NavLink} to="/orgs">
+            Organizations
+          </Nav.Link>
           {/* Ideally, the Profile is beside the Log Out button
           and is a photo of the user */}
           {user && (
