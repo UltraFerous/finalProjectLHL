@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import ProjectCardList from "../components/ProjectCardList";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function ProjectList() {
 
@@ -29,6 +30,11 @@ export default function ProjectList() {
 
   return (
     <>
+      <Link to='/projects/create'>
+        <button class="text-white btn btn-primary"> 
+          New Project 
+        </button>
+      </Link>
       <h2 className="text-center mt-5">Your Search Results</h2>
       <ProjectCardList featuredProjects={projects} />
     </>

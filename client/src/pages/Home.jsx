@@ -44,7 +44,7 @@ export default function Home() {
   }, []);
 
   const heroStyle = {
-    backgroundImage: 'url("../hero-image.webp")',
+    backgroundImage: 'url("../public/hero-image.webp")',
     height: '400px',
     width: '100%',
     backgroundSize: 'cover',
