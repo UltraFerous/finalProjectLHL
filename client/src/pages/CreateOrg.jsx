@@ -4,12 +4,11 @@ import { UserContext } from "../context/UserContext";
 // INSERT INTO organizations (name, description, website, user_id, image) VALUES
 
 export default function CreateOrg() {
-  const { user } = useContext(UserContext) 
+  const { user } = useContext(UserContext);
     const [data, setData] = useState({
       name: "",
       description: "",
       website: "",
-      user_id: user,
       image: "",
     });
   
@@ -27,7 +26,7 @@ export default function CreateOrg() {
         name: data.name,
         description: data.description,
         website: data.website,
-        user_id: user,
+        user_id: user.id,
         image: data.image,
       };
       console.log("Sumbitted:", userData);

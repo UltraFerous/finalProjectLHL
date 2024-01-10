@@ -25,7 +25,7 @@ export default function CreateProject() {
       name: data.name,
       description: data.description,
       status: 1,
-      organization_id: 1,
+      organization_id: user.organization_id,
       image: data.image,
     };
     console.log("Sumbitted:", projectData);
