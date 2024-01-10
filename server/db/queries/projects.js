@@ -144,7 +144,6 @@ module.exports = { allProjectData,
   findPostsForProject, 
   findApplicationsForProject, 
   findTagsForProject, 
-  findDevelopersWithProject,
   findUsersWithProject,
   browseProjects
  };
