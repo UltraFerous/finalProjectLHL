@@ -78,10 +78,10 @@ const browseUsersTag = function(name) {
     FROM users
     JOIN assigned_tags_users ON users.id = assigned_tags_users.user_id
     JOIN tags ON assigned_tags_users.tag_id = tags.id
-    WHERE lower(users.username) ILIKE '%$1%'
+    WHERE lower(users.username) ILIKE $1
     OR
-    lower(tags.tag_name) ILIKE '%$1%'
-    `, [name])
+    lower(tags.tag_name) ILIKE $1
+    `, [`%${name}%`])
     .then((result) => {
       return result.rows;
     })

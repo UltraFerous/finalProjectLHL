@@ -123,17 +123,15 @@ const findUsersWithProject = (projectID) => {
 const browseProjects = function(name) {
   return db
     .query(`
-    SELECT
-    projects.*, organizations.name as orgname
-    FROM projects
-    JOIN organizations
-    ON projects.organization_id = organizations.id
-    JOIN assigned_tags_projects ON projects.id = assigned_tags_projects.project_id
-    JOIN tags ON assigned_tags_projects.tag_id = tags.id
-    WHERE lower(projects.name) ILIKE '%$1%'
-    OR
-    lower(tags.tag_name) ILIKE '%$1%'
-    `, [name])
+      SELECT
+      projects.*, organizations.name as orgname
+      FROM projects
+      JOIN organizations ON projects.organization_id = organizations.id
+      JOIN assigned_tags_projects ON projects.id = assigned_tags_projects.project_id
+      JOIN tags ON assigned_tags_projects.tag_id = tags.id
+      WHERE lower(projects.name) ILIKE $1
+      OR lower(tags.tag_name) ILIKE $1
+    `, [`%${name}%`])
     .then((result) => {
       return result.rows;
     })

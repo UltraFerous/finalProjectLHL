@@ -1,9 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const { userDataSearchID } = require("../db/queries/users.js");
+const { userDataSearchID, browseUsersTag } = require("../db/queries/users.js");
 const { findTagsForUser } = require("../db/queries/developers.js");
 
-// import query helper functions and use them in routes
+// user search
+router.get('/search/:searchTerm', (req, res) => {
+  const searchTerm = req.params.searchTerm;
+
+  browseUsersTag(searchTerm)
+    .then((userData) => {
+      res.status(200).json(userData)
+    })
+    .catch(err => {
+      console.error("ERROR:", err.message);
+      res.status(500).json({ error: "Internal server error" });
+    });
+});
 
 // user details page
 router.get('/:id/details', (req, res) => {
@@ -20,6 +32,11 @@ router.get('/:id/details', (req, res) => {
     })
     .then(userTagData => {
       responseArray.push(userTagData);
+      // call second query helper func
+      return findUserProjects(user_id);
+    })
+    .then(userProjectData => {
+      responseArray.push(userProjectData);
     })
     .then(() => res.status(200).json(responseArray))
     .catch((err) => {
