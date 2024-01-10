@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
+import { Container, Row, Col, Image, Button } from "react-bootstrap";
 
 export default function Project() {
   const { id } = useParams();
@@ -12,15 +13,11 @@ export default function Project() {
   const { user, userLoaded } = useContext(UserContext);
 
   const isProjectAdmin = () => {
-    if (userLoaded && user && Array.isArray(projectAdmin) && projectAdmin.length > 0) {
-      return projectAdmin.includes(user.id);
-    }
-    return false;
+      return projectAdmin === user.id;
   };
 
   useEffect(() => {
     const fetchProjectDetails = () => {
-      
       axios
         .get(`http://localhost:8080/projects/${id}/details`)
         .then((response) => {
@@ -38,20 +35,23 @@ export default function Project() {
 
               // Map contributors if contributorsArray is an array
               if (Array.isArray(contributorsArray)) {
-                setContributors(
-                  contributorsArray.map((contributor) => (
-                    <div key={contributor.user_id}>{contributor.username}</div>
-                  ))
+                const contributorList = contributorsArray.map(
+                  (contributor) => ({
+                    id: contributor.id,
+                    name: contributor.username,
+                    image: contributor.image,
+                  })
                 );
+                setContributors(contributorList);
               }
 
               // Map tags if tagsArray is an array
               if (Array.isArray(tagsArray)) {
-                setTags(
-                  tagsArray.map((tag) => (
-                    <div key={tag.tag_id}>{tag.tag_name}</div>
-                  ))
-                );
+                const tagsList = tagsArray.map((tag) => ({
+                  id: tag.tag_id,
+                  name: tag.tag_name,
+                }));
+                setTags(tagsList);
               }
               if (Array.isArray(adminArray) && adminArray.length > 0) {
                 setprojectAdmin(adminArray[0].id);
@@ -74,21 +74,80 @@ export default function Project() {
 
   return (
     <>
-      <h1>{project && project.name}</h1>
-      <h2>{project && project.orgname}</h2>
-      <ul>{tags}</ul>
-      {project && user && isProjectAdmin() && (
-        <Link to={`/projects/${project && project.id}/edit`}>Edit Project</Link>
-      )}
-      <p>{project && project.description}</p>
-      <img src={project && project.image} />
-      {user && project && (
-        <Link to={`/projects/${project.id}/apply`}>
-          Apply to Work on This Project
-        </Link>
-      )}
-      <h3>Project Contributors</h3>
-      {contributors}
+      <Container className="my-5">
+        <Row className="d-flex justify-content-center">
+          <Col md={7} className="mx-auto">
+            <Row className="mb-4 text-center">
+              <h1 className="fw-semibold">{project && project.name}</h1>
+            </Row>
+            <Row className="mb-4 text-center">
+              <h3>{project && project.orgname}</h3>
+            </Row>
+
+            <Row className="mb-5">
+              <Col className="d-flex justify-content-center">
+                {tags.map((tag) => (
+                  <Button size="sm" key={tag.id} style={{ margin: "10px" }}>
+                    {tag.name}
+                  </Button>
+                ))}
+              </Col>
+            </Row>
+            <Row className="mb-4 mx-auto">
+              <Col className="text-center">
+                <Image
+                  src={project && project.image}
+                  rounded
+                  fluid
+                  style={{ maxHeight: "500px", display: "inline-block" }}
+                  className="mx-auto"
+                />
+              </Col>
+            </Row>
+            <Row className="mb-4">
+              <p>{project && project.description}</p>
+            </Row>
+            {user && project && !isProjectAdmin() && (
+              <Link to={`/projects/${project.id}/apply`}>
+                <Button variant="primary" className="text-white mb-5">Apply to Work on This Project</Button>
+              </Link>
+            )}
+            <Row className="mb-3">
+              <h5>Project Contributors</h5>
+            </Row>
+            <Row className="mb-5" style={{ marginTop: "10px" }}>
+              {contributors.map((contributor) => (
+                <Col className="col-auto" key={contributor.id}>
+                  <div
+                    className="d-flex flex-row align-items-center"
+                    style={{ marginRight: "10px" }}
+                  >
+                    <Image
+                      src={contributor.image}
+                      roundedCircle
+                      style={{
+                        width: "80px",
+                        height: "80px",
+                        marginRight: "10px",
+                      }}
+                      alt="User Image"
+                    />
+                    <h6>{contributor.name}</h6>
+                  </div>
+                </Col>
+              ))}
+            </Row>
+
+            {project && user && isProjectAdmin() && (
+              <Link to={`/projects/${project && project.id}/edit`}>
+                <Button variant="primary" className="text-white mb-5">Edit Project</Button>
+              </Link>
+            )}
+
+            
+          </Col>
+        </Row>
+      </Container>
     </>
   );
 }
