@@ -32,6 +32,11 @@ router.get('/:id/details', (req, res) => {
     })
     .then(userTagData => {
       responseArray.push(userTagData);
+      // call second query helper func
+      return findUserProjects(user_id);
+    })
+    .then(userProjectData => {
+      responseArray.push(userProjectData);
     })
     .then(() => res.status(200).json(responseArray))
     .catch((err) => {

@@ -8,7 +8,7 @@ export default function OrgCardList(props) {
         imageSource={org.image}
         title={org.name}
         description={org.description}
-        type="organizations"
+        type="org"
       />
     )
   );
