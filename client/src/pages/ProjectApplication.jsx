@@ -2,6 +2,8 @@ import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 export default function ProjectApplication() {
   const { id } = useParams();
@@ -75,19 +77,24 @@ export default function ProjectApplication() {
   }, [id, user.id]);
 
   return (
-    <>
-      <h1>Application for {project && project[0].name}</h1>
-      <h2>{project && project[0].orgname}</h2>
-      <form onSubmit={onSubmit}>
-      <label htmlFor="text">What makes you a good fit for this project?</label>
-        <textarea
-          name="text"
-          id="text"
-          value={text}
-          onChange={onChange}
-        />
-        <button type="submit">Submit Application</button>
-      </form>
-    </>
+    <div className="mt-5">
+      <h1 className="text-center mb-3">Application for {project && project[0].name}</h1>
+      <h2 className="text-center mb-4">{project && project[0].orgname}</h2>
+      <Form
+      onSubmit={onSubmit}
+      className="d-flex flex-column align-items-center mb-4"
+      >
+       <Form.Group controlId="text" className="mb-3 mt-4" style={{ width: '550px' }}>
+          <Form.Label>What makes you a good fit for this project?</Form.Label>
+          <Form.Control
+            as="textarea"
+            name="text"
+            value={text}
+            onChange={onChange}
+          />
+        </Form.Group>
+        <Button type="submit" className="text-white" variant="primary">Submit Application</Button>
+      </Form>
+    </div>
   );
 }
