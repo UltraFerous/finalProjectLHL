@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { userDataSearchID } = require("../db/queries/users.js");
-const { findTagsForUser } = require("../db/queries/developers.js");
+const { findTagsForUser, findUserProjects } = require("../db/queries/developers.js");
 
 // import query helper functions and use them in routes
 
@@ -20,6 +20,11 @@ router.get('/:id/details', (req, res) => {
     })
     .then(userTagData => {
       responseArray.push(userTagData);
+      // call second query helper func
+      return findUserProjects(user_id);
+    })
+    .then(userProjectData => {
+      responseArray.push(userProjectData);
     })
     .then(() => res.status(200).json(responseArray))
     .catch((err) => {
