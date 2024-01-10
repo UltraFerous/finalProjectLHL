@@ -102,26 +102,7 @@ const findTagsForProject = (projectID) => {
   });
 };
 
-const findDevelopersWithProject = (projectID) => {
-  return db
-  .query(`
-  SELECT
-  developers_with_projects.user_id,
-  users.username
-  FROM developers_with_projects
-  JOIN users
-  ON developers_with_projects.user_id = users.id
-  WHERE developers_with_projects.project_id = $1
-  `, [projectID])
-  .then(result => {
-    return result.rows;
-  })
-  .catch(err => {
-    console.log('Error:', err);
-  });
-};
-
-const findUsersWithProject = (userID) => {
+const findUsersWithProject = (projectID) => {
   return db
   .query(`
   SELECT
@@ -130,7 +111,7 @@ const findUsersWithProject = (userID) => {
   JOIN developers_with_projects
   ON users.id = developers_with_projects.user_id
   WHERE developers_with_projects.project_id = $1
-  `, [userID])
+  `, [projectID])
   .then(result => {
     return result.rows;
   })
