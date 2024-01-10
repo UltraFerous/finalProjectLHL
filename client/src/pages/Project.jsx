@@ -5,7 +5,6 @@ import axios from "axios";
 
 export default function Project() {
   const { id } = useParams();
-  console.log("id:", id);
   const [project, setProject] = useState(null);
   const [tags, setTags] = useState([]);
   const [contributors, setContributors] = useState([]);
@@ -20,13 +19,12 @@ export default function Project() {
   };
 
   useEffect(() => {
-    console.log('user state in project component:', user);
     const fetchProjectDetails = () => {
+      
       axios
         .get(`http://localhost:8080/projects/${id}/details`)
         .then((response) => {
           const data = response.data;
-          console.log('client received data:', data);
           // Check if data is an array and has at least three elements
           if (Array.isArray(data) && data.length >= 3) {
             const projectDetails = data[0];
@@ -72,6 +70,8 @@ export default function Project() {
     };
 
     fetchProjectDetails();
+    console.log(user)
+    console.log(user.id, user.email, user.username, user.organization_id);
   }, [id]);
 
   return (

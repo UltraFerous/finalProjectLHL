@@ -1,5 +1,4 @@
 import { createContext, useState, useEffect } from "react";
-import axios from "axios";
 
 export const UserContext = createContext();
 
@@ -26,10 +25,14 @@ export const UserProvider = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    updateUserWithCookie();
+  }, []); // Run once on component mount to handle page refresh
+
   return (
     <UserContext.Provider
       value={{
-        user,
+        ...user,
         updateCurrentUser,
         updateUserWithCookie,
       }}
