@@ -2,6 +2,8 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 export default function RegisterUser() {
   const { updateCurrentUser } = useContext(UserContext);
@@ -82,104 +84,86 @@ export default function RegisterUser() {
   };
 
   return (
-    <>
-      <h1>Create an Account</h1>
-      <form onSubmit={onSubmit}>
-        <div>
-          <h3>User Type</h3>
-          <button
-            type="button"
-            onClick={() => handleAdminToggle(true)}
-            style={{
-              backgroundColor: registrationData.admin ? "green" : "white",
-            }}
-          >
-            Organization
-          </button>
-          <button
-            type="button"
-            onClick={() => handleAdminToggle(false)}
-            style={{
-              backgroundColor: !registrationData.admin ? "green" : "white",
-            }}
-          >
-            Developer
-          </button>
-        </div>
-        <label htmlFor="username">Username</label>
-        <input
-          name="username"
-          id="username"
-          value={username}
-          onChange={onChange}
-        />
-        <label htmlFor="password">Password</label>
-        <input
-          name="password"
-          id="password"
-          value={password}
-          onChange={onChange}
-        />
-        <label htmlFor="email">Email</label>
-        <input
-          name="email"
-          id="email"
-          type="email"
-          value={email}
-          onChange={onChange}
-        />
-        <label htmlFor="city">City</label>
-        <input name="city" id="city" value={city} onChange={onChange} />
-        <label htmlFor="province">Province</label>
-        <input
-          name="province"
-          id="province"
-          value={province}
-          onChange={onChange}
-        />
-        <label htmlFor="country">Country</label>
-        <input
-          name="country"
-          id="country"
-          value={country}
-          onChange={onChange}
-        />
-        <label htmlFor="image">Image URL</label>
-        <input name="image" id="image" value={image} onChange={onChange} />
+    <div className="mt-5">
+      <h1 className="text-center mb-4">Create an Account</h1>
+      <Form
+      onSubmit={onSubmit}
+      className="d-flex flex-column align-items-center mb-4"
+      >
+        <div className="d-flex mb-3">
+      <Button
+        type="button"
+        onClick={() => handleAdminToggle(true)}
+        style={{
+          backgroundColor: registrationData.admin ? "green" : "white",
+          color: registrationData.admin ? "white" : "green",
+          marginRight: '10px', // Adjust the margin as needed
+        }}
+      >
+        Organization
+      </Button>
+      <Button
+        type="button"
+        onClick={() => handleAdminToggle(false)}
+        style={{
+          backgroundColor: !registrationData.admin ? "green" : "white",
+          color: registrationData.admin ? "green" : "white",
+          marginLeft: '10px', // Adjust the margin as needed
+        }}
+      >
+        Developer
+      </Button>
+    </div>
+        <Form.Group controlId="username" style={{ marginBottom: '20px' }}>
+          <Form.Label>Username</Form.Label>
+          <Form.Control name="username" value={username} onChange={onChange} style={{ width: '450px' }} />
+        </Form.Group>
+        <Form.Group controlId="password" style={{ marginBottom: '20px' }}>
+          <Form.Label>Password</Form.Label>
+          <Form.Control name="password" value={password} onChange={onChange} type="password" style={{ width: '450px' }}/>
+        </Form.Group>
+        <Form.Group controlId="email" style={{ marginBottom: '20px' }}>
+          <Form.Label>Email</Form.Label>
+          <Form.Control name="email" value={email} onChange={onChange} type="email" style={{ width: '450px' }}/>
+        </Form.Group>
+        <Form.Group controlId="city" style={{ marginBottom: '20px' }}>
+          <Form.Label>City</Form.Label>
+          <Form.Control name="city" value={city} onChange={onChange} style={{ width: '450px' }}/>
+        </Form.Group>
+        <Form.Group controlId="province" style={{ marginBottom: '20px' }}>
+          <Form.Label>Province</Form.Label>
+          <Form.Control name="province" value={province} onChange={onChange} style={{ width: '450px' }}/>
+        </Form.Group>
+        <Form.Group controlId="country" style={{ marginBottom: '20px' }}>
+          <Form.Label>Country</Form.Label>
+          <Form.Control name="country" value={country} onChange={onChange} style={{ width: '450px' }}/>
+        </Form.Group>
+        <Form.Group controlId="image" style={{ marginBottom: '20px' }}>
+          <Form.Label>Image URL</Form.Label>
+          <Form.Control name="image" value={image} onChange={onChange} style={{ width: '450px' }}/>
+        </Form.Group>
         {admin !== null && !admin && (
           <>
-            <label htmlFor="linkedin">LinkedIn URL</label>
-            <input
-              name="linkedin"
-              id="linkedin"
-              value={linkedin}
-              onChange={onChange}
-            />
-            <label htmlFor="github">Github URL</label>
-            <input
-              name="github"
-              id="github"
-              value={github}
-              onChange={onChange}
-            />
-            <label htmlFor="website">Website URL</label>
-            <input
-              name="website"
-              id="website"
-              value={website}
-              onChange={onChange}
-            />
+            <Form.Group controlId="linkedin" style={{ marginBottom: '20px' }}>
+              <Form.Label>LinkedIn URL</Form.Label>
+              <Form.Control name="linkedin" value={linkedin} onChange={onChange} style={{ width: '450px' }}/>
+            </Form.Group>
+            <Form.Group controlId="github" style={{ marginBottom: '20px' }}>
+              <Form.Label>Github URL</Form.Label>
+              <Form.Control name="github" value={github} onChange={onChange} style={{ width: '450px' }}/>
+            </Form.Group>
+            <Form.Group controlId="website" style={{ marginBottom: '20px' }}>
+              <Form.Label>Website URL</Form.Label>
+              <Form.Control name="website" value={website} onChange={onChange} style={{ width: '450px' }}/>
+            </Form.Group>
           </>
         )}
-        <label htmlFor="description">About You</label>
-        <textarea
-          name="description"
-          id="description"
-          value={description}
-          onChange={onChange}
-        />
-        <button type="submit">Register</button>
-      </form>
-    </>
+        <Form.Group controlId="description" style={{ marginBottom: '20px' }}>
+          <Form.Label>About You</Form.Label>
+          <Form.Control as="textarea" name="description" value={description} onChange={onChange} style={{ width: '450px' }}/>
+        </Form.Group>
+        <Button type="submit" variant="primary" className="text-white">Register</Button>
+      </Form>
+    </div>
   );
 }
