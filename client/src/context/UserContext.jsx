@@ -4,12 +4,14 @@ export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [userLoaded, setUserLoaded] = useState(false);
 
   //functions related to user go here
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       setUser(JSON.parse(storedUser));
+      setUserLoaded(true);
     }
   }, []);
 
@@ -22,6 +24,7 @@ export const UserProvider = ({ children }) => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       setUser(JSON.parse(storedUser));
+      setUserLoaded(true);
     }
   };
 
@@ -33,6 +36,7 @@ export const UserProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         ...user,
+        userLoaded,
         updateCurrentUser,
         updateUserWithCookie,
       }}

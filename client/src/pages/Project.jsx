@@ -9,10 +9,10 @@ export default function Project() {
   const [tags, setTags] = useState([]);
   const [contributors, setContributors] = useState([]);
   const [projectAdmin, setprojectAdmin] = useState([]);
-  const { user } = useContext(UserContext);
+  const { user, userLoaded } = useContext(UserContext);
 
   const isProjectAdmin = () => {
-    if (user && Array.isArray(projectAdmin) && projectAdmin.length > 0) {
+    if (userLoaded && user && Array.isArray(projectAdmin) && projectAdmin.length > 0) {
       return projectAdmin.includes(user.id);
     }
     return false;
@@ -70,8 +70,6 @@ export default function Project() {
     };
 
     fetchProjectDetails();
-    console.log(user)
-    console.log(user.id, user.email, user.username, user.organization_id);
   }, [id]);
 
   return (
