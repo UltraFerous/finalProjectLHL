@@ -1,5 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 //   INSERT INTO projects (name, description, status, organization_id, image) VALUES
 
 export default function CreateProject() {
@@ -13,7 +15,7 @@ export default function CreateProject() {
     const value = e.target.value;
     setData({
       ...data,
-      [e.target.name]: value
+      [e.target.name]: value,
     });
   };
 
@@ -33,38 +35,45 @@ export default function CreateProject() {
   };
 
   return (
-    <>
-      <h1>Create New Project Page</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="name">
-          Name
-          <input
+    <div className="mt-5">
+      <h1 className="text-center mb-4">Create New Project Page</h1>
+      <Form
+        onSubmit={handleSubmit}
+        className="d-flex flex-column align-items-center mb-4"
+      >
+        <Form.Group controlId="name" className="mb-3">
+          <Form.Label>Name</Form.Label>
+          <Form.Control
             type="text"
             name="name"
             value={data.name}
             onChange={handleChange}
           />
-        </label>
-        <label htmlFor="description">
-          Description
-          <input
+        </Form.Group>
+
+        <Form.Group controlId="description" className="mb-3">
+          <Form.Label>Description</Form.Label>
+          <Form.Control
             type="text"
             name="description"
             value={data.description}
             onChange={handleChange}
           />
-        </label>
-        <label htmlFor="image">
-          Image
-          <input
+        </Form.Group>
+
+        <Form.Group controlId="image">
+          <Form.Label>Image</Form.Label>
+          <Form.Control
             type="text"
             name="image"
             value={data.image}
             onChange={handleChange}
           />
-        </label>
-        <button type="submit">Create Project</button>
-      </form>
-    </>
+        </Form.Group>
+        <Button type="submit" className="text-white mt-4">
+          Create Project
+        </Button>
+      </Form>
+    </div>
   );
 }
