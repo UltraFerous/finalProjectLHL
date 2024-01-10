@@ -122,7 +122,7 @@ export default function LogInUser() {
           className="ms-2 text-white mx-2"
           onClick={() =>
             handleDemoClick({
-              username: "jane_smith",
+              username: "JaneSmith",
               password: "qwerty1234",
             })
           }
@@ -136,7 +136,7 @@ export default function LogInUser() {
           className="ms-2 text-white mx-2"
           onClick={() =>
             handleDemoClick({
-              username: "admin",
+              username: "HollyHunter",
               password: "supersecret",
             })
           }
