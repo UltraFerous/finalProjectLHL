@@ -4,6 +4,7 @@ const cookieSession = require("cookie-session");
 const bodyParser = require("body-parser");
 const { userDataSearchName, userDataSearchID } = require("../db/queries/users.js");
 const { createUserWithValues } = require("../db/queries/users-api.js");
+const { createDeveloperInformation, addTagToDeveloper } = require("../db/queries/developers-api.js");
 
 router.use(
   cookieSession({
@@ -69,6 +70,7 @@ router.post("/register", (req, res) => {
     github,
     website,
     description,
+    developerTags,
   } = req.body;
 
   // Check if the user exists
@@ -94,11 +96,23 @@ router.post("/register", (req, res) => {
           if (newUser) {
             req.session.userId = newUser.id;
 
-            //Send user data as response
+            // Send user data as response
             const { id, username, email } = newUser;
             res.status(200).json({ user: { id, username, email } });
+
+            // Create developer information
+            createDeveloperInformation(id, linkedin, github, website);
+
+            // Add developer tags
+            if (developerTags && developerTags.length > 0) {
+              developerTags.forEach((tag) => {
+                addTagToDeveloper(id, tag);
+              });
+            }
           } else {
-            console.error("Error during registration: User data is undefined.");
+            console.error(
+              "Error during registration: User data is undefined."
+            );
             res.status(500).json({ error: "Internal server error" });
           }
         })

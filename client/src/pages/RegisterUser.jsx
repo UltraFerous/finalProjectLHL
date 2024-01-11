@@ -9,6 +9,8 @@ export default function RegisterUser() {
   const { updateCurrentUser } = useContext(UserContext);
   const navigate = useNavigate();
 
+  const [developerTags, setDeveloperTags] = useState([]);
+
   const [registrationData, setRegistrationData] = useState({
     username: "",
     password: "",
@@ -53,13 +55,34 @@ export default function RegisterUser() {
     }));
   };
 
+  const handleCheckboxChange = (tag) => {
+    setDeveloperTags((prevTags) => {
+      if (prevTags.includes(tag)) {
+        // If it's checked, remove it
+        return prevTags.filter((t) => t !== tag);
+      } else {
+        // If it's unchecked, add it
+        return [...prevTags, tag];
+      }
+    });
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    // Add developerTags to the registrationData
+    setRegistrationData((prevData) => ({
+      ...prevData,
+      developerTags,
+    }));
 
     axios
       .post(
         "http://localhost:8080/api/users/register",
-        registrationData, // Send properties directly
+        {
+          ...registrationData,
+          developerTags,
+        },
         {
           withCredentials: true,
           headers: {
@@ -161,47 +184,50 @@ export default function RegisterUser() {
               <Form.Check
                 type="checkbox"
                 label="React"
-                id="react"
+                id="1"
+                onChange={() => handleCheckboxChange(1)}
               />
               <Form.Check
                 type="checkbox"
                 label="Ruby"
-                id="ruby"
+                id="2"
+                onChange={() => handleCheckboxChange(2)}
               />
               <Form.Check
                 type="checkbox"
                 label="CSS"
-                id="css"
+                id="3"
+                onChange={() => handleCheckboxChange(3)}
               />
               <Form.Check
                 type="checkbox"
                 label="Express"
-                id="Express"
+                id="4"
+                onChange={() => handleCheckboxChange(4)}
               />
               <Form.Check
                 type="checkbox"
                 label="Node"
-                id="Node"
+                id="5"
+                onChange={() => handleCheckboxChange(5)}
               />
               <Form.Check
                 type="checkbox"
                 label="PostgreSQL"
-                id="PostgreSQL"
+                id="6"
+                onChange={() => handleCheckboxChange(6)}
               />
               <Form.Check
                 type="checkbox"
                 label="Material UI"
-                id="Material UI"
+                id="7"
+                onChange={() => handleCheckboxChange(7)}
               />
               <Form.Check
                 type="checkbox"
                 label="OAuth"
-                id="OAuth"
-              />
-              <Form.Check
-                type="checkbox"
-                label="React"
-                id="react"
+                id="9"
+                onChange={() => handleCheckboxChange(9)}
               />
             </div>
           </>
