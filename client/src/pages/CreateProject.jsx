@@ -11,11 +11,20 @@ export default function CreateProject() {
     image: "",
   });
 
+  const [projectTags, setProjectTags] = useState([]);
+
   const handleChange = (e) => {
     const value = e.target.value;
     setData({
       ...data,
       [e.target.name]: value,
+    });
+  };
+
+  const handleCheckboxChange = (tags) => {
+    setProjectTags((prevTags) => {
+      // Add new tags without duplicates
+      return [...new Set([...prevTags, ...tags])];
     });
   };
 
@@ -27,8 +36,8 @@ export default function CreateProject() {
       status: 1,
       organization_id: user.organization_id,
       image: data.image,
+      tags: projectTags,
     };
-    console.log("Sumbitted:", projectData);
     axios.post("/api/projects", projectData).then((response) => {
       console.log(response.status, response.data.token);
     });
@@ -42,22 +51,24 @@ export default function CreateProject() {
         className="d-flex flex-column align-items-center mb-4"
       >
         <Form.Group controlId="name" className="mb-3">
-          <Form.Label>Name</Form.Label>
+          <Form.Label>Project Name</Form.Label>
           <Form.Control
             type="text"
             name="name"
             value={data.name}
             onChange={handleChange}
+            style={{ width: '28em' }}
           />
         </Form.Group>
 
         <Form.Group controlId="description" className="mb-3">
-          <Form.Label>Description</Form.Label>
+          <Form.Label>Project Description</Form.Label>
           <Form.Control
-            type="text"
+            as="textarea"
             name="description"
             value={data.description}
             onChange={handleChange}
+            style={{ width: '28em' }}
           />
         </Form.Group>
 
@@ -68,8 +79,37 @@ export default function CreateProject() {
             name="image"
             value={data.image}
             onChange={handleChange}
+            style={{ width: '28em' }}
           />
         </Form.Group>
+        <div className="mb-4 mt-4 ms-5 ps-4">
+              <p>What kind of project is it? Check all that apply.
+              </p>
+              <Form.Check
+                type="checkbox"
+                label="Basic website"
+                id="3"
+                onChange={() => handleCheckboxChange([3])}
+              />
+              <Form.Check
+                type="checkbox"
+                label="Web application"
+                id="1"
+                onChange={() => handleCheckboxChange([1, 7, 2, 4, 5])}
+              />
+              <Form.Check
+                type="checkbox"
+                label="Do you need to store data? (Products, Customers, Blog posts, etc)"
+                id="6"
+                onChange={() => handleCheckboxChange([6, 5, 2])}
+              />
+              <Form.Check
+                type="checkbox"
+                label="Do you need user login capability?"
+                id="9"
+                onChange={() => handleCheckboxChange([8])}
+              />
+            </div>
         <Button type="submit" className="text-white mt-4">
           Create Project
         </Button>
