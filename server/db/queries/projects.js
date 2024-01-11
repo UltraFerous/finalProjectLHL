@@ -159,6 +159,40 @@ const findProjectsForOrg = (orgID) => {
   });
 };
 
+const findPendingApplicationsForProject = (projectID) => {
+  return db
+  .query(`
+  SELECT
+  *
+  FROM applications
+  WHERE applications.project_id = $1
+  AND applications.status = 0
+  `, [orgID])
+  .then(result => {
+    return result.rows;
+  })
+  .catch(err => {
+    console.log('Error:', err);
+  });
+};
+
+const findAcceptedApplicationsForProject = (projectID) => {
+  return db
+  .query(`
+  SELECT
+  *
+  FROM applications
+  WHERE applications.project_id = $1
+  AND applications.status = 1
+  `, [orgID])
+  .then(result => {
+    return result.rows;
+  })
+  .catch(err => {
+    console.log('Error:', err);
+  });
+};
+
 module.exports = { allProjectData, 
   projectDataSearchID, 
   projectDataSearchName, 
@@ -167,5 +201,7 @@ module.exports = { allProjectData,
   findTagsForProject,
   findUsersWithProject,
   browseProjects,
-  findProjectsForOrg
+  findProjectsForOrg,
+  findPendingApplicationsForProject,
+  findAcceptedApplicationsForProject
  };
