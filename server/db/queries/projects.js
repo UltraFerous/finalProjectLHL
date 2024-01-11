@@ -140,6 +140,24 @@ const browseProjects = function(name) {
     });
 };
 
+const findProjectsForOrg = (orgID) => {
+  return db
+  .query(`
+  SELECT
+  projects.*
+  FROM projects
+  JOIN organizations 
+  ON projects.organization_id = organizations.id
+  WHERE organizations.id = $1
+  `, [orgID])
+  .then(result => {
+    return result.rows;
+  })
+  .catch(err => {
+    console.log('Error:', err);
+  });
+};
+
 module.exports = { allProjectData, 
   projectDataSearchID, 
   projectDataSearchName, 
@@ -147,5 +165,6 @@ module.exports = { allProjectData,
   findApplicationsForProject, 
   findTagsForProject,
   findUsersWithProject,
-  browseProjects
+  browseProjects,
+  findProjectsForOrg
  };
