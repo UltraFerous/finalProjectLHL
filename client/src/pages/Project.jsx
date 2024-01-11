@@ -81,7 +81,9 @@ export default function Project() {
               <h1 className="fw-semibold">{project && project.name}</h1>
             </Row>
             <Row className="mb-4 text-center">
+              <Link to={`/org/${project && project.organization_id}`}>
               <h3>{project && project.orgname}</h3>
+              </Link>
             </Row>
 
             <Row className="mb-5">
