@@ -16,17 +16,29 @@ export default function SearchContainer() {
     <div className="mb-4">
       <ButtonToolbar aria-label="Toolbar with button groups" className="d-flex p-2 justify-content-center">
         <ButtonGroup className="me-2" aria-label="First group">
-          <Button onClick={updateSearchType} value="projects" className="text-white">
+          <Button
+            onClick={updateSearchType}
+            value="projects"
+            variant={searchType === "projects" ? "success" : "primary"}
+          >
             Projects
           </Button>
         </ButtonGroup>
         <ButtonGroup className="me-2" aria-label="Second group">
-          <Button onClick={updateSearchType} value="developers" className="text-white">
+          <Button
+            onClick={updateSearchType}
+            value="developers"
+            variant={searchType === "developers" ? "success" : "primary"}
+          >
             Developers
           </Button>
         </ButtonGroup>
         <ButtonGroup aria-label="Third group">
-          <Button onClick={updateSearchType} value="organizations" className="text-white">
+          <Button
+            onClick={updateSearchType}
+            value="organizations"
+            variant={searchType === "organizations" ? "success" : "primary"}
+          >
             Organizations
           </Button>
         </ButtonGroup>

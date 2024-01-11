@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { projectDataSearchID, findUsersWithProject, findTagsForProject, allProjectData } = require('../db/queries/projects.js');
+const { projectDataSearchID, findUsersWithProject, findTagsForProject, allProjectData, browseProjects } = require('../db/queries/projects.js');
 
 const{ findProjectAdmin } =require('../db/queries/developers.js');
 

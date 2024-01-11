@@ -25,6 +25,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/projects">
           <Route index element={<ProjectList />} />
+          <Route path="search/:searchTerm" element={<ProjectList />} />
           <Route path="create" element={<CreateProject />} />
           <Route path=":id/apply" element={<ProjectApplication />} />
           <Route path=":id" element={<Project />} />
@@ -36,7 +37,10 @@ function App() {
           <Route path=":id" element={<UserProfile />} />
           <Route path="register" element={<RegisterUser />} />
         </Route>
-        <Route path="/developers" element={<DeveloperList />} />
+        <Route path="/developers">
+          <Route index element={<DeveloperList />} />
+          <Route path="search/:searchTerm" element={<DeveloperList />} />
+        </Route>
         <Route path="/org/:id" element={<OrgProfile />} />
         <Route path="/org/create" element={<CreateOrg />} />
         <Route path="/orgs" element={<OrgList />} />
