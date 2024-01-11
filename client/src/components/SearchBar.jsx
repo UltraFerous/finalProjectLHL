@@ -1,13 +1,26 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { useNavigate } from "react-router-dom";
 
 export default function SearchBar(props) {
   const [searchInput, setSearchInput] = useState("");
+  const navigate = useNavigate();
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // Your search logic here
+
+    // if props.searchType equals "projects", route to the appropriate search page
+    if (props.searchType === "projects") {
+      navigate(`/projects/search/${searchInput}`);
+    }
+
+    // if props.searchType equals "developers", route to the appropriate search page
+    if (props.searchType === "developers") {
+      navigate(`/developers/search/${searchInput}`);
+    }
+
+    // if props.searchType equals "organizations", route to the appropriate search page
   };
 
   const onChange = (e) => {

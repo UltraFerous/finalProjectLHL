@@ -1,15 +1,20 @@
 import { useState, useEffect } from "react"
 import DeveloperCardList from "../components/DeveloperCardList";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 
 export default function DeveloperList() {
-
   const [developers, setDevelopers] = useState([]);
+  const location = useLocation();
+  // conditional endpoint for regular developers page and search results page
+  const endpoint = location.pathname.startsWith("/developers/search")
+    ? `http://localhost:8080${location.pathname}`
+    : "http://localhost:8080/developers";
 
   useEffect(() => {
     const fetchCardDetails = () => {
       axios
-        .get("http://localhost:8080/developers")
+        .get(endpoint)
         .then((response) => {
           const data = response.data;
 
