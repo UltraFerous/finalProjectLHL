@@ -108,6 +108,9 @@ export default function UserProfile() {
                 </Col>
               ))}
             </Row>
+            <Row className="mb-5">
+              <Button variant="success">Contact Developer</Button>
+            </Row>
           </Col>
         </Row>
       </Container>
