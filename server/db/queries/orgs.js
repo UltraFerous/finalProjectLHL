@@ -38,8 +38,8 @@ const orgDataSearchName = function(name) {
     SELECT
     *
     FROM organizations
-    WHERE lower(organizations.name) LIKE lower('%$1%')
-    `, [name])
+    WHERE lower(organizations.name) LIKE lower($1)
+    `, [`%${name}%`])
     .then((result) => {
       return result.rows;
     })

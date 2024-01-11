@@ -1,8 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const { orgDataSearchID, allOrgData } = require('../db/queries/orgs.js');
+const { orgDataSearchID, orgDataSearchName, allOrgData } = require('../db/queries/orgs.js');
 const { createOrgWithObject } = require('../db/queries/orgs-api.js');
-// import query helper functions and use them in routes
+
+// organization search
+router.get('/search/:searchTerm', (req, res) => {
+  const searchTerm = req.params.searchTerm;
+
+  orgDataSearchName(searchTerm)
+    .then((orgData) => {
+      if (orgData.length > 0) {
+        res.status(200).json(orgData);
+      }
+    })
+    .catch((err) => {
+      console.error("ERROR:", err.message);
+      res.status(500).json({ error: 'Internal server error' });
+    });
+});
 
 // organization details page
 router.get('/:id', (req, res) => {
