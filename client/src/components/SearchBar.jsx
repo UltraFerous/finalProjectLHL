@@ -9,20 +9,22 @@ export default function SearchBar(props) {
 
   const onSubmit = (e) => {
     e.preventDefault();
-
     // if props.searchType equals "projects", route to the appropriate search page
     if (props.searchType === "projects") {
       navigate(`/projects/search/${searchInput}`);
+      window.location.reload(false);
     }
 
     // if props.searchType equals "developers", route to the appropriate search page
     if (props.searchType === "developers") {
       navigate(`/developers/search/${searchInput}`);
+      window.location.reload(false);
     }
 
     // if props.searchType equals "organizations", route to the appropriate search page
     if (props.searchType === "organizations") {
       navigate(`/org/search/${searchInput}`);
+      window.location.reload(false);
     }
   };
 
