@@ -9,6 +9,9 @@ export default function SearchContainer() {
   const [searchType, setSearchType] = useState("");
 
   const updateSearchType = (e) => {
+    if(e.target.value === searchType){
+      return setSearchType("");
+    }
     setSearchType(e.target.value);
   };
 

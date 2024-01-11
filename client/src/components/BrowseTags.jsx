@@ -13,7 +13,7 @@ export default function BrowseTags(props) {
   return (
     showTags && (
     <div className="text-center mb-5">
-      <p class="text-center">Or would you like to browse by category?</p>
+      <p className="text-center">Or would you like to browse by category?</p>
       <ButtonToolbar className="justify-content-center">
           <Button variant="primary" className="mx-2 text-white" value="react">
             React
