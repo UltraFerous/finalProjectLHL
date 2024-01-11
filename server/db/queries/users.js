@@ -81,6 +81,7 @@ const browseUsersTag = function(name) {
     WHERE lower(users.username) ILIKE $1
     OR
     lower(tags.tag_name) ILIKE $1
+    GROUP BY (users.id)
     `, [`%${name}%`])
     .then((result) => {
       return result.rows;
