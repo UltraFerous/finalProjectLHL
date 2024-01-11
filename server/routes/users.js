@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { userDataSearchID } = require("../db/queries/users.js");
-const { findTagsForUser } = require("../db/queries/developers.js");
+const { userDataSearchID, browseUsersTag } = require("../db/queries/users.js");
+const { findTagsForUser, findUserProjects } = require("../db/queries/developers.js");
 
 // user details page
 router.get('/:id/details', (req, res) => {
