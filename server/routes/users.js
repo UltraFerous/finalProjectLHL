@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { userDataSearchID, browseUsersTag } = require("../db/queries/users.js");
-const { findTagsForUser } = require("../db/queries/developers.js");
+const { findTagsForUser, findUserProjects } = require("../db/queries/developers.js");
 
 // user search
 router.get('/search/:searchTerm', (req, res) => {
