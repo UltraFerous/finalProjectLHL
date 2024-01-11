@@ -94,6 +94,7 @@ export default function UserProfile() {
             <Row className="mb-5" style={{ marginTop: '10px' }}>
               {projects.map((project) => (
                 <Col className="col-auto" key={project.id} >
+                  <Link to={`/projects/${project.id}`}>
                   <div className="d-flex flex-row align-items-center" style={{ marginRight: '10px' }}>
                     <Image
                       src={project.image}
@@ -101,10 +102,14 @@ export default function UserProfile() {
                       style={{ width: '80px', height: '80px', marginRight: '10px' }}
                       alt="User Image"
                     />
-                    <h6>{project.name}</h6>
+                    <h6 style={{color: "#212529"}}>{project.name}</h6>
                   </div>
+                  </Link>
                 </Col>
               ))}
+            </Row>
+            <Row className="mb-5">
+              <Button variant="success">Contact Developer</Button>
             </Row>
           </Col>
         </Row>
