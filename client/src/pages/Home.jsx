@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Container from 'react-bootstrap/Container';
 import ProjectCardList from "../components/ProjectCardList";
 import DeveloperCardList from "../components/DeveloperCardList";
 import SearchContainer from "../components/SearchContainer";
@@ -62,15 +63,15 @@ export default function Home() {
       <div style={heroStyle}>
         <h1 className="text-center">Connecting Developers and Charities for a Brighter Future</h1>
       </div>
-      <div>
+      <Container>
         <h2 className="text-center mt-5">Search for Inspiration</h2>
         <p className="text-center">What would you like to search for?</p>
-      </div>
-      <SearchContainer />
-      <h2 className="text-center">Featured Projects</h2>
-      <ProjectCardList featuredProjects={projects} />
-      <h2 className="text-center">Featured Developers</h2>
-      <DeveloperCardList featuredDevelopers={developers} />
+        <SearchContainer />
+        <h2 className="text-center">Featured Projects</h2>
+        <ProjectCardList featuredProjects={projects} />
+        <h2 className="text-center">Featured Developers</h2>
+        <DeveloperCardList featuredDevelopers={developers} />
+      </Container>
     </>
   );
 }

@@ -1,17 +1,19 @@
-import SummaryCard from "./Card";
+import SummaryCard from './Card';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 export default function ProjectCardList(props) {
   const projectList = props.featuredProjects.map((project) => (
+    <Col>
       <SummaryCard
-        key={project.id}
         id={project.id}
         imageSource={project.image}
         title={project.name}
         description={project.description}
         type="projects"
       />
-    )
-  );
+    </Col>
+  ));
 
-  return <ul className="d-flex p-2 justify-content-center">{projectList}</ul>;
+  return <Row md={3} className="gx-0">{projectList}</Row>;
 }

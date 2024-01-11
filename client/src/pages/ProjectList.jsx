@@ -3,6 +3,7 @@ import ProjectCardList from "../components/ProjectCardList";
 import axios from "axios";
 import { Link, useLocation } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
+import Container from "react-bootstrap/Container";
 
 export default function ProjectList() {
   const { user } = useContext(UserContext);
@@ -38,18 +39,20 @@ export default function ProjectList() {
 
   return (
     <>
-      {/* if user is logged in and an admin, and this is regular project page, provide create project link */}
-      {user && user.organization_id > 0
-        && (endpoint === "http://localhost:8080/projects") &&
-        <Link to='/projects/create' className="d-flex p-4 justify-content-center">
-          <button className="text-white btn btn-primary btn-lg">
-            Create Project
-          </button>
-        </Link>
-      }
-      { projects.length === 0 && loading === true && <h2 className="text-center mt-5">Loading...</h2> }
-      { projects.length > 0 && loading === false && <h2 className="text-center mt-5">Your Search Results</h2> }
-      { projects.length === 0 &&  loading === false ? <h2 className="text-center mt-5">No Results Found</h2> : <ProjectCardList featuredProjects={projects} /> } 
+      <Container>
+        {/* if user is logged in and an admin, and this is regular project page, provide create project link */}
+        {user && user.organization_id > 0
+          && (endpoint === "http://localhost:8080/projects") &&
+          <Link to='/projects/create' className="d-flex p-4 justify-content-center">
+            <button className="text-white btn btn-primary btn-lg">
+              Create Project
+            </button>
+          </Link>
+        }
+        {projects.length === 0 && loading === true && <h2 className="text-center mt-5">Loading...</h2>}
+        {projects.length > 0 && loading === false && <h2 className="text-center mt-5">Your Search Results</h2>}
+        {projects.length === 0 && loading === false ? <h2 className="text-center mt-5">No Results Found</h2> : <ProjectCardList featuredProjects={projects} />}
+      </Container>
     </>
   );
 }
