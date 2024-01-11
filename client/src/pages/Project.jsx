@@ -82,7 +82,7 @@ export default function Project() {
             </Row>
             <Row className="mb-4 text-center">
               <Link to={`/org/${project && project.organization_id}`}>
-              <h3>{project && project.orgname}</h3>
+              <h3 style={{ color: "#212529" }}>{project && project.orgname}</h3>
               </Link>
             </Row>
 
@@ -120,6 +120,7 @@ export default function Project() {
             <Row className="mb-5" style={{ marginTop: "10px" }}>
               {contributors.map((contributor) => (
                 <Col className="col-auto" key={contributor.id}>
+                  <Link to={`/users/${project && contributor.id}`}>
                   <div
                     className="d-flex flex-row align-items-center"
                     style={{ marginRight: "10px" }}
@@ -134,8 +135,9 @@ export default function Project() {
                       }}
                       alt="User Image"
                     />
-                    <h6>{contributor.name}</h6>
+                    <h6 style={{ color: "#212529" }}>{contributor.name}</h6>
                   </div>
+                  </Link>
                 </Col>
               ))}
             </Row>
