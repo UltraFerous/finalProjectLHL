@@ -88,8 +88,9 @@ const browseOrgs = function(name) {
     SELECT
     *
     FROM organizations
-    WHERE lower(organizations.name) ILIKE '%$1%'
-    `, [name])
+    WHERE lower(organizations.name) ILIKE $1
+    GROUP BY (organizations.id)
+    `, [`%${name}%`])
     .then((result) => {
       return result.rows;
     })

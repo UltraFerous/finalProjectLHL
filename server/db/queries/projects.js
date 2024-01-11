@@ -131,6 +131,7 @@ const browseProjects = function(name) {
       JOIN tags ON assigned_tags_projects.tag_id = tags.id
       WHERE lower(projects.name) ILIKE $1
       OR lower(tags.tag_name) ILIKE $1
+      GROUP BY (projects.id, organizations.name)
     `, [`%${name}%`])
     .then((result) => {
       return result.rows;
