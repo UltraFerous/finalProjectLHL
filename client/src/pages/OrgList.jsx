@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react"
 import OrgCardList from "../components/OrgCardList";
+import Container from "react-bootstrap/Container";
 import axios from "axios";
 import { Link, useLocation } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
@@ -36,15 +37,17 @@ export default function OrgList() {
 
   return (
     <>
-      {user && user.organization_id === undefined &&
-        <Link to='/org/create' className="d-flex p-4 justify-content-center">
-          <button className="text-white btn btn-primary btn-lg">
-            Create Organization
-          </button>
-        </Link>
-      }
-      <h2 className="text-center mt-5">Your Search Results</h2>
-      <OrgCardList orgs={orgs} />
+      <Container>
+        {user && user.organization_id === undefined &&
+          <Link to='/org/create' className="d-flex p-4 justify-content-center">
+            <button className="text-white btn btn-primary btn-lg">
+              Create Organization
+            </button>
+          </Link>
+        }
+        <h2 className="text-center mt-5">Your Search Results</h2>
+        <OrgCardList orgs={orgs} />
+      </Container>
     </>
   );
 }

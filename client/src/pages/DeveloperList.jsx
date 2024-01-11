@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import DeveloperCardList from "../components/DeveloperCardList";
+import Container from "react-bootstrap/Container";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 
@@ -34,8 +35,10 @@ export default function DeveloperList() {
 
   return (
     <>
-      <h2 className="text-center mt-5">Your Search Results</h2>
-      <DeveloperCardList featuredDevelopers={developers} />
+      <Container>
+        <h2 className="text-center mt-5">Your Search Results</h2>
+        <DeveloperCardList featuredDevelopers={developers} />
+      </Container>
     </>
   );
 }

@@ -1,7 +1,10 @@
 import SummaryCard from "./Card";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 export default function DeveloperCardList(props) {
   const developerList = props.featuredDevelopers.map((developer) => (
+    <Col>
       <SummaryCard
         key={developer.id}
         id={developer.id}
@@ -10,8 +13,9 @@ export default function DeveloperCardList(props) {
         description={developer.description}
         type="users"
       />
-    )
+    </Col>
+  )
   );
 
-  return <ul className="d-flex p-2 justify-content-center">{developerList}</ul>;
+  return <Row md={3} className="gx-0">{developerList}</Row>;
 }
