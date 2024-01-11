@@ -156,10 +156,58 @@ export default function RegisterUser() {
               <Form.Label>Website URL</Form.Label>
               <Form.Control name="website" value={website} onChange={onChange} style={{ width: '450px' }}/>
             </Form.Group>
+            <div className="mb-4">
+              <p>What are your skills?</p>
+              <Form.Check
+                type="checkbox"
+                label="React"
+                id="react"
+              />
+              <Form.Check
+                type="checkbox"
+                label="Ruby"
+                id="ruby"
+              />
+              <Form.Check
+                type="checkbox"
+                label="CSS"
+                id="css"
+              />
+              <Form.Check
+                type="checkbox"
+                label="Express"
+                id="Express"
+              />
+              <Form.Check
+                type="checkbox"
+                label="Node"
+                id="Node"
+              />
+              <Form.Check
+                type="checkbox"
+                label="PostgreSQL"
+                id="PostgreSQL"
+              />
+              <Form.Check
+                type="checkbox"
+                label="Material UI"
+                id="Material UI"
+              />
+              <Form.Check
+                type="checkbox"
+                label="OAuth"
+                id="OAuth"
+              />
+              <Form.Check
+                type="checkbox"
+                label="React"
+                id="react"
+              />
+            </div>
           </>
         )}
         <Form.Group controlId="description" style={{ marginBottom: '20px' }}>
-          <Form.Label>About You</Form.Label>
+          <Form.Label>How would you describe yourself?</Form.Label>
           <Form.Control as="textarea" name="description" value={description} onChange={onChange} style={{ width: '450px' }}/>
         </Form.Group>
         <Button type="submit" variant="primary" className="text-white">Register</Button>
