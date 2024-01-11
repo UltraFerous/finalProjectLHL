@@ -1,15 +1,26 @@
 const express = require('express');
 const router = express.Router();
-const { createProjectWithObject, modifyProjectWithObject, applyForProject } = require('../db/queries/projects-api.js');
+const { createProjectWithObject, modifyProjectWithObject, applyForProject, addTagToProject } = require('../db/queries/projects-api.js');
 
 // import query helper functions and use them in routes
 
 // create new project
 router.post('/', (req, res) => {
-  createProjectWithObject(req.body)
-  .then((projectData) => {
-    res.status(200);
+
+  const { tags, ...projectData} = req.body
+
+  createProjectWithObject(projectData)
+  .then((project) => {
+    const projectId = project.id;
+
+    // Insert tags for the project
+    const tagInsertPromises = tags.map((tagId) =>
+      addTagToProject(projectId, tagId)
+    );
+
+    return Promise.all(tagInsertPromises);
   })
+  .then(() => res.status(200).json({ success: true }))
   .catch((err) => {
     console.error("ERROR:", err.message);
     res.status(500).json({ error: 'Internal server error' });

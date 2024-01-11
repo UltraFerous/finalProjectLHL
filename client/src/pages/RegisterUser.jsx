@@ -227,7 +227,7 @@ export default function RegisterUser() {
                 type="checkbox"
                 label="OAuth"
                 id="9"
-                onChange={() => handleCheckboxChange(9)}
+                onChange={() => handleCheckboxChange(8)}
               />
             </div>
           </>
