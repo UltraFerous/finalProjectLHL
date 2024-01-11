@@ -69,7 +69,22 @@ export default function OrgProfile() {
             </Row>
             <Row className="mb-4">
               <Link to={`/users/${org && orgAdmin[0].user_id}`}>
-                <p style={{ color: "#212529" }}>{orgAdmin && orgAdmin[0].username}</p>
+              <div
+                      className="d-flex flex-row align-items-center"
+                      style={{ marginRight: "10px" }}
+                    >
+              <Image
+                      src={org && orgAdmin[0].image}
+                      roundedCircle
+                      style={{
+                        width: "80px",
+                        height: "80px",
+                        marginRight: "10px",
+                      }}
+                      alt="User Image"
+                    />
+                <h6 style={{ color: "#212529" }}>{orgAdmin && orgAdmin[0].username}</h6>
+                </div>
               </Link>
             </Row>
             <Row className="mb-5">

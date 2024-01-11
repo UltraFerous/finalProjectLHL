@@ -68,7 +68,7 @@ const checkOrgAdmin = function(orgID) {
   return db
     .query(`
     SELECT
-    user_id, users.username
+    user_id, users.username, users.image
     FROM organizations
     JOIN users
     ON users.id = organizations.user_id
