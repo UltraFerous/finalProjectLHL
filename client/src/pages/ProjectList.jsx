@@ -3,6 +3,7 @@ import ProjectCardList from "../components/ProjectCardList";
 import axios from "axios";
 import { Link, useLocation } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
+import SearchBar from "../components/SearchBar"
 
 export default function ProjectList() {
   const { user } = useContext(UserContext);
@@ -39,6 +40,7 @@ export default function ProjectList() {
   return (
     <>
       {/* if user is logged in and an admin, and this is regular project page, provide create project link */}
+      <SearchBar searchType={"projects"}/>
       {user && user.organization_id > 0
         && (endpoint === "http://localhost:8080/projects") &&
         <Link to='/projects/create' className="d-flex p-4 justify-content-center">
