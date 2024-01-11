@@ -41,9 +41,12 @@ function App() {
           <Route index element={<DeveloperList />} />
           <Route path="search/:searchTerm" element={<DeveloperList />} />
         </Route>
-        <Route path="/org/:id" element={<OrgProfile />} />
-        <Route path="/org/create" element={<CreateOrg />} />
-        <Route path="/orgs" element={<OrgList />} />
+        <Route path="/org">
+          <Route index element={<OrgList />} />
+          <Route path="create" element={<CreateOrg />} />
+          <Route path="search/:searchTerm" element={<OrgList />} />
+          <Route path=":id" element={<OrgProfile />} />
+        </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

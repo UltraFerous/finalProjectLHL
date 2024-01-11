@@ -21,6 +21,9 @@ export default function SearchBar(props) {
     }
 
     // if props.searchType equals "organizations", route to the appropriate search page
+    if (props.searchType === "organizations") {
+      navigate(`/org/search/${searchInput}`);
+    }
   };
 
   const onChange = (e) => {
