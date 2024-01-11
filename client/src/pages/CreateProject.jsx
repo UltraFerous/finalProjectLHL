@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { UserContext } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 //   INSERT INTO projects (name, description, status, organization_id, image) VALUES
 
 export default function CreateProject() {
@@ -12,6 +14,9 @@ export default function CreateProject() {
   });
 
   const [projectTags, setProjectTags] = useState([]);
+
+  const { user } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -38,14 +43,14 @@ export default function CreateProject() {
       image: data.image,
       tags: projectTags,
     };
-    axios.post("/api/projects", projectData).then((response) => {
-      console.log(response.status, response.data.token);
+    axios.post("/api/projects", projectData).then(() => {
+      navigate("/projects");
     });
   };
 
   return (
     <div className="mt-5">
-      <h1 className="text-center mb-4">Create New Project Page</h1>
+      <h1 className="text-center mb-4">Create New Project</h1>
       <Form
         onSubmit={handleSubmit}
         className="d-flex flex-column align-items-center mb-4"

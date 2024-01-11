@@ -21,6 +21,7 @@ const createProjectWithObject = (projectObj) => {
     .query(`
   INSERT INTO projects (name, description, status, organization_id, image) VALUES
   ($1, $2, $3, $4, $5)
+  RETURNING id;
   `, [name, description, status, organization_id, image])
     .then(result => {
       return result.rows[0];
