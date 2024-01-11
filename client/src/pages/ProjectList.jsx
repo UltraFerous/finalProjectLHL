@@ -7,6 +7,7 @@ import { UserContext } from "../context/UserContext";
 export default function ProjectList() {
   const { user } = useContext(UserContext);
   const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
   const location = useLocation();
   // conditional endpoint for regular projects page and search results page
   const endpoint = location.pathname.startsWith("/projects/search")
@@ -19,6 +20,7 @@ export default function ProjectList() {
         .get(endpoint)
         .then((response) => {
           const data = response.data;
+          setLoading(false);
 
           // Check if data is an array
           if (Array.isArray(data) && data.length >= 1) {
@@ -45,8 +47,9 @@ export default function ProjectList() {
           </button>
         </Link>
       }
-      <h2 className="text-center mt-5">Your Search Results</h2>
-      <ProjectCardList featuredProjects={projects} />
+      { projects.length === 0 && loading === true && <h2 className="text-center mt-5">Loading...</h2> }
+      { projects.length > 0 && loading === false && <h2 className="text-center mt-5">Your Search Results</h2> }
+      { projects.length === 0 &&  loading === false ? <h2 className="text-center mt-5">No Results Found</h2> : <ProjectCardList featuredProjects={projects} /> } 
     </>
   );
 }
