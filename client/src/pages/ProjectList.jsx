@@ -35,7 +35,7 @@ export default function ProjectList() {
     };
 
     fetchCardDetails();
-  }, []);
+  }, [endpoint]);
 
   return (
     <>

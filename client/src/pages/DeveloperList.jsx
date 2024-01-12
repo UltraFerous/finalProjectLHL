@@ -31,7 +31,7 @@ export default function DeveloperList() {
     };
 
     fetchCardDetails();
-  }, []);
+  }, [endpoint]);
 
   return (
     <>
