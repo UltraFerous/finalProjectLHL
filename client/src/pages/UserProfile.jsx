@@ -9,6 +9,7 @@ export default function UserProfile() {
   const [userData, setUserData] = useState(null);
   const [tags, setTags] = useState([]);
   const [projects, setProjects] = useState([]);
+  const [applications, setApplications] = useState([]);
   const { user, userLoaded } = useContext(UserContext);
 
   useEffect(() => {
@@ -23,6 +24,7 @@ export default function UserProfile() {
             const userDetails = data[0];
             const tagsArray = data[1];
             const projectsArray = data[2];
+            const applicationsArray = data[3];
 
             // Check if userDetails is an array with expected properties
             if (Array.isArray(userDetails) && userDetails.length > 0) {
@@ -50,6 +52,23 @@ export default function UserProfile() {
               } else {
                 setUserData(null);
               }
+
+              // Map applications if applicationsArray is an array
+              if (Array.isArray(applicationsArray)) {
+                const applicationsList = applicationsArray.map(
+                  (application) => ({
+                    id: application.applicationid,
+                    projectName: application.projectname,
+                    applicantName: application.username,
+                    image: application.userimage,
+                    text: application.text,
+                    applicantId: application.applicant,
+                  })
+                );
+                setApplications(applicationsList);
+              } else {
+                setUserData(null);
+              }
             }
           }
         })
@@ -72,7 +91,13 @@ export default function UserProfile() {
             </Row>
             <Row className="mb-4 mx-auto">
               <Col className="text-center">
-                <Image src={userData && userData.image} rounded fluid style={{ maxHeight: '600px', display: 'inline-block' }} className="mx-auto" />
+                <Image
+                  src={userData && userData.image}
+                  rounded
+                  fluid
+                  style={{ maxHeight: "600px", display: "inline-block" }}
+                  className="mx-auto"
+                />
               </Col>
             </Row>
             <Row className="mb-4">
@@ -89,28 +114,80 @@ export default function UserProfile() {
               ))}
             </Row>
             <Row>
-              <h5>Projects</h5>
+              <h5>
+                Projects {userData && userData.username} is contributing to
+              </h5>
             </Row>
-            <Row className="mb-5" style={{ marginTop: '10px' }}>
+            <Row className="mb-5" style={{ marginTop: "10px" }}>
               {projects.map((project) => (
-                <Col className="col-auto" key={project.id} >
+                <Col className="col-auto" key={project.id}>
                   <Link to={`/projects/${project.id}`}>
-                  <div className="d-flex flex-row align-items-center" style={{ marginRight: '10px' }}>
-                    <Image
-                      src={project.image}
-                      roundedCircle
-                      style={{ width: '80px', height: '80px', marginRight: '10px' }}
-                      alt="User Image"
-                    />
-                    <h6 style={{color: "#212529"}}>{project.name}</h6>
-                  </div>
+                    <div
+                      className="d-flex flex-row align-items-center"
+                      style={{ marginRight: "10px" }}
+                    >
+                      <Image
+                        src={project.image}
+                        roundedCircle
+                        style={{
+                          width: "80px",
+                          height: "80px",
+                          marginRight: "10px",
+                        }}
+                        alt="User Image"
+                      />
+                      <h6 style={{ color: "#212529" }}>{project.name}</h6>
+                    </div>
                   </Link>
                 </Col>
               ))}
             </Row>
             <Row className="mb-5">
-              <Button variant="success">Contact Developer</Button>
+              <Button variant="success">Contact Me</Button>
             </Row>
+            {userData && userData.admin && (
+              <>
+                <Row>
+                  <h5>Applications for your review</h5>
+                </Row>
+                <Row
+                  className="mb-5d-flex flex-column"
+                  style={{ marginTop: "10px" }}
+                >
+                  {applications.map((application) => (
+                    <Col
+                      className=" bg-light col-auto mt-3 mb-4"
+                      key={application.id}
+                    >
+                      <h5 style={{ color: "#212529" }}>
+                        {application.projectName} Project
+                      </h5>
+                      <Link to={`/users/${application.applicantId}`}>
+                        <div
+                          className="d-flex flex-row align-items-center mt-3 mb-3"
+                          style={{ marginRight: "10px" }}
+                        >
+                          <Image
+                            src={application.image}
+                            roundedCircle
+                            style={{
+                              width: "80px",
+                              height: "80px",
+                              marginRight: "10px",
+                            }}
+                            alt="User Image"
+                          />
+                          <h6 style={{ color: "#212529" }}>
+                            {application.applicantName}
+                          </h6>
+                        </div>
+                      </Link>
+                      <p style={{ color: "#212529" }}>{application.text}</p>
+                    </Col>
+                  ))}
+                </Row>
+              </>
+            )}
           </Col>
         </Row>
       </Container>

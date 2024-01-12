@@ -99,5 +99,27 @@ const browseOrgs = function(name) {
     });
 };
 
+const orgAdminApplications = function(userId) {
+  return db
+    .query(`
+    SELECT
+    applications.user_id as applicant, applications.text as text, users.username as username, projects.name as projectname, users.image as userimage, applications.id as applicationid
+    FROM organizations
+    JOIN projects
+    ON organizations.id = projects.organization_id
+    JOIN applications
+    ON projects.id = applications.project_id
+    JOIN users
+    ON applications.user_id = users.id
+    WHERE organizations.user_id = $1
+    `, 
+    [userId])
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((err) => {
+      console.log("ERROR:", err.message);
+    });
+};
 
-module.exports = { allOrgData, orgDataSearchID, orgDataSearchName, checkOrgAdmin, orgDoubleCheck, browseOrgs };
+module.exports = { allOrgData, orgDataSearchID, orgDataSearchName, checkOrgAdmin, orgDoubleCheck, browseOrgs, orgAdminApplications };

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { userDataSearchID, browseUsersTag } = require("../db/queries/users.js");
 const { findTagsForUser, findUserProjects } = require("../db/queries/developers.js");
+const { orgAdminApplications } = require("../db/queries/orgs.js");
 
 // user details page
 router.get('/:id/details', (req, res) => {
@@ -23,6 +24,10 @@ router.get('/:id/details', (req, res) => {
     })
     .then(userProjectData => {
       responseArray.push(userProjectData);
+      return orgAdminApplications(user_id);
+    })
+    .then(userApplicationData => {
+      responseArray.push(userApplicationData);
     })
     .then(() => res.status(200).json(responseArray))
     .catch((err) => {
