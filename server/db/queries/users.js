@@ -59,10 +59,10 @@ const browseUsers = function(name) {
     SELECT
     users.*, organizations.id AS organization_id
     FROM users
-    JOIN organizations ON organizations.user_id = users.id
-    JOIN developers_information ON developers_information.user_id = users.id
-    WHERE lower(users.username) ILIKE '%$1%'
-    `, [name])
+    LEFT JOIN organizations ON organizations.user_id = users.id
+    LEFT JOIN developers_information ON developers_information.user_id = users.id
+    WHERE lower(users.username) ILIKE $1
+    `, [`%${name}%`])
     .then((result) => {
       return result.rows;
     })
