@@ -27,7 +27,6 @@ router.get('/:id/details', (req, res) => {
       return orgAdminApplications(user_id);
     })
     .then(userApplicationData => {
-      console.log(userApplicationData);
       responseArray.push(userApplicationData);
     })
     .then(() => res.status(200).json(responseArray))
