@@ -147,13 +147,17 @@ export default function UserProfile() {
                 </Col>
               ))}
             </Row>
-            {(user && user.id !== parsedId) || !user && (
+            {user && user.id === parsedId ? (
+              <div></div> // Render an empty div if the condition is true
+            ) : (
               <Row className="mb-5">
                 <Button variant="success">Contact Me</Button>
               </Row>
             )}
             {user && user.id === parsedId && applications.length > 0 && (
-              <div style={{ borderTop: `2px solid #208C27`, paddingTop: "30px" }}>
+              <div
+                style={{ borderTop: `2px solid #208C27`, paddingTop: "30px" }}
+              >
                 <Row>
                   <h5>Applications for your review</h5>
                 </Row>
