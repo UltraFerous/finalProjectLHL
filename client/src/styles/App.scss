@@ -16,6 +16,9 @@ $navbar-dark-active-color: $white;
 $link-decoration: none;
 $link-hover-decoration: none;
 
+$input-border-color: #acb4bd;
+$form-check-input-border: 1px solid #acb4bd;
+
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
 
 // Then add additional custom code here
