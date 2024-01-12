@@ -39,31 +39,24 @@ router.get('/quicksearch/:searchTerm', (req, res) => {
 
   findTagsForUser(searchTerm)
     .then(userTags => {
-      if (userTags.length = 0) {
+      if (userTags.length === 0) {
         res.status(404).json({ error: 'No user data found to search with' });
       }
       const tagsOfUser = [];
       for (let tag in userTags) {
         tagsOfUser.push(userTags[tag].tag_id);
       }
-
-      const mapLoop = async () => {
-        console.log('Start')
-          const promises = await tagsOfUser.map(async tag => {
-            const projects = new Promise((resolve, reject) => {
-            findProjectsByTag(tag)
-            });
-          return projects
-        })
-        const numFruits = await Promise.all(promises)
-        console.log(numFruits)
-    }
-    
-    })
-    .then(projectResults => {
-      console.log("Sent!");
-      console.log(projectResults);
-      res.status(200).json(projectResults);
+      const promises = tagsOfUser.map(value => findProjectsByTag(value));
+      Promise.all(promises)
+      .then(projectResults => {
+        console.log("Sent!");
+        console.log(projectResults);
+        res.status(200).json(projectResults);
+      })
+      .catch(err => {
+        console.error("ERROR:", err.message);
+        res.status(500).json({ error: "Internal server error" });
+      });
     })
     .catch(err => {
       console.error("ERROR:", err.message);

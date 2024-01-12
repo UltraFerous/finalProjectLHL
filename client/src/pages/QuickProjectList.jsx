@@ -4,6 +4,7 @@ import axios from "axios";
 import { Link, useLocation } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import Container from "react-bootstrap/Container";
+import pruneData from "../helpers/pruneData";
 
 export default function ProjectList() {
   const { user } = useContext(UserContext);
@@ -27,7 +28,8 @@ export default function ProjectList() {
           // Check if data is an array
           if (Array.isArray(data) && data.length >= 1) {
             // Set the state with the received data
-            // setProjects(data);
+            let sortedData = pruneData(data)
+            setProjects(sortedData);
           }
         })
         .catch((error) => {
@@ -51,7 +53,7 @@ export default function ProjectList() {
           </Link>
         }
         {projects.length === 0 && loading === true && <h2 className="text-center mt-5">Loading...</h2>}
-        {projects.length > 0 && loading === false && <h2 className="text-center mt-5">Your Search Results</h2>}
+        {projects.length > 0 && loading === false && <h2 className="text-center mt-5">Best Fits For You</h2>}
         {projects.length === 0 && loading === false ? <h2 className="text-center mt-5">No Results Found</h2> : <ProjectCardList featuredProjects={projects} />}
       </Container>
     </>
