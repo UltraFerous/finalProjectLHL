@@ -103,12 +103,14 @@ const orgAdminApplications = function(userId) {
   return db
     .query(`
     SELECT
-    applications.user_id as applicant, applications.text as text
+    applications.user_id as applicant, applications.text as text, users.username as username, projects.name as projectname, users.image as userimage
     FROM organizations
     JOIN projects
     ON organizations.id = projects.organization_id
     JOIN applications
     ON projects.id = applications.project_id
+    JOIN users
+    ON applications.user_id = users.id
     WHERE organizations.user_id = $1
     `, 
     [userId])
