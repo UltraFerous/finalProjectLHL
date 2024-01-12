@@ -29,7 +29,6 @@ router.post('/', (req, res) => {
 
 // edit individual project details
 router.patch('/:id', (req, res) => {
-  console.log("GOT IT ", req.body.id, req.body)
   modifyProjectWithObject(req.body.id, req.body)
   .then((projectData) => {
     console.log("All DONE!")

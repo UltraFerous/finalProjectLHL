@@ -6,11 +6,12 @@ import axios from "axios";
 
 export default function UserProfile() {
   const { id } = useParams();
+  const parsedId = parseInt(id, 10); // Ensure it's a number
   const [userData, setUserData] = useState(null);
   const [tags, setTags] = useState([]);
   const [projects, setProjects] = useState([]);
   const [applications, setApplications] = useState([]);
-  const { user, userLoaded } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     const fetchUserDetails = () => {
@@ -38,10 +39,10 @@ export default function UserProfile() {
                 }));
                 setTags(tagsList);
               } else {
-                setUserData(null);
+                setTags([]);
               }
 
-              // Map tags if tagsArray is an array
+              // Map projects if projectsArray is an array
               if (Array.isArray(projectsArray)) {
                 const projectsList = projectsArray.map((project) => ({
                   id: project.id,
@@ -50,7 +51,7 @@ export default function UserProfile() {
                 }));
                 setProjects(projectsList);
               } else {
-                setUserData(null);
+                setProjects([]);
               }
 
               // Map applications if applicationsArray is an array
@@ -67,14 +68,14 @@ export default function UserProfile() {
                 );
                 setApplications(applicationsList);
               } else {
-                setUserData(null);
+                setApplications([]);
               }
             }
           }
         })
         .catch((error) => {
           console.error("Error fetching user details:", error);
-          setUserData({});
+          setUserData(null);
         });
     };
 
@@ -104,7 +105,7 @@ export default function UserProfile() {
               <p className="text-center">{userData && userData.description}</p>
             </Row>
             <Row>
-              <h5>Skills</h5>
+              <h5 className="mb-3">Skills</h5>
             </Row>
             <Row className="mb-5">
               {tags.map((tag) => (
@@ -114,8 +115,12 @@ export default function UserProfile() {
               ))}
             </Row>
             <Row>
-              <h5>
-                Projects {userData && userData.username} is contributing to
+              <h5 className="mb-2">
+                {user && user.id === parsedId
+                  ? "Projects you are contributing to"
+                  : `Projects ${
+                      userData && userData.username
+                    } is contributing to`}
               </h5>
             </Row>
             <Row className="mb-5" style={{ marginTop: "10px" }}>
@@ -142,21 +147,27 @@ export default function UserProfile() {
                 </Col>
               ))}
             </Row>
-            <Row className="mb-5">
-              <Button variant="success">Contact Me</Button>
-            </Row>
-            {userData && userData.admin && (
-              <>
+            {user && user.id === parsedId ? (
+              <div></div> // Render an empty div if the condition is true
+            ) : (
+              <Row className="mb-5">
+                <Button variant="success">Contact Me</Button>
+              </Row>
+            )}
+            {user && user.id === parsedId && applications.length > 0 && (
+              <div
+                style={{ borderTop: `2px solid #208C27`, paddingTop: "30px" }}
+              >
                 <Row>
                   <h5>Applications for your review</h5>
                 </Row>
                 <Row
-                  className="mb-5d-flex flex-column"
+                  className="mb-5 d-flex flex-column"
                   style={{ marginTop: "10px" }}
                 >
                   {applications.map((application) => (
                     <Col
-                      className=" bg-light col-auto mt-3 mb-4"
+                      className="bg-light col-auto mt-3 mb-4"
                       key={application.id}
                     >
                       <h5 style={{ color: "#212529" }}>
@@ -186,7 +197,7 @@ export default function UserProfile() {
                     </Col>
                   ))}
                 </Row>
-              </>
+              </div>
             )}
           </Col>
         </Row>
