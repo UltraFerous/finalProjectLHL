@@ -193,6 +193,25 @@ const findAcceptedApplicationsForProject = (projectID) => {
   });
 };
 
+const findProjectsByTag = (tagID) => {
+  return db
+  .query(`
+  SELECT
+  projects.*, organizations.name as orgname
+  FROM projects
+  JOIN organizations ON projects.organization_id = organizations.id
+  JOIN assigned_tags_projects ON projects.id = assigned_tags_projects.project_id
+  JOIN tags ON assigned_tags_projects.tag_id = tags.id
+  WHERE tags.id = $1
+  `, [tagID])
+  .then(result => {
+    return result.rows;
+  })
+  .catch(err => {
+    console.log('Error:', err);
+  });
+};
+
 module.exports = { allProjectData, 
   projectDataSearchID, 
   projectDataSearchName, 
@@ -203,5 +222,6 @@ module.exports = { allProjectData,
   browseProjects,
   findProjectsForOrg,
   findPendingApplicationsForProject,
-  findAcceptedApplicationsForProject
+  findAcceptedApplicationsForProject,
+  findProjectsByTag
  };

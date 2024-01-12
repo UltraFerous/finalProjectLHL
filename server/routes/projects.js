@@ -1,22 +1,22 @@
 const express = require('express');
 const router = express.Router();
 
-const { projectDataSearchID, findUsersWithProject, findTagsForProject, allProjectData, browseProjects } = require('../db/queries/projects.js');
+const { projectDataSearchID, findUsersWithProject, findTagsForProject, allProjectData, browseProjects, findProjectsByTag } = require('../db/queries/projects.js');
 
-const{ findProjectAdmin } =require('../db/queries/developers.js');
+const { findProjectAdmin, findTagsForUser } = require('../db/queries/developers.js');
 
 // import query helper functions and use them in routes
 
 // projects list page
 router.get('/', (req, res) => {
   allProjectData()
-  .then((allProjectData) => {
-    res.status(200).json(allProjectData);
-  })
-  .catch((err) => {
-    console.error("ERROR:", err.message);
-    res.status(500).json({ error: 'Internal server error' });
-  });
+    .then((allProjectData) => {
+      res.status(200).json(allProjectData);
+    })
+    .catch((err) => {
+      console.error("ERROR:", err.message);
+      res.status(500).json({ error: 'Internal server error' });
+    });
 });
 
 // project search
@@ -26,6 +26,44 @@ router.get('/search/:searchTerm', (req, res) => {
   browseProjects(searchTerm)
     .then(projectData => {
       res.status(200).json(projectData);
+    })
+    .catch(err => {
+      console.error("ERROR:", err.message);
+      res.status(500).json({ error: "Internal server error" });
+    });
+});
+
+// project search
+router.get('/quicksearch/:searchTerm', (req, res) => {
+  const searchTerm = req.params.searchTerm;
+
+  findTagsForUser(searchTerm)
+    .then(userTags => {
+      if (userTags.length = 0) {
+        res.status(404).json({ error: 'No user data found to search with' });
+      }
+      const tagsOfUser = [];
+      for (let tag in userTags) {
+        tagsOfUser.push(userTags[tag].tag_id);
+      }
+
+      const mapLoop = async () => {
+        console.log('Start')
+          const promises = await tagsOfUser.map(async tag => {
+            const projects = new Promise((resolve, reject) => {
+            findProjectsByTag(tag)
+            });
+          return projects
+        })
+        const numFruits = await Promise.all(promises)
+        console.log(numFruits)
+    }
+    
+    })
+    .then(projectResults => {
+      console.log("Sent!");
+      console.log(projectResults);
+      res.status(200).json(projectResults);
     })
     .catch(err => {
       console.error("ERROR:", err.message);
@@ -60,7 +98,7 @@ router.get('/:id/details', async (req, res) => {
 
   // call first query helper func
   projectDataSearchID(project_id)
-    .then(projectData  => {
+    .then(projectData => {
       responseArray.push(projectData);
       // call second query helper func
       return findUsersWithProject(project_id);

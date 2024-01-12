@@ -14,6 +14,7 @@ import RegisterUser from "./pages/RegisterUser";
 import OrgProfile from "./pages/OrgProfile";
 import CreateOrg from "./pages/CreateOrg";
 import OrgList from "./pages/OrgList";
+import QuickProjectList from "./pages/QuickProjectList";
 import { UserProvider } from './context/UserContext';
 import "./styles/App.css"
 
@@ -26,6 +27,7 @@ function App() {
         <Route path="/projects">
           <Route index element={<ProjectList />} />
           <Route path="search/:searchTerm" element={<ProjectList />} />
+          <Route path="quicksearch/:searchTerm" element={<QuickProjectList />} />
           <Route path="create" element={<CreateProject />} />
           <Route path=":id/apply" element={<ProjectApplication />} />
           <Route path=":id" element={<Project />} />
