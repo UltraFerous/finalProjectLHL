@@ -33,7 +33,7 @@ export default function OrgList() {
     };
 
     fetchCardDetails();
-  }, []);
+  }, [endpoint]);
 
   return (
     <>

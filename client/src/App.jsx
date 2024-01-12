@@ -23,7 +23,7 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/projects">
+        <Route path="/projects" element={<ProjectList />}>
           <Route index element={<ProjectList />} />
           <Route path="search/:searchTerm" element={<ProjectList />} />
           <Route path="create" element={<CreateProject />} />
