@@ -70,7 +70,7 @@ const checkOrgAdmin = function(orgID) {
     SELECT
     user_id, users.username, users.image
     FROM organizations
-    JOIN users
+    RIGHT JOIN users
     ON users.id = organizations.user_id
     WHERE organizations.id = $1 
     `, [orgID])
