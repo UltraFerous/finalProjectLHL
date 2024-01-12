@@ -53,7 +53,7 @@ export default function ProjectList() {
           </Link>
         }
         {projects.length === 0 && loading === true && <h2 className="text-center mt-5">Loading...</h2>}
-        {projects.length > 0 && loading === false && <h2 className="text-center mt-5">Best Fits For You</h2>}
+        {projects.length > 0 && loading === false && <h2 className="text-center mt-5">Best Projects For You</h2>}
         {projects.length === 0 && loading === false ? <h2 className="text-center mt-5">No Results Found</h2> : <ProjectCardList featuredProjects={projects} />}
       </Container>
     </>

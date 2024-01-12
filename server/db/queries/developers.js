@@ -37,6 +37,26 @@ const findUsersByTag = (tagID) => {
   });
 };
 
+const findUsersByTagDetails = (tagID) => {
+  return db
+  .query(`
+  SELECT
+  users.*
+  FROM users
+  JOIN assigned_tags_users
+  ON assigned_tags_users.user_id = users.id
+  LEFT JOIN developers_information ON developers_information.user_id = users.id
+  WHERE assigned_tags_users.tag_id = $1
+  GROUP BY users.id
+  `, [tagID])
+  .then(result => {
+    return result.rows;
+  })
+  .catch(err => {
+    console.log('Error:', err);
+  });
+};
+
 const findTagsForUser = (userID) => {
   return db
   .query(`
@@ -91,4 +111,4 @@ const findUserProjects = (userID) => {
   });
 };
 
-module.exports = { findProjectAdmin, findUsersByTag, findTagsForUser, findPostsForUser, findUserProjects };
+module.exports = { findProjectAdmin, findUsersByTag, findTagsForUser, findPostsForUser, findUserProjects, findUsersByTagDetails };
