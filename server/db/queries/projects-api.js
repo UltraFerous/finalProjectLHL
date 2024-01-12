@@ -52,7 +52,6 @@ const modifyProjectWithValues = (projectID, name, description, status, image) =>
 
 const modifyProjectWithObject = (projectID, projectObj) => {
   const { name, description, status, image } = projectObj;
-  console.log("HERE IS OUR DATA: ", projectObj);
   return db
     .query(`
   UPDATE projects
