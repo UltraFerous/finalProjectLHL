@@ -52,7 +52,6 @@ const modifyProjectWithValues = (projectID, name, description, status, image) =>
 
 const modifyProjectWithObject = (projectID, projectObj) => {
   const { name, description, status, image } = projectObj;
-  console.log("HERE IS OUR DATA: ", projectObj);
   return db
     .query(`
   UPDATE projects
@@ -148,6 +147,20 @@ const removeUserFromProject = (applicationObj) => {
     });
 };
 
+const addProjectPost = (postObj) => {
+  const { text, project_id } = postObj;
+  return db
+    .query(`
+  INSERT INTO posts (text, project_id) VALUES
+  ($1, $2)
+  `, [text, project_id])
+    .then(result => {
+      return result.rows[0];
+    })
+    .catch(err => {
+      console.log('Error:', err);
+    });
+};
 
 module.exports = {
   createProjectWithValues,
@@ -158,5 +171,6 @@ module.exports = {
   removeTagFromProject,
   applyForProject,
   acceptUserForProject,
-  removeUserFromProject
+  removeUserFromProject,
+  addProjectPost,
 };

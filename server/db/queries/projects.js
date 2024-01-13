@@ -54,12 +54,9 @@ const findPostsForProject = (projectID) => {
   return db
   .query(`
   SELECT
-  linked_users_posts.user_id, posts.text
+  *
   FROM posts
-  JOIN linked_users_posts
-  ON posts.id = linked_users_posts.post_id
-  WHERE posts.project_id = $1
-  `, [projectID])
+  WHERE posts.project_id = $1`, [projectID] )
   .then(result => {
     return result.rows;
   })

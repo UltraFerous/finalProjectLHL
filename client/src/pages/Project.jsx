@@ -2,7 +2,16 @@ import { useState, useEffect, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
-import { Container, Row, Col, Image, Button } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Image,
+  Button,
+  Card,
+  Modal,
+  Form,
+} from "react-bootstrap";
 
 export default function Project() {
   const { id } = useParams();
@@ -10,10 +19,49 @@ export default function Project() {
   const [tags, setTags] = useState([]);
   const [contributors, setContributors] = useState([]);
   const [projectAdmin, setprojectAdmin] = useState([]);
-  const { user, userLoaded } = useContext(UserContext);
+  const [projectPosts, setProjectPosts] = useState([]);
+  const { user } = useContext(UserContext);
+  const [show, setShow] = useState(false);
+  const [postFormText, setPostFormText] = useState("");
 
   const isProjectAdmin = () => {
-      return projectAdmin === user.id;
+    return projectAdmin === user.id;
+  };
+
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const postData = {
+      project_id: id,
+      text: postFormText,
+    }
+    axios.post(`http://localhost:8080/api/projects/${id}/addpost`, postData)
+    .then(() => {
+      setShow(false);
+
+      // Fetch the updated posts from the server
+      axios.get(`http://localhost:8080/projects/${id}/details`)
+        .then((response) => {
+          const postsArray = response.data[4];
+
+          // Map the updated posts and update the state
+          if (Array.isArray(postsArray)) {
+            const updatedPosts = postsArray.map((post) => ({
+              id: post.id,
+              text: post.text,
+            }));
+            setProjectPosts(updatedPosts);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching updated posts:", error);
+        });
+    })
+    .catch((error) => {
+      console.error("Error submitting post:", error);
+    });
   };
 
   useEffect(() => {
@@ -28,6 +76,7 @@ export default function Project() {
             const contributorsArray = data[1];
             const tagsArray = data[2];
             const adminArray = data[3];
+            const postsArray = data[4];
 
             // Check if projectDetails is an array with expected properties
             if (Array.isArray(projectDetails) && projectDetails.length > 0) {
@@ -56,6 +105,15 @@ export default function Project() {
               if (Array.isArray(adminArray) && adminArray.length > 0) {
                 setprojectAdmin(adminArray[0].id);
               }
+
+              // Map postsArray if postsArray is an array
+              if (Array.isArray(postsArray)) {
+                const postsList = postsArray.map((post) => ({
+                  id: post.id,
+                  text: post.text,
+                }));
+                setProjectPosts(postsList);
+              }
             } else {
               setProject(null);
             }
@@ -82,7 +140,9 @@ export default function Project() {
             </Row>
             <Row className="mb-4 text-center">
               <Link to={`/org/${project && project.organization_id}`}>
-              <h3 style={{ color: "#212529" }}>{project && project.orgname}</h3>
+                <h3 style={{ color: "#212529" }}>
+                  {project && project.orgname}
+                </h3>
               </Link>
             </Row>
 
@@ -111,7 +171,9 @@ export default function Project() {
             </Row>
             {user && project && !isProjectAdmin() && (
               <Link to={`/projects/${project.id}/apply`}>
-                <Button variant="primary" className="text-white mb-5">Apply to Work on This Project</Button>
+                <Button variant="primary" className="text-white mb-5">
+                  Apply to Work on This Project
+                </Button>
               </Link>
             )}
             <Row className="mb-3">
@@ -121,22 +183,22 @@ export default function Project() {
               {contributors.map((contributor) => (
                 <Col className="col-auto" key={contributor.id}>
                   <Link to={`/users/${project && contributor.id}`}>
-                  <div
-                    className="d-flex flex-row align-items-center"
-                    style={{ marginRight: "10px" }}
-                  >
-                    <Image
-                      src={contributor.image}
-                      roundedCircle
-                      style={{
-                        width: "80px",
-                        height: "80px",
-                        marginRight: "10px",
-                      }}
-                      alt="User Image"
-                    />
-                    <h6 style={{ color: "#212529" }}>{contributor.name}</h6>
-                  </div>
+                    <div
+                      className="d-flex flex-row align-items-center"
+                      style={{ marginRight: "10px" }}
+                    >
+                      <Image
+                        src={contributor.image}
+                        roundedCircle
+                        style={{
+                          width: "80px",
+                          height: "80px",
+                          marginRight: "10px",
+                        }}
+                        alt="User Image"
+                      />
+                      <h6 style={{ color: "#212529" }}>{contributor.name}</h6>
+                    </div>
                   </Link>
                 </Col>
               ))}
@@ -144,9 +206,45 @@ export default function Project() {
 
             <Col>
             {project && user && isProjectAdmin() && (
-              <Link to={`/projects/${project && project.id}/edit`}>
-                <Button variant="primary" className="text-white mb-5">Edit Project</Button>
-              </Link>
+              <>
+                <div className="d-flex flex-row align-items-center mb-5">
+                  <Link to={`/projects/${project && project.id}/edit`}>
+                    <Button variant="primary" className="text-white">
+                      Edit Project
+                    </Button>
+                  </Link>
+                  <Button onClick={handleShow} className="ms-5">
+                    Add Project Update
+                  </Button>
+                </div>
+                <Modal
+                  show={show}
+                  onHide={handleClose}
+                  size="lg"
+                  aria-labelledby="contained-modal-title-vcenter"
+                  centered
+                >
+                  <Modal.Header closeButton>
+                    <Modal.Title>Project Update</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <Form>
+                      <Form.Group
+                        className="mb-3"
+                        controlId="postForm.ControlTextarea"
+                      >
+                        <Form.Label>What's new with this project?</Form.Label>
+                        <Form.Control as="textarea" rows={3} onChange={(e) => setPostFormText(e.target.value)}/>
+                      </Form.Group>
+                    </Form>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="primary" onClick={handleSubmit}>
+                      Save Post
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+              </>
             )}
           </Col>
 
@@ -157,6 +255,23 @@ export default function Project() {
             </Link>
           )}
           </Col>
+
+
+            <Row className="mb-3">
+              <h5>Project Updates</h5>
+            </Row>
+            <Row
+              className="mb-4 d-flex flex-column"
+              style={{ marginTop: "10px" }}
+            >
+              {projectPosts.map((post) => (
+                <Col className="bg-light col-auto mt-1 mb-2" key={post.id}>
+                  <Card bg="light">
+                    <Card.Body>{post.text}</Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
 
           </Col>
         </Row>
