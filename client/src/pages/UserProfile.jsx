@@ -64,6 +64,7 @@ export default function UserProfile() {
                     image: application.userimage,
                     text: application.text,
                     applicantId: application.applicant,
+                    status: application.status,
                   })
                 );
                 setApplications(applicationsList);
