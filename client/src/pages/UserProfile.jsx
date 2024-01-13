@@ -148,9 +148,6 @@ export default function UserProfile() {
               ))}
             </Row>
 
-            <Row className="mb-5">
-              <Button variant="success">Contact Me</Button>
-            </Row>
             <Row>
             {userData && userData.id === id && (
               <Link to={`/projects/quicksearch/${id}`}>
@@ -158,9 +155,7 @@ export default function UserProfile() {
               </Link>
             )}
             </Row>
-            {userData && userData.admin && (
-              <>
-
+            
             {user && user.id === parsedId ? (
               <div></div> // Render an empty div if the condition is true
             ) : (
