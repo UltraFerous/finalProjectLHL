@@ -21,14 +21,48 @@ export default function Project() {
   const [projectAdmin, setprojectAdmin] = useState([]);
   const [projectPosts, setProjectPosts] = useState([]);
   const { user } = useContext(UserContext);
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
+  const [postFormText, setPostFormText] = useState("");
 
   const isProjectAdmin = () => {
     return projectAdmin === user.id;
   };
 
-  const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const postData = {
+      project_id: id,
+      text: postFormText,
+    }
+    axios.post(`http://localhost:8080/api/projects/${id}/addpost`, postData)
+    .then(() => {
+      setShow(false);
+
+      // Fetch the updated posts from the server
+      axios.get(`http://localhost:8080/projects/${id}/details`)
+        .then((response) => {
+          const postsArray = response.data[4];
+
+          // Map the updated posts and update the state
+          if (Array.isArray(postsArray)) {
+            const updatedPosts = postsArray.map((post) => ({
+              id: post.id,
+              text: post.text,
+            }));
+            setProjectPosts(updatedPosts);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching updated posts:", error);
+        });
+    })
+    .catch((error) => {
+      console.error("Error submitting post:", error);
+    });
+  };
 
   useEffect(() => {
     const fetchProjectDetails = () => {
@@ -199,13 +233,13 @@ export default function Project() {
                         controlId="postForm.ControlTextarea"
                       >
                         <Form.Label>What's new with this project?</Form.Label>
-                        <Form.Control as="textarea" rows={3} />
+                        <Form.Control as="textarea" rows={3} onChange={(e) => setPostFormText(e.target.value)}/>
                       </Form.Group>
                     </Form>
                   </Modal.Body>
                   <Modal.Footer>
-                    <Button variant="primary" onClick={handleClose}>
-                      Save Changes
+                    <Button variant="primary" onClick={handleSubmit}>
+                      Save Post
                     </Button>
                   </Modal.Footer>
                 </Modal>

@@ -56,12 +56,12 @@ router.post('/:id/apply', (req, res) => {
 router.post('/:id/addpost', (req, res) => {
   addProjectPost(req.body)
   .then((response) => {
-    res.status(200);
+    res.status(200).json(response);
   })
   .catch((err) => {
     console.error("ERROR:", err.message);
     res.status(500).json({ error: 'Internal server error' });
-  })
+  });
 })
 
 module.exports = router;
