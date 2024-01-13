@@ -21,7 +21,9 @@ export default function UserProfile() {
   const [applications, setApplications] = useState([]);
   const { user } = useContext(UserContext);
 
-  const acceptApplicationClick = () => {};
+  const acceptApplicationClick = () => {
+    
+  };
 
   useEffect(() => {
     const fetchUserDetails = () => {
