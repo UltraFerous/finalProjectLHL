@@ -19,7 +19,6 @@ router.get('/:otherUserId', (req, res) => {
   // call helper query func to return all messages between two users
   allMessages(currentUserId, otherUserId)
     .then(messageData => {
-      console.log(messageData);
       res.status(200).json(messageData);
     })
     .catch(err => {

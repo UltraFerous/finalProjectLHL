@@ -36,6 +36,7 @@ const orgsApiRoutes = require('./routes/orgs-api');
 const orgsRoutes = require('./routes/orgs');
 const developersRoutes = require('./routes/developers');
 const messagesRoutes = require('./routes/messages.js');
+const messagesApiRoutes = require('./routes/messages-api.js');
 
 // mount all resource routes
 // note: endpoints that return data (eg. JSON) usually start with `/api`
@@ -47,6 +48,7 @@ app.use('/developers', developersRoutes);
 app.use('/api/org', orgsApiRoutes);
 app.use('/org', orgsRoutes);
 app.use('/messages', messagesRoutes);
+app.use('/api/messages', messagesApiRoutes);
 
 // Home Page
 app.get('/api', (req, res) => {
