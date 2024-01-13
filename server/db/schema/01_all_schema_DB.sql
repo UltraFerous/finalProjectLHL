@@ -13,3 +13,4 @@
 \i db/schema/11_developer_information.sql
 \i db/schema/13_project_status_types.sql
 \i db/schema/14_assigned_tags_projects.sql
+\i db/schema/15_direct_messages.sql
