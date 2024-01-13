@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
-import { Container, Row, Col, Image, Button } from "react-bootstrap";
+import { Container, Row, Col, Image, Button, Card } from "react-bootstrap";
 
 export default function Project() {
   const { id } = useParams();
@@ -23,7 +23,6 @@ export default function Project() {
         .get(`http://localhost:8080/projects/${id}/details`)
         .then((response) => {
           const data = response.data;
-          console.log(data);
           // Check if data is an array and has at least three elements
           if (Array.isArray(data) && data.length >= 3) {
             const projectDetails = data[0];
@@ -170,12 +169,14 @@ export default function Project() {
               <h5>Project Updates</h5>
             </Row>
             <Row
-              className="mb-5 d-flex flex-column"
+              className="mb-4 d-flex flex-column"
               style={{ marginTop: "10px" }}
             >
               {projectPosts.map((post) => (
-                <Col className="bg-light col-auto mt-3 mb-4" key={post.id}>
-                  <p>{post.text}</p>
+                <Col className="bg-light col-auto mt-1 mb-2" key={post.id}>
+                  <Card bg="light">
+                  <Card.Body>{post.text}</Card.Body>
+                  </Card>
                 </Col>
               ))}
             </Row>
