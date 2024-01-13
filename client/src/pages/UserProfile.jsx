@@ -22,7 +22,7 @@ export default function UserProfile() {
   const { user } = useContext(UserContext);
 
   const acceptApplicationClick = () => {
-    
+
   };
 
   useEffect(() => {
@@ -193,10 +193,10 @@ export default function UserProfile() {
                     <Card key={application.id} className="mt-3 mb-4">
                       <Card.Header>
                         <Row className="align-items-center">
-                          <Col>
+                          <Col xs={8}>
                             <h5>{application.projectName} Project</h5>
                           </Col>
-                          <Col className="text-end">
+                          <Col xs={4} className="text-end">
                             <Badge pill bg="primary">
                               {application.status}
                             </Badge>
