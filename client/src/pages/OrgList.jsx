@@ -9,6 +9,7 @@ export default function OrgList() {
   const { user } = useContext(UserContext);
   const [orgs, setOrgs] = useState([]);
   const location = useLocation();
+  const [loading, setLoading] = useState(true);
   // conditional endpoint for regular organizations page and search results page
   const endpoint = location.pathname.startsWith("/org/search")
     ? `http://localhost:8080${location.pathname}`
@@ -20,7 +21,8 @@ export default function OrgList() {
         .get(endpoint)
         .then((response) => {
           const data = response.data;
-
+          setLoading(false);
+          
           // Check if data is an array
           if (Array.isArray(data) && data.length >= 1) {
             // Set the state with the received data
@@ -45,8 +47,9 @@ export default function OrgList() {
             </button>
           </Link>
         }
-        <h2 className="text-center mt-5">Your Search Results</h2>
-        <OrgCardList orgs={orgs} />
+        {orgs.length === 0 && loading === true && <h2 className="text-center mt-5">Loading...</h2>}
+        {orgs.length > 0 && loading === false && <h2 className="text-center mt-5">Your Search Results</h2>}
+        {orgs.length === 0 && loading === false ? <h2 className="text-center mt-5">No Results Found</h2> : <OrgCardList orgs={orgs} />}
       </Container>
     </>
   );

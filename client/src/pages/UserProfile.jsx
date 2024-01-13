@@ -147,6 +147,20 @@ export default function UserProfile() {
                 </Col>
               ))}
             </Row>
+
+            <Row className="mb-5">
+              <Button variant="success">Contact Me</Button>
+            </Row>
+            <Row>
+            {userData && userData.id === id && (
+              <Link to={`/projects/quicksearch/${id}`}>
+                <Button variant="primary" className="text-white mb-5">Quick Search For Projects</Button>
+              </Link>
+            )}
+            </Row>
+            {userData && userData.admin && (
+              <>
+
             {user && user.id === parsedId ? (
               <div></div> // Render an empty div if the condition is true
             ) : (
@@ -158,6 +172,7 @@ export default function UserProfile() {
               <div
                 style={{ borderTop: `2px solid #208C27`, paddingTop: "30px" }}
               >
+
                 <Row>
                   <h5>Applications for your review</h5>
                 </Row>

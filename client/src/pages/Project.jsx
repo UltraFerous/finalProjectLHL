@@ -204,6 +204,7 @@ export default function Project() {
               ))}
             </Row>
 
+            <Col>
             {project && user && isProjectAdmin() && (
               <>
                 <div className="d-flex flex-row align-items-center mb-5">
@@ -245,6 +246,16 @@ export default function Project() {
                 </Modal>
               </>
             )}
+          </Col>
+
+          <Col>
+          {project && user && isProjectAdmin() && (
+            <Link to={`/developers/quicksearch/${project && project.id}`}>
+              <Button variant="primary" className="text-white mb-5">Quick Search For Developers</Button>
+            </Link>
+          )}
+          </Col>
+
 
             <Row className="mb-3">
               <h5>Project Updates</h5>
@@ -261,6 +272,7 @@ export default function Project() {
                 </Col>
               ))}
             </Row>
+
           </Col>
         </Row>
       </Container>
