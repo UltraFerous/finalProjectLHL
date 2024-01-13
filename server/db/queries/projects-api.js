@@ -147,12 +147,13 @@ const removeUserFromProject = (applicationObj) => {
     });
 };
 
-const addProjectPost = (text, projectId) => {
+const addProjectPost = (postObj) => {
+  const { text, project_id } = postObj;
   return db
     .query(`
-  INSERT INTO posts (text, projectId) VALUES
+  INSERT INTO posts (text, project_id) VALUES
   ($1, $2)
-  `, [text, projectId])
+  `, [text, project_id])
     .then(result => {
       return result.rows[0];
     })
