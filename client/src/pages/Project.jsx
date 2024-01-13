@@ -2,7 +2,16 @@ import { useState, useEffect, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
-import { Container, Row, Col, Image, Button, Card } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Image,
+  Button,
+  Card,
+  Modal,
+  Form,
+} from "react-bootstrap";
 
 export default function Project() {
   const { id } = useParams();
@@ -11,11 +20,15 @@ export default function Project() {
   const [contributors, setContributors] = useState([]);
   const [projectAdmin, setprojectAdmin] = useState([]);
   const [projectPosts, setProjectPosts] = useState([]);
-  const { user, userLoaded } = useContext(UserContext);
+  const { user } = useContext(UserContext);
+  const [show, setShow] = useState(true);
 
   const isProjectAdmin = () => {
     return projectAdmin === user.id;
   };
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     const fetchProjectDetails = () => {
@@ -158,11 +171,45 @@ export default function Project() {
             </Row>
 
             {project && user && isProjectAdmin() && (
-              <Link to={`/projects/${project && project.id}/edit`}>
-                <Button variant="primary" className="text-white mb-5">
-                  Edit Project
-                </Button>
-              </Link>
+              <>
+                <div className="d-flex flex-row align-items-center mb-5">
+                  <Link to={`/projects/${project && project.id}/edit`}>
+                    <Button variant="primary" className="text-white">
+                      Edit Project
+                    </Button>
+                  </Link>
+                  <Button onClick={handleShow} className="ms-5">
+                    Add Project Update
+                  </Button>
+                </div>
+                <Modal
+                  show={show}
+                  onHide={handleClose}
+                  size="lg"
+                  aria-labelledby="contained-modal-title-vcenter"
+                  centered
+                >
+                  <Modal.Header closeButton>
+                    <Modal.Title>Project Update</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <Form>
+                      <Form.Group
+                        className="mb-3"
+                        controlId="postForm.ControlTextarea"
+                      >
+                        <Form.Label>What's new with this project?</Form.Label>
+                        <Form.Control as="textarea" rows={3} />
+                      </Form.Group>
+                    </Form>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="primary" onClick={handleClose}>
+                      Save Changes
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+              </>
             )}
 
             <Row className="mb-3">
@@ -175,7 +222,7 @@ export default function Project() {
               {projectPosts.map((post) => (
                 <Col className="bg-light col-auto mt-1 mb-2" key={post.id}>
                   <Card bg="light">
-                  <Card.Body>{post.text}</Card.Body>
+                    <Card.Body>{post.text}</Card.Body>
                   </Card>
                 </Col>
               ))}
