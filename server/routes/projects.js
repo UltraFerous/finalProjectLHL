@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const { projectDataSearchID, findUsersWithProject, findTagsForProject, allProjectData, browseProjects, findProjectsByTag } = require('../db/queries/projects.js');
+
+const { projectDataSearchID, findUsersWithProject, findTagsForProject, allProjectData, browseProjects, findPostsForProject, findProjectsByTag } = require('../db/queries/projects.js');
 
 const { findProjectAdmin, findTagsForUser } = require('../db/queries/developers.js');
 
@@ -107,6 +108,10 @@ router.get('/:id/details', async (req, res) => {
     })
     .then(projectAdminData => {
       responseArray.push(projectAdminData);
+      return findPostsForProject(project_id);
+    })
+    .then(projectPostData => {
+      responseArray.push(projectPostData);
     })
     .then(() => res.status(200).json(responseArray))
     .catch((err) => {
