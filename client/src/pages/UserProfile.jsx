@@ -145,6 +145,13 @@ export default function UserProfile() {
             <Row className="mb-5">
               <Button variant="success">Contact Me</Button>
             </Row>
+            <Row>
+            {userData && userData.id === id && (
+              <Link to={`/projects/quicksearch/${id}`}>
+                <Button variant="primary" className="text-white mb-5">Quick Search For Projects</Button>
+              </Link>
+            )}
+            </Row>
             {userData && userData.admin && (
               <>
                 <Row>

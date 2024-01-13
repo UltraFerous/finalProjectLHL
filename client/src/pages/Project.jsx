@@ -142,13 +142,22 @@ export default function Project() {
               ))}
             </Row>
 
+            <Col>
             {project && user && isProjectAdmin() && (
               <Link to={`/projects/${project && project.id}/edit`}>
                 <Button variant="primary" className="text-white mb-5">Edit Project</Button>
               </Link>
             )}
+          </Col>
 
-            
+          <Col>
+          {project && user && isProjectAdmin() && (
+            <Link to={`/developers/quicksearch/${project && project.id}`}>
+              <Button variant="primary" className="text-white mb-5">Quick Search For Developers</Button>
+            </Link>
+          )}
+          </Col>
+
           </Col>
         </Row>
       </Container>
