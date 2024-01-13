@@ -147,6 +147,19 @@ const removeUserFromProject = (applicationObj) => {
     });
 };
 
+const addProjectPost = (text, projectId) => {
+  return db
+    .query(`
+  INSERT INTO posts (text, projectId) VALUES
+  ($1, $2)
+  `, [text, projectId])
+    .then(result => {
+      return result.rows[0];
+    })
+    .catch(err => {
+      console.log('Error:', err);
+    });
+};
 
 module.exports = {
   createProjectWithValues,
@@ -157,5 +170,6 @@ module.exports = {
   removeTagFromProject,
   applyForProject,
   acceptUserForProject,
-  removeUserFromProject
+  removeUserFromProject,
+  addProjectPost,
 };
