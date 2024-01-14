@@ -60,7 +60,6 @@ export const UserProvider = ({ children }) => {
         .get(`http://localhost:8080/messages/${userId}`)
         .then((response) => {
           // Count messages with is_read set to false
-          console.log(response);
           const count = response.data.reduce(
             (acc, message) =>
               message.receiver_id === userId && !message.is_read
@@ -98,6 +97,8 @@ export const UserProvider = ({ children }) => {
         updateLoading,
         isLoading,
         newMessageCount,
+        updateNewMessageCount,
+        fetchMessages,
       }}
     >
       {children}

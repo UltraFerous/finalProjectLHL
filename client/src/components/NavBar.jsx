@@ -12,7 +12,7 @@ import Badge from "react-bootstrap/Badge";
 import appLogo from "../images/good-dev-logo-white.png";
 
 export default function NavBar() {
-  const { updateCurrentUser, user, userLoaded, newMessageCount } =
+  const { updateCurrentUser, user, userLoaded, newMessageCount, updateNewMessageCount } =
     useContext(UserContext);
 
   const navigate = useNavigate();
@@ -33,6 +33,8 @@ export default function NavBar() {
 
           // Update user state
           updateCurrentUser(null);
+
+          updateNewMessageCount(0);
 
           // Redirect to the home page
           navigate("/");

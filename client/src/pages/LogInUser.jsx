@@ -6,7 +6,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 export default function LogInUser() {
-  const { updateCurrentUser } = useContext(UserContext);
+  const { updateCurrentUser, fetchMessages } = useContext(UserContext);
   const navigate = useNavigate();
 
   const [loginData, setLoginData] = useState({
@@ -41,6 +41,7 @@ export default function LogInUser() {
         if (response.status === 200) {
           const userData = response.data;
           updateCurrentUser(userData);
+          fetchMessages();
           // Redirect to the home page
           navigate("/");
         } else {
@@ -66,6 +67,7 @@ export default function LogInUser() {
         if (response.status === 200) {
           const userData = response.data;
           updateCurrentUser(userData);
+          fetchMessages();
           // Redirect to the home page
           navigate("/");
         } else {
