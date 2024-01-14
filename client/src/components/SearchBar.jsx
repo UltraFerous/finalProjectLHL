@@ -10,6 +10,7 @@ export default function SearchBar(props) {
   const onSubmit = (e) => {
     e.preventDefault();
 
+    // Do not search if there is no input
     if(searchInput.length === 0){
       return 
     }
