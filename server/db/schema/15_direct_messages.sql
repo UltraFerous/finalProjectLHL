@@ -7,5 +7,6 @@ CREATE TABLE direct_messages (
   sender_id INTEGER REFERENCES users(id) NOT NULL,
   receiver_id INTEGER REFERENCES users(id) NOT NULL,
   message_text TEXT NOT NULL,
-  sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  is_read BOOLEAN DEFAULT FALSE
 );
