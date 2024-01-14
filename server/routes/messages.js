@@ -12,8 +12,8 @@ router.use(
 );
 
 // get all message threads for logged in user
-router.get('/', (req, res) => {
-  const currentUserId = req.session.userId;
+router.get('/:userId', (req, res) => {
+  const currentUserId = req.params.userId;
 
   // call helper query function
   allMessageThreads(currentUserId)

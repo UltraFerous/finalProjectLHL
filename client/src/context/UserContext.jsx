@@ -20,7 +20,7 @@ export const UserProvider = ({ children }) => {
 
   const updateLoading = (loadingStatus) => {
     setIsLoading(loadingStatus);
-  }
+  };
 
   const updateCurrentUser = (userData) => {
     setUser(userData);
@@ -46,20 +46,32 @@ export const UserProvider = ({ children }) => {
     });
   };
 
-  const updateNewMessages = (hasNewMessages) => {
-    setNewMessages(hasNewMessages);
-  };
+  const updateNewMessages = (status) => {
+    setNewMessages(status);
+  }
 
   const fetchMessages = () => {
-    axios
-      .get("http://localhost:8080/messages")
-      .then((response) => {
-        // Handle the response data as needed
-        console.log("Messages:", response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching messages:", error);
-      });
+    const storedUser = localStorage.getItem("user");
+    const userId = storedUser ? JSON.parse(storedUser).user.id : null;
+
+    if (userId) {
+      axios
+        .get(`http://localhost:8080/messages/${userId}`)
+        .then((response) => {
+          // Check if there are new messages with is-read set to false
+          const hasNewMessages = response.data.some(
+            (message) => message.receiver_id === userId && !message.is_read
+          );
+
+          // Update the newMessages state
+          updateNewMessages(hasNewMessages);
+        })
+        .catch((error) => {
+          console.error("Error fetching messages:", error);
+        });
+    } else {
+      console.warn("User information not available yet.");
+    }
   };
 
   useEffect(() => {
