@@ -9,6 +9,9 @@ export const UserProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [newMessageCount, setNewMessageCount] = useState(0);
 
+  const storedUser = localStorage.getItem("user");
+  const userId = storedUser ? JSON.parse(storedUser).user.id : null;
+
   //functions related to user go here
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -51,8 +54,7 @@ export const UserProvider = ({ children }) => {
   }
 
   const fetchMessages = () => {
-    const storedUser = localStorage.getItem("user");
-    const userId = storedUser ? JSON.parse(storedUser).user.id : null;
+
 
     if (userId) {
       axios
@@ -84,7 +86,7 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     fetchMessages();
-  }, []);
+  }, [userId]);
 
   return (
     <UserContext.Provider

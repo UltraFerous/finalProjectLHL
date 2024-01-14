@@ -79,7 +79,7 @@ export default function NavBar() {
               className="text-white mx-2"
             />
 
-            {newMessageCount && (
+            {newMessageCount > 0 && (
               <Badge
                 pill
                 bg="danger"
