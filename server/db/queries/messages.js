@@ -4,7 +4,7 @@ const { db } = require('../connection');
 const allMessageThreads = function(user) {
   return db
     .query(`
-      SELECT DISTINCT ON (sender_id, receiver_id)
+      SELECT DISTINCT ON (LEAST(sender_id, receiver_id), GREATEST(sender_id, receiver_id))
         id,
         sender_id,
         receiver_id,
@@ -12,7 +12,7 @@ const allMessageThreads = function(user) {
         sent_at
       FROM direct_messages
       WHERE sender_id = $1 OR receiver_id = $1
-      ORDER BY sender_id, receiver_id, sent_at DESC;
+      ORDER BY LEAST(sender_id, receiver_id), GREATEST(sender_id, receiver_id), sent_at DESC;
     `, [user])
     .then(result => result.rows)
     .catch(err => {
