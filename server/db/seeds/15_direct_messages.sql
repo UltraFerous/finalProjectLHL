@@ -78,7 +78,7 @@ VALUES
   (9, 7, 'Hello from User 9!'),
   (9, 8, 'Hi!'),
   (9, 8, 'How is your day?'),
-  (9, 10, 'Hello from User 9!');
+  (9, 10, 'Hello from User 9!'),
   (9, 10, 'Good to see you!'),
 
   (10, 4, 'Hey there!'),
