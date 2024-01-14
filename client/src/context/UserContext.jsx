@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from "react";
+import axios from "axios";
 
 export const UserContext = createContext();
 
@@ -6,6 +7,7 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [userLoaded, setUserLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [newMessages, setNewMessages] = useState(false);
 
   //functions related to user go here
   useEffect(() => {
@@ -44,9 +46,29 @@ export const UserProvider = ({ children }) => {
     });
   };
 
+  const updateNewMessages = (hasNewMessages) => {
+    setNewMessages(hasNewMessages);
+  };
+
+  const fetchMessages = () => {
+    axios
+      .get("http://localhost:8080/messages")
+      .then((response) => {
+        // Handle the response data as needed
+        console.log("Messages:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching messages:", error);
+      });
+  };
+
   useEffect(() => {
     updateUserWithCookie();
   }, []); // Run once on component mount to handle page refresh
+
+  useEffect(() => {
+    fetchMessages();
+  }, []);
 
   return (
     <UserContext.Provider
@@ -58,6 +80,7 @@ export const UserProvider = ({ children }) => {
         updateCurrentUserWithOrg,
         updateLoading,
         isLoading,
+        newMessages,
       }}
     >
       {children}

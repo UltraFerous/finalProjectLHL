@@ -12,7 +12,8 @@ import Badge from "react-bootstrap/Badge";
 import appLogo from "../images/good-dev-logo-white.png";
 
 export default function NavBar() {
-  const { updateCurrentUser, user, userLoaded } = useContext(UserContext);
+  const { updateCurrentUser, user, userLoaded, newMessages } =
+    useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -70,23 +71,30 @@ export default function NavBar() {
             </Nav.Link>
           )}
         </Nav>
-        <div style={{ position: "relative", display: "inline-block" }}>
-          <FontAwesomeIcon
-            icon={faEnvelope}
-            size="2x"
-            className="text-white mx-3"
-          />
+        {user && (
+          <div style={{ position: "relative", display: "inline-block" }}>
+            <FontAwesomeIcon
+              icon={faEnvelope}
+              size="2x"
+              className="text-white mx-2"
+            />
 
-          {/* {hasNewMessages && ( */}
-          <Badge
-            pill
-            bg="danger"
-            style={{ position: "absolute", top: "10px", right: "10px", fontSize: "0.6rem" }}
-          >
-            8
-          </Badge>
-          {/* )} */}
-        </div>
+            {newMessages && (
+              <Badge
+                pill
+                bg="danger"
+                style={{
+                  position: "absolute",
+                  top: "10px",
+                  right: "10px",
+                  fontSize: "0.6rem",
+                }}
+              >
+                8
+              </Badge>
+            )}
+          </div>
+        )}
         <Nav>
           {!user && (
             <Button as={NavLink} to="/users/login" variant="outline-light">
