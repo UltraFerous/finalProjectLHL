@@ -8,7 +8,7 @@ import {
   Card,
 } from "react-bootstrap";
 import { useState, useEffect, useContext } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
 
@@ -20,6 +20,7 @@ export default function UserProfile() {
   const [projects, setProjects] = useState([]);
   const [applications, setApplications] = useState([]);
   const { user } = useContext(UserContext);
+  const navigate = useNavigate()
 
   const acceptApplicationClick = () => {
 
@@ -31,6 +32,11 @@ export default function UserProfile() {
         .get(`http://localhost:8080/users/${id}/details`)
         .then((response) => {
           const data = response.data;
+          
+          // If data is empty redirect to 404 page
+          if (Array.isArray(data) && data[0].length === 0) {
+            return navigate('/*');
+          }
 
           // Check if data is an array and has at least three elements
           if (Array.isArray(data) && data.length >= 2) {

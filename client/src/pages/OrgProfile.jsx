@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Container, Row, Col, Image, Button } from "react-bootstrap";
 
@@ -8,6 +8,7 @@ export default function OrgProfile() {
   const [org, setOrg] = useState(null);
   const [projects, setProjects] = useState([]);
   const [orgAdmin, setOrgAdmin] = useState(null);
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchOrgDetails = () => {
@@ -15,6 +16,12 @@ export default function OrgProfile() {
         .get(`http://localhost:8080/org/${id}`)
         .then((response) => {
           const data = response.data;
+
+          // If data is empty redirect to 404 page
+          if (Array.isArray(data) && data[0].length === 0) {
+            return navigate('/*');
+          }
+
           if (Array.isArray(data) && data.length >= 3) {
             const orgDetails = data[0];
             const projectsArray = data[1];
