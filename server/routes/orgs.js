@@ -38,7 +38,6 @@ router.get('/:id', (req, res) => {
     responseArray.push(orgAdminData);
   })
     .then(() => {
-      console.log(responseArray);
       res.status(200).json(responseArray);
     })
     .catch((err) => {
