@@ -4,15 +4,19 @@ const { db } = require('../connection');
 const allMessageThreads = function(user) {
   return db
     .query(`
-      SELECT DISTINCT ON (LEAST(sender_id, receiver_id), GREATEST(sender_id, receiver_id))
-        id,
-        sender_id,
-        receiver_id,
-        message_text,
-        sent_at
-      FROM direct_messages
-      WHERE sender_id = $1 OR receiver_id = $1
-      ORDER BY LEAST(sender_id, receiver_id), GREATEST(sender_id, receiver_id), sent_at DESC;
+      SELECT DISTINCT ON (LEAST(dm.sender_id, dm.receiver_id), GREATEST(dm.sender_id, dm.receiver_id))
+        dm.id,
+        dm.sender_id,
+        dm.receiver_id,
+        u.username as receiver_username,
+        u.image as receiver_image,
+        dm.message_text,
+        dm.sent_at,
+        dm.is_read
+      FROM direct_messages dm
+      LEFT JOIN users u ON dm.receiver_id = u.id
+      WHERE dm.sender_id = $1 OR dm.receiver_id = $1
+      ORDER BY LEAST(dm.sender_id, dm.receiver_id), GREATEST(dm.sender_id, dm.receiver_id), dm.sent_at DESC;
     `, [user])
     .then(result => result.rows)
     .catch(err => {

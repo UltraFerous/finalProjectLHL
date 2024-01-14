@@ -16,6 +16,7 @@ import CreateOrg from "./pages/CreateOrg";
 import OrgList from "./pages/OrgList";
 import QuickProjectList from "./pages/QuickProjectList";
 import QuickDeveloperList from "./pages/QuickDeveloperList";
+import MessagesList from "./pages/MessagesList";
 import { UserProvider } from './context/UserContext';
 import "./styles/App.css"
 
@@ -52,6 +53,9 @@ function App() {
           <Route path=":id" element={<OrgProfile />} />
         </Route>
         <Route path="*" element={<NotFound />} />
+        <Route path="/messages">
+          <Route path=":userId" element={<MessagesList />} />
+        </Route>
       </Routes>
     </>
   );

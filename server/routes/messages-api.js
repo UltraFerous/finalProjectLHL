@@ -12,8 +12,8 @@ router.use(
 );
 
 // write a message
-router.post('/:otherUserId', (req, res) => {
-  const currentUserId = req.session.userId;
+router.post('/:userId/:otherUserId', (req, res) => {
+  const currentUserId = req.params.userId;
   const otherUserId = req.params.otherUserId;
   const messageText = req.body.messageText;
 
