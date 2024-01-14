@@ -12,8 +12,9 @@ router.use(
 );
 
 // get all message threads for logged in user
-router.get('/', (req, res) => {
-  const currentUserId = req.session.userId;
+router.get('/:userId', (req, res) => {
+  const currentUserId = req.params.userId;
+  console.log(currentUserId);
 
   // call helper query function
   allMessageThreads(currentUserId)
@@ -27,8 +28,8 @@ router.get('/', (req, res) => {
 });
 
 // get all messages between two users
-router.get('/:otherUserId', (req, res) => {
-  const currentUserId = req.session.userId;
+router.get('/:userId/:otherUserId', (req, res) => {
+  const currentUserId = req.params.userId;
   const otherUserId = req.params.otherUserId;
 
   // call helper query function
