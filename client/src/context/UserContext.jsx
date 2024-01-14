@@ -7,7 +7,7 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [userLoaded, setUserLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [newMessages, setNewMessages] = useState(false);
+  const [newMessageCount, setNewMessageCount] = useState(0);
 
   //functions related to user go here
   useEffect(() => {
@@ -46,8 +46,8 @@ export const UserProvider = ({ children }) => {
     });
   };
 
-  const updateNewMessages = (status) => {
-    setNewMessages(status);
+  const updateNewMessageCount = (count) => {
+    setNewMessageCount(count);
   }
 
   const fetchMessages = () => {
@@ -58,13 +58,17 @@ export const UserProvider = ({ children }) => {
       axios
         .get(`http://localhost:8080/messages/${userId}`)
         .then((response) => {
-          // Check if there are new messages with is-read set to false
-          const hasNewMessages = response.data.some(
-            (message) => message.receiver_id === userId && !message.is_read
+          // Count messages with is_read set to false
+          console.log(response);
+          const count = response.data.reduce(
+            (acc, message) =>
+              message.receiver_id === userId && !message.is_read
+                ? acc + 1
+                : acc,
+            0
           );
-
-          // Update the newMessages state
-          updateNewMessages(hasNewMessages);
+          // Update the newMessagesCount state
+          updateNewMessageCount(count);
         })
         .catch((error) => {
           console.error("Error fetching messages:", error);
@@ -92,7 +96,7 @@ export const UserProvider = ({ children }) => {
         updateCurrentUserWithOrg,
         updateLoading,
         isLoading,
-        newMessages,
+        newMessageCount,
       }}
     >
       {children}

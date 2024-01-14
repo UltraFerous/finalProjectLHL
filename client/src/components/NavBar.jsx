@@ -12,7 +12,7 @@ import Badge from "react-bootstrap/Badge";
 import appLogo from "../images/good-dev-logo-white.png";
 
 export default function NavBar() {
-  const { updateCurrentUser, user, userLoaded, newMessages } =
+  const { updateCurrentUser, user, userLoaded, newMessageCount } =
     useContext(UserContext);
 
   const navigate = useNavigate();
@@ -79,18 +79,18 @@ export default function NavBar() {
               className="text-white mx-2"
             />
 
-            {newMessages && (
+            {newMessageCount && (
               <Badge
                 pill
                 bg="danger"
                 style={{
                   position: "absolute",
-                  top: "10px",
-                  right: "10px",
+                  top: "12px",
+                  right: "2px",
                   fontSize: "0.6rem",
                 }}
               >
-                8
+                {newMessageCount}
               </Badge>
             )}
           </div>
