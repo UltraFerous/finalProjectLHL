@@ -1,15 +1,19 @@
 import { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
+import Badge from "react-bootstrap/Badge";
 import appLogo from "../images/good-dev-logo-white.png";
 
 export default function NavBar() {
-  const { updateCurrentUser, user, userLoaded } = useContext(UserContext);
+  const { updateCurrentUser, user, userLoaded, newMessageCount } =
+    useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -67,6 +71,30 @@ export default function NavBar() {
             </Nav.Link>
           )}
         </Nav>
+        {user && (
+          <div style={{ position: "relative", display: "inline-block" }}>
+            <FontAwesomeIcon
+              icon={faEnvelope}
+              size="2x"
+              className="text-white mx-2"
+            />
+
+            {newMessageCount > 0 && (
+              <Badge
+                pill
+                bg="danger"
+                style={{
+                  position: "absolute",
+                  top: "12px",
+                  right: "2px",
+                  fontSize: "0.6rem",
+                }}
+              >
+                {newMessageCount}
+              </Badge>
+            )}
+          </div>
+        )}
         <Nav>
           {!user && (
             <Button as={NavLink} to="/users/login" variant="outline-light">

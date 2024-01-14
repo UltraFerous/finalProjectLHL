@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from "react";
+import axios from "axios";
 
 export const UserContext = createContext();
 
@@ -6,6 +7,10 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [userLoaded, setUserLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [newMessageCount, setNewMessageCount] = useState(0);
+
+  const storedUser = localStorage.getItem("user");
+  const userId = storedUser ? JSON.parse(storedUser).user.id : null;
 
   //functions related to user go here
   useEffect(() => {
@@ -18,7 +23,7 @@ export const UserProvider = ({ children }) => {
 
   const updateLoading = (loadingStatus) => {
     setIsLoading(loadingStatus);
-  }
+  };
 
   const updateCurrentUser = (userData) => {
     setUser(userData);
@@ -44,9 +49,44 @@ export const UserProvider = ({ children }) => {
     });
   };
 
+  const updateNewMessageCount = (count) => {
+    setNewMessageCount(count);
+  }
+
+  const fetchMessages = () => {
+
+
+    if (userId) {
+      axios
+        .get(`http://localhost:8080/messages/${userId}`)
+        .then((response) => {
+          // Count messages with is_read set to false
+          console.log(response);
+          const count = response.data.reduce(
+            (acc, message) =>
+              message.receiver_id === userId && !message.is_read
+                ? acc + 1
+                : acc,
+            0
+          );
+          // Update the newMessagesCount state
+          updateNewMessageCount(count);
+        })
+        .catch((error) => {
+          console.error("Error fetching messages:", error);
+        });
+    } else {
+      console.warn("User information not available yet.");
+    }
+  };
+
   useEffect(() => {
     updateUserWithCookie();
   }, []); // Run once on component mount to handle page refresh
+
+  useEffect(() => {
+    fetchMessages();
+  }, [userId]);
 
   return (
     <UserContext.Provider
@@ -58,6 +98,7 @@ export const UserProvider = ({ children }) => {
         updateCurrentUserWithOrg,
         updateLoading,
         isLoading,
+        newMessageCount,
       }}
     >
       {children}
