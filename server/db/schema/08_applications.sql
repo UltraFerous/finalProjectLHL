@@ -9,5 +9,6 @@ CREATE TABLE applications (
   text TEXT,
   status INTEGER DEFAULT 0,
   FOREIGN KEY(user_id) REFERENCES users(id),
-  FOREIGN KEY(project_id) REFERENCES projects(id)
+  FOREIGN KEY(project_id) REFERENCES projects(id),
+  FOREIGN KEY(status) REFERENCES application_status_types(id)
 );

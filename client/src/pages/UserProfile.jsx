@@ -1,4 +1,12 @@
-import { Container, Row, Col, Image, Button } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Image,
+  Button,
+  Badge,
+  Card,
+} from "react-bootstrap";
 import { useState, useEffect, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
@@ -12,6 +20,10 @@ export default function UserProfile() {
   const [projects, setProjects] = useState([]);
   const [applications, setApplications] = useState([]);
   const { user } = useContext(UserContext);
+
+  const acceptApplicationClick = () => {
+
+  };
 
   useEffect(() => {
     const fetchUserDetails = () => {
@@ -64,6 +76,7 @@ export default function UserProfile() {
                     image: application.userimage,
                     text: application.text,
                     applicantId: application.applicant,
+                    status: application.status,
                   })
                 );
                 setApplications(applicationsList);
@@ -105,7 +118,7 @@ export default function UserProfile() {
               <p className="text-center">{userData && userData.description}</p>
             </Row>
             <Row>
-              <h5 className="mb-3">Skills</h5>
+              <h4 className="mb-3">Skills</h4>
             </Row>
             <Row className="mb-5">
               {tags.map((tag) => (
@@ -115,13 +128,13 @@ export default function UserProfile() {
               ))}
             </Row>
             <Row>
-              <h5 className="mb-2">
+              <h4 className="mb-2">
                 {user && user.id === parsedId
                   ? "Projects you are contributing to"
                   : `Projects ${
                       userData && userData.username
                     } is contributing to`}
-              </h5>
+              </h4>
             </Row>
             <Row className="mb-5" style={{ marginTop: "10px" }}>
               {projects.map((project) => (
@@ -149,13 +162,15 @@ export default function UserProfile() {
             </Row>
 
             <Row>
-            {userData && userData.id === id && (
-              <Link to={`/projects/quicksearch/${id}`}>
-                <Button variant="primary" className="text-white mb-5">Quick Search For Projects</Button>
-              </Link>
-            )}
+              {userData && userData.id === id && (
+                <Link to={`/projects/quicksearch/${id}`}>
+                  <Button variant="primary" className="text-white mb-5">
+                    Quick Search For Projects
+                  </Button>
+                </Link>
+              )}
             </Row>
-            
+
             {user && user.id === parsedId ? (
               <div></div> // Render an empty div if the condition is true
             ) : (
@@ -167,44 +182,59 @@ export default function UserProfile() {
               <div
                 style={{ borderTop: `2px solid #208C27`, paddingTop: "30px" }}
               >
-
                 <Row>
-                  <h5>Applications for your review</h5>
+                  <h4 className="mt-4 mb-3">Applications for your review</h4>
                 </Row>
                 <Row
                   className="mb-5 d-flex flex-column"
                   style={{ marginTop: "10px" }}
                 >
                   {applications.map((application) => (
-                    <Col
-                      className="bg-light col-auto mt-3 mb-4"
-                      key={application.id}
-                    >
-                      <h5 style={{ color: "#212529" }}>
-                        {application.projectName} Project
-                      </h5>
-                      <Link to={`/users/${application.applicantId}`}>
-                        <div
-                          className="d-flex flex-row align-items-center mt-3 mb-3"
-                          style={{ marginRight: "10px" }}
+                    <Card key={application.id} className="mt-3 mb-4">
+                      <Card.Header>
+                        <Row className="align-items-center">
+                          <Col xs={8}>
+                            <h5>{application.projectName} Project</h5>
+                          </Col>
+                          <Col xs={4} className="text-end">
+                            <Badge pill bg="primary">
+                              {application.status}
+                            </Badge>
+                          </Col>
+                        </Row>
+                      </Card.Header>
+                      <Card.Body>
+                        <Card.Title>
+                          <Link to={`/users/${application.applicantId}`}>
+                            <div
+                              className="d-flex flex-row align-items-center mt-3 mb-3"
+                              style={{ marginRight: "10px" }}
+                            >
+                              <Image
+                                src={application.image}
+                                roundedCircle
+                                style={{
+                                  width: "80px",
+                                  height: "80px",
+                                  marginRight: "25px",
+                                }}
+                                alt="User Image"
+                              />
+                              <h6 style={{ color: "#212529" }}>
+                                {application.applicantName}
+                              </h6>
+                            </div>
+                          </Link>
+                        </Card.Title>
+                        <Card.Text>{application.text}</Card.Text>
+                        <Button
+                          variant="primary"
+                          onClick={acceptApplicationClick}
                         >
-                          <Image
-                            src={application.image}
-                            roundedCircle
-                            style={{
-                              width: "80px",
-                              height: "80px",
-                              marginRight: "10px",
-                            }}
-                            alt="User Image"
-                          />
-                          <h6 style={{ color: "#212529" }}>
-                            {application.applicantName}
-                          </h6>
-                        </div>
-                      </Link>
-                      <p style={{ color: "#212529" }}>{application.text}</p>
-                    </Col>
+                          Accept Application
+                        </Button>
+                      </Card.Body>
+                    </Card>
                   ))}
                 </Row>
               </div>
