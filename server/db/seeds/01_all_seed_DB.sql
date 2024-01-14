@@ -14,3 +14,4 @@
 \i db/seeds/12_developers_information.sql
 \i db/seeds/13_project_status_types.sql
 \i db/seeds/14_assigned_tags_projects.sql
+\i db/seeds/15_direct_messages.sql
