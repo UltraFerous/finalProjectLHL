@@ -27,8 +27,8 @@ router.get('/:userId', (req, res) => {
 });
 
 // get all messages between two users
-router.get('/:otherUserId', (req, res) => {
-  const currentUserId = req.session.userId;
+router.get('/:userId/:otherUserId', (req, res) => {
+  const currentUserId = req.params.userId;
   const otherUserId = req.params.otherUserId;
 
   // call helper query function
