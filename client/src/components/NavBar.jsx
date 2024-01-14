@@ -74,7 +74,7 @@ export default function NavBar() {
           )}
         </Nav>
         {user && (
-          <div style={{ position: "relative", display: "inline-block" }}>
+          <NavLink as={NavLink} to={`/messages/${user.id}`} style={{ position: "relative", display: "inline-block" }}>
             <FontAwesomeIcon
               icon={faEnvelope}
               size="2x"
@@ -95,7 +95,7 @@ export default function NavBar() {
                 {newMessageCount}
               </Badge>
             )}
-          </div>
+          </NavLink>
         )}
         <Nav>
           {!user && (
