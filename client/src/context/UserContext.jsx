@@ -5,6 +5,7 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [userLoaded, setUserLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   //functions related to user go here
   useEffect(() => {
@@ -14,6 +15,10 @@ export const UserProvider = ({ children }) => {
       setUserLoaded(true);
     }
   }, []);
+
+  const updateLoading = (loadingStatus) => {
+    setIsLoading(loadingStatus);
+  }
 
   const updateCurrentUser = (userData) => {
     setUser(userData);
@@ -50,7 +55,9 @@ export const UserProvider = ({ children }) => {
         userLoaded,
         updateCurrentUser,
         updateUserWithCookie,
-        updateCurrentUserWithOrg
+        updateCurrentUserWithOrg,
+        updateLoading,
+        isLoading,
       }}
     >
       {children}

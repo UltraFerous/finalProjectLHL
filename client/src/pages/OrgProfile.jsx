@@ -1,14 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Container, Row, Col, Image, Button } from "react-bootstrap";
+import Spinner from "../components/Spinner";
+import { UserContext } from "../context/UserContext";
 
 export default function OrgProfile() {
   const { id } = useParams();
   const [org, setOrg] = useState(null);
   const [projects, setProjects] = useState([]);
   const [orgAdmin, setOrgAdmin] = useState(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  const { isLoading, updateLoading } = useContext(UserContext);
 
   useEffect(() => {
     const fetchOrgDetails = () => {
@@ -47,6 +51,7 @@ export default function OrgProfile() {
             setOrg(null);
           }
         })
+        .then(() => updateLoading(false))
         .catch((error) => {
           console.error("Error fetching organization details:", error);
         });
@@ -55,7 +60,9 @@ export default function OrgProfile() {
     fetchOrgDetails();
   }, [id]);
 
-  return (
+  return isLoading ? (
+    <Spinner />
+    ) : (
     <>
       <Container className="my-5">
         <Row className="d-flex justify-content-center">
