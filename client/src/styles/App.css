@@ -9329,3 +9329,6 @@ textarea.form-control-lg {
   --bs-btn-disabled-color: #fff;
   --bs-btn-disabled-bg: #208C27;
   --bs-btn-disabled-border-color: #208C27; }
+
+.messageContainer {
+  margin-bottom: 125px; }

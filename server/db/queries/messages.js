@@ -8,13 +8,16 @@ const allMessageThreads = function(user) {
         dm.id,
         dm.sender_id,
         dm.receiver_id,
-        u.username as receiver_username,
-        u.image as receiver_image,
+        sender.username as sender_username,
+        sender.image as sender_image,
+        receiver.username as receiver_username,
+        receiver.image as receiver_image,
         dm.message_text,
         dm.sent_at,
         dm.is_read
       FROM direct_messages dm
-      LEFT JOIN users u ON dm.receiver_id = u.id
+      LEFT JOIN users sender ON dm.sender_id = sender.id
+      LEFT JOIN users receiver ON dm.receiver_id = receiver.id
       WHERE dm.sender_id = $1 OR dm.receiver_id = $1
       ORDER BY LEAST(dm.sender_id, dm.receiver_id), GREATEST(dm.sender_id, dm.receiver_id), dm.sent_at DESC;
     `, [user])
@@ -29,9 +32,12 @@ const allMessageThreads = function(user) {
 const allMessages = function(userOne, userTwo) {
   return db
     .query(`
-      SELECT * FROM direct_messages
-      WHERE (sender_id = $1 AND receiver_id = $2) OR (sender_id = $2 AND receiver_id = $1)
-      ORDER BY sent_at;
+      SELECT dm.*, sender.image AS sender_image, receiver.image AS receiver_image
+      FROM direct_messages dm
+      JOIN users sender ON dm.sender_id = sender.id
+      JOIN users receiver ON dm.receiver_id = receiver.id
+      WHERE (dm.sender_id = $1 AND dm.receiver_id = $2) OR (dm.sender_id = $2 AND dm.receiver_id = $1)
+      ORDER BY dm.sent_at;
     `, [userOne, userTwo])
     .then(result => result.rows)
     .catch(err => console.log('ERROR:', err.message));

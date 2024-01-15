@@ -18,7 +18,6 @@ export default function MessagesList() {
           // store messages in state
           setMessages(response.data);
         })
-        .then()
         .catch(error => {
           console.log('Error fetching message data:', error);
         });
@@ -36,11 +35,18 @@ export default function MessagesList() {
               key={message.id}
             >
               <Row>
-                <Alert variant='success'>
+                <Alert>
                   <div className='d-flex flex-row align-items-center mb-3'>
                     <img
-                      src={message.receiver_image}
-                      alt={`User ${message.receiver_id}`}
+                      src={
+                        message.receiver_id === user.id ?
+                          message.sender_image :
+                          message.receiver_image
+                      }
+                      alt={`User ${message.receiver_id === user.id ?
+                        message.sender_id :
+                        message.receiver_id
+                        }`}
                       width="80"
                       className="rounded-circle me-4"
                     />

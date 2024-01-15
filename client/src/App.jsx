@@ -17,8 +17,8 @@ import OrgList from "./pages/OrgList";
 import QuickProjectList from "./pages/QuickProjectList";
 import QuickDeveloperList from "./pages/QuickDeveloperList";
 import MessagesList from "./pages/MessagesList";
-import { UserProvider } from './context/UserContext';
-import "./styles/App.css"
+import Messages from "./pages/Messages";
+import "./styles/App.css";
 
 function App() {
   return (
@@ -55,6 +55,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
         <Route path="/messages">
           <Route path=":userId" element={<MessagesList />} />
+          <Route path=":userId/:otherUserId" element={<Messages />} />
         </Route>
       </Routes>
     </>
