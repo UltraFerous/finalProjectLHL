@@ -7,6 +7,7 @@ const allProjectData = function() {
     SELECT
     *
     FROM projects
+    ORDER BY projects.id DESC
     `)
     .then((result) => {
       return result.rows;
