@@ -48,7 +48,8 @@ export default function UserProfile() {
             // Check if userDetails is an array with expected properties
             if (Array.isArray(userDetails) && userDetails.length > 0) {
               setUserData(userDetails[0]);
-
+              console.log("USERDATA", userData)
+              console.log("USERDETAIL", userDetails[0])
               // Map tags if tagsArray is an array
               if (Array.isArray(tagsArray)) {
                 const tagsList = tagsArray.map((tag) => ({
@@ -168,7 +169,7 @@ export default function UserProfile() {
             </Row>
 
             <Row>
-              {userData && userData.id === id && (
+              {user && user.id === parsedId && (
                 <Link to={`/projects/quicksearch/${id}`}>
                   <Button variant="primary" className="text-white mb-5">
                     Quick Search For Projects
