@@ -32,13 +32,21 @@ const allMessageThreads = function(user) {
 const allMessages = function(userOne, userTwo) {
   return db
     .query(`
-      SELECT dm.*, sender.image AS sender_image, receiver.image AS receiver_image
-      FROM direct_messages dm
-      JOIN users sender ON dm.sender_id = sender.id
-      JOIN users receiver ON dm.receiver_id = receiver.id
-      WHERE (dm.sender_id = $1 AND dm.receiver_id = $2) OR (dm.sender_id = $2 AND dm.receiver_id = $1)
-      ORDER BY dm.sent_at;
+      UPDATE direct_messages
+      SET is_read = true
+      WHERE (sender_id = $1 AND receiver_id = $2) OR (sender_id = $2 AND receiver_id = $1)
+      AND is_read = false;
     `, [userOne, userTwo])
+    .then(() => {
+      return db.query(`    
+        SELECT dm.*, sender.image AS sender_image, receiver.image AS receiver_image
+        FROM direct_messages dm
+        JOIN users sender ON dm.sender_id = sender.id
+        JOIN users receiver ON dm.receiver_id = receiver.id
+        WHERE (dm.sender_id = $1 AND dm.receiver_id = $2) OR (dm.sender_id = $2 AND dm.receiver_id = $1)
+        ORDER BY dm.sent_at;
+      `, [userOne, userTwo]);
+    })
     .then(result => result.rows)
     .catch(err => console.log('ERROR:', err.message));
 };

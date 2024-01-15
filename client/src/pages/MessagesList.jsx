@@ -35,7 +35,7 @@ export default function MessagesList() {
               key={message.id}
             >
               <Row>
-                <Alert>
+                <Alert variant={message.is_read ? 'dark' : 'primary'}>
                   <div className='d-flex flex-row align-items-center mb-3'>
                     <img
                       src={
