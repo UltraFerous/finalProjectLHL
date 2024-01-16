@@ -187,7 +187,7 @@ export default function UserProfile() {
               <div></div> // Render an empty div if the condition is true
             ) : (
               <Row className="mb-5">
-                <Link to={`http://localhost:5173/messages/${user.id}/${id}`}>
+                <Link to={`http://localhost:5173/messages/${user && user.id}/${id}`}>
                   <Button variant="success" className="w-100">Contact Me</Button>
                 </Link>
               </Row>

@@ -103,7 +103,7 @@ export default function OrgProfile() {
               </Link>
             </Row>
             <Row className="mb-5">
-              <Link to={`http://localhost:5173/messages/${user.id}/${org && org.user_id}`}>
+              <Link to={`http://localhost:5173/messages/${user && user.id}/${org && org.user_id}`}>
                 <Button variant="success" className="w-100">Contact Organization</Button>
               </Link>
             </Row>
