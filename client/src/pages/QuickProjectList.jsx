@@ -5,16 +5,18 @@ import { Link, useLocation } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import Container from "react-bootstrap/Container";
 import pruneData from "../helpers/pruneData";
+import Spinner from "../components/Spinner";
 
 export default function ProjectList() {
   const { user } = useContext(UserContext);
   const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
   const location = useLocation();
   // conditional endpoint for regular projects page and search results page
   const endpoint = location.pathname.startsWith("/projects/quicksearch")
     ? `http://localhost:8080${location.pathname}`
     : "http://localhost:8080/projects";
+
+    const { isLoading, updateLoading } = useContext(UserContext);
 
   useEffect(() => {
     const fetchCardDetails = () => {
@@ -22,14 +24,13 @@ export default function ProjectList() {
         .get(endpoint)
         .then((response) => {
           const data = response.data;
-          setLoading(false);
-          console.log("GOT THE DATA!")
-          console.log(data)
+          
           // Check if data is an array
           if (Array.isArray(data) && data.length >= 1) {
             // Set the state with the received data
             let sortedData = pruneData(data)
             setProjects(sortedData);
+            updateLoading(false);
           }
         })
         .catch((error) => {
@@ -40,7 +41,9 @@ export default function ProjectList() {
     fetchCardDetails();
   }, [endpoint]);
 
-  return (
+  return isLoading ? (
+    <Spinner />
+    ) : (
     <>
       <Container>
         {/* if user is logged in and an admin, and this is regular project page, provide create project link */}
@@ -52,9 +55,8 @@ export default function ProjectList() {
             </button>
           </Link>
         }
-        {projects.length === 0 && loading === true && <h2 className="text-center mt-5">Loading...</h2>}
-        {projects.length > 0 && loading === false && <h2 className="text-center mt-5">Best Projects For You</h2>}
-        {projects.length === 0 && loading === false ? <h2 className="text-center mt-5">No Results Found</h2> : <ProjectCardList featuredProjects={projects} />}
+        {projects.length > 0 && <h2 className="text-center mt-5">Best Projects For You</h2>}
+        {projects.length === 0 ? <h2 className="text-center mt-5">No Results Found</h2> : <ProjectCardList featuredProjects={projects} />}
       </Container>
     </>
   );

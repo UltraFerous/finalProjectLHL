@@ -11,6 +11,7 @@ import { useState, useEffect, useContext } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
+import Spinner from "../components/Spinner";
 
 export default function UserProfile() {
   const { id } = useParams();
@@ -25,6 +26,8 @@ export default function UserProfile() {
   const acceptApplicationClick = () => {
 
   };
+
+  const { isLoading, updateLoading } = useContext(UserContext);
 
   useEffect(() => {
     const fetchUserDetails = () => {
@@ -87,6 +90,7 @@ export default function UserProfile() {
                   })
                 );
                 setApplications(applicationsList);
+                updateLoading(false);
               } else {
                 setApplications([]);
               }
@@ -102,7 +106,9 @@ export default function UserProfile() {
     fetchUserDetails();
   }, [id]);
 
-  return (
+  return isLoading ? (
+    <Spinner />
+    ) : (
     <>
       <Container className="my-5">
         <Row className="d-flex justify-content-center">
