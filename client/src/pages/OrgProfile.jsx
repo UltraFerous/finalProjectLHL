@@ -10,6 +10,7 @@ export default function OrgProfile() {
   const [org, setOrg] = useState(null);
   const [projects, setProjects] = useState([]);
   const [orgAdmin, setOrgAdmin] = useState(null);
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
   const { isLoading, updateLoading } = useContext(UserContext);
@@ -62,7 +63,7 @@ export default function OrgProfile() {
 
   return isLoading ? (
     <Spinner />
-    ) : (
+  ) : (
     <>
       <Container className="my-5">
         <Row className="d-flex justify-content-center">
@@ -83,26 +84,28 @@ export default function OrgProfile() {
             </Row>
             <Row className="mb-4">
               <Link to={`/users/${org && orgAdmin[0].user_id}`}>
-              <div
-                      className="d-flex flex-row align-items-center"
-                      style={{ marginRight: "10px" }}
-                    >
-              <Image
-                      src={org && orgAdmin[0].image}
-                      roundedCircle
-                      style={{
-                        width: "80px",
-                        height: "80px",
-                        marginRight: "10px",
-                      }}
-                      alt="User Image"
-                    />
-                <h6 style={{ color: "#212529" }}>{orgAdmin && orgAdmin[0].username}</h6>
+                <div
+                  className="d-flex flex-row align-items-center"
+                  style={{ marginRight: "10px" }}
+                >
+                  <Image
+                    src={org && orgAdmin[0].image}
+                    roundedCircle
+                    style={{
+                      width: "80px",
+                      height: "80px",
+                      marginRight: "10px",
+                    }}
+                    alt="User Image"
+                  />
+                  <h6 style={{ color: "#212529" }}>{orgAdmin && orgAdmin[0].username}</h6>
                 </div>
               </Link>
             </Row>
             <Row className="mb-5">
-              <Button variant="success">Contact Organization</Button>
+              <Link to={`http://localhost:5173/messages/${user.id}/${org && org.user_id}`}>
+                <Button variant="success" className="w-100">Contact Organization</Button>
+              </Link>
             </Row>
             <Row>
               <h5>Projects</h5>

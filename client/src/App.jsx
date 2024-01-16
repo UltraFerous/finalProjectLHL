@@ -52,11 +52,11 @@ function App() {
           <Route path="search/:searchTerm" element={<OrgList />} />
           <Route path=":id" element={<OrgProfile />} />
         </Route>
-        <Route path="*" element={<NotFound />} />
         <Route path="/messages">
           <Route path=":userId" element={<MessagesList />} />
           <Route path=":userId/:otherUserId" element={<Messages />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );
