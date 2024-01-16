@@ -35,7 +35,7 @@ export default function UserProfile() {
         .get(`http://localhost:8080/users/${id}/details`)
         .then((response) => {
           const data = response.data;
-          
+
           // If data is empty redirect to 404 page
           if (Array.isArray(data) && data[0].length === 0) {
             return navigate('/*');
@@ -108,7 +108,7 @@ export default function UserProfile() {
 
   return isLoading ? (
     <Spinner />
-    ) : (
+  ) : (
     <>
       <Container className="my-5">
         <Row className="d-flex justify-content-center">
@@ -144,9 +144,8 @@ export default function UserProfile() {
               <h4 className="mb-2">
                 {user && user.id === parsedId
                   ? "Projects you are contributing to"
-                  : `Projects ${
-                      userData && userData.username
-                    } is contributing to`}
+                  : `Projects ${userData && userData.username
+                  } is contributing to`}
               </h4>
             </Row>
             <Row className="mb-5" style={{ marginTop: "10px" }}>
@@ -188,7 +187,9 @@ export default function UserProfile() {
               <div></div> // Render an empty div if the condition is true
             ) : (
               <Row className="mb-5">
-                <Button variant="success">Contact Me</Button>
+                <Link to={`http://localhost:5173/messages/${user.id}/${id}`}>
+                  <Button variant="success" className="w-100">Contact Me</Button>
+                </Link>
               </Row>
             )}
             {user && user.id === parsedId && applications.length > 0 && (
