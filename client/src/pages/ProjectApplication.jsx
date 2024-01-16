@@ -4,6 +4,7 @@ import axios from "axios";
 import { UserContext } from "../context/UserContext";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
 export default function ProjectApplication() {
   const { id } = useParams();
@@ -15,6 +16,9 @@ export default function ProjectApplication() {
     project_id: null,
     text: ""
   });
+  const [show, setShow] = useState(false);
+
+  const parsedId = parseInt(id, 10); // Ensure it's a number
 
   const { text } = applicationData;
 
@@ -23,6 +27,15 @@ export default function ProjectApplication() {
       ...prevState,
       [e.target.id]: e.target.value,
     }));
+  };
+
+  const handleShow = () => {
+    setShow(true);
+    ;
+  };
+  const handleClose = () => {
+    setShow(false);
+    navigate(`/projects/${id}`)
   };
 
   const onSubmit = async (e) => {
@@ -43,7 +56,7 @@ export default function ProjectApplication() {
         if (response.status === 200) {
           const applicationData = response.data;
           // Redirect to the project details
-          navigate(`/projects/${id}`);
+          handleShow();
         } else {
           // Handle unsuccessful login
           console.error("Application submission failed");
@@ -95,6 +108,27 @@ export default function ProjectApplication() {
         </Form.Group>
         <Button type="submit" className="text-white" variant="primary">Submit Application</Button>
       </Form>
+      <Modal
+                  show={show}
+                  onHide={handleClose}
+                  size="md"
+                  aria-labelledby="contained-modal-title-vcenter"
+                  centered
+                >
+                  <Modal.Header closeButton>
+                    <Modal.Title>Application Submitted</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <Form>
+                      <Form.Group
+                        className="mb-3"
+                        controlId="postForm.ControlTextarea"
+                      >
+                        <Form.Label>Your application will be reviewed by the project administrator.</Form.Label>
+                      </Form.Group>
+                    </Form>
+                  </Modal.Body>
+                </Modal>
     </div>
   );
 }
