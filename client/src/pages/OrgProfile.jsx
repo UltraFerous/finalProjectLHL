@@ -10,10 +10,9 @@ export default function OrgProfile() {
   const [org, setOrg] = useState(null);
   const [projects, setProjects] = useState([]);
   const [orgAdmin, setOrgAdmin] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
-
-  const { isLoading, updateLoading } = useContext(UserContext);
 
   useEffect(() => {
     const fetchOrgDetails = () => {
@@ -52,7 +51,7 @@ export default function OrgProfile() {
             setOrg(null);
           }
         })
-        .then(() => updateLoading(false))
+        .then(() => setIsLoading(false))
         .catch((error) => {
           console.error("Error fetching organization details:", error);
         });
