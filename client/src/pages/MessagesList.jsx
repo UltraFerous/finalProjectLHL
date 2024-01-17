@@ -31,7 +31,8 @@ export default function MessagesList() {
         {messages.map(message => {
           return (
             <Link
-              to={`/messages/${message.sender_id}/${message.receiver_id}`}
+              // if receiver.id = user.id, set second id to sender.id
+              to={`/messages/${user.id}/${message.receiver_id === user.id ? message.sender_id : message.receiver_id}`}
               key={message.id}
             >
               <Row>
