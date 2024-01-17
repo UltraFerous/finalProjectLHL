@@ -13,7 +13,7 @@ import axios from 'axios';
 
 export default function Messages() {
   // get user data from context
-  const { user } = useContext(UserContext);
+  const { user, updateNewMessageCount } = useContext(UserContext);
   // get url
   const location = useLocation();
   const pathSegments = location.pathname.split('/');
@@ -30,6 +30,7 @@ export default function Messages() {
         .get(`http://localhost:8080/messages/${userId}/${otherUserId}`)
         .then(response => {
           setMessages(response.data);
+          updateNewMessageCount(0);
         })
         .catch(error => {
           console.log('Error fetching message data:', error);
