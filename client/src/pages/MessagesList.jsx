@@ -51,7 +51,7 @@ export default function MessagesList() {
                       width="80"
                       className="rounded-circle me-4"
                     />
-                    <p><strong>{message.receiver_username}</strong></p>
+                    <p><strong>{message.receiver_id === user.id ? message.sender_username : message.receiver_username}</strong></p>
                   </div>
                   <p>{message.message_text}</p>
                 </Alert>
