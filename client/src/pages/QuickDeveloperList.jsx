@@ -9,13 +9,12 @@ import Spinner from "../components/Spinner";
 
 export default function DeveloperList() {
   const [developers, setDevelopers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
   // conditional endpoint for regular developers page and search results page
   const endpoint = location.pathname.startsWith("/developers/quicksearch")
     ? `http://localhost:8080${location.pathname}`
     : "http://localhost:8080/developers";
-
-  const { isLoading, updateLoading } = useContext(UserContext);
 
   useEffect(() => {
     const fetchCardDetails = () => {
@@ -29,7 +28,7 @@ export default function DeveloperList() {
             // Set the state with the received data
             const sortedData = pruneData(data);
             setDevelopers(sortedData);
-            updateLoading(false);
+            setIsLoading(false);
           }
         })
         .catch((error) => {

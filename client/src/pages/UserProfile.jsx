@@ -20,6 +20,7 @@ export default function UserProfile() {
   const [tags, setTags] = useState([]);
   const [projects, setProjects] = useState([]);
   const [applications, setApplications] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { user } = useContext(UserContext);
   const navigate = useNavigate()
 
@@ -27,7 +28,7 @@ export default function UserProfile() {
 
   };
 
-  const { isLoading, updateLoading } = useContext(UserContext);
+  
 
   useEffect(() => {
     const fetchUserDetails = () => {
@@ -90,7 +91,7 @@ export default function UserProfile() {
                   })
                 );
                 setApplications(applicationsList);
-                updateLoading(false);
+                setIsLoading(false);
               } else {
                 setApplications([]);
               }

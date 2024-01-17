@@ -9,13 +9,12 @@ import Spinner from "../components/Spinner";
 export default function ProjectList() {
   const { user } = useContext(UserContext);
   const [projects, setProjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
   // conditional endpoint for regular projects page and search results page
   const endpoint = location.pathname.startsWith("/projects/search")
     ? `http://localhost:8080${location.pathname}`
     : "http://localhost:8080/projects";
-
-  const { isLoading, updateLoading } = useContext(UserContext);
 
   useEffect(() => {
     const fetchCardDetails = () => {
@@ -23,12 +22,12 @@ export default function ProjectList() {
         .get(endpoint)
         .then((response) => {
           const data = response.data;
-          updateLoading(false);
 
           // Check if data is an array
           if (Array.isArray(data) && data.length >= 1) {
             // Set the state with the received data
             setProjects(data);
+            setIsLoading(false);
           }
         })
         .catch((error) => {

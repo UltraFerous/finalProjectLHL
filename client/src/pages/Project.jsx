@@ -24,13 +24,14 @@ export default function Project() {
   const { user } = useContext(UserContext);
   const [show, setShow] = useState(false);
   const [postFormText, setPostFormText] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate()
 
   const isProjectAdmin = () => {
     return projectAdmin === user.id;
   };
 
-  const { isLoading, updateLoading } = useContext(UserContext);
+  
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
@@ -123,7 +124,7 @@ export default function Project() {
                   text: post.text,
                 }));
                 setProjectPosts(postsList);
-                updateLoading(false);
+                setIsLoading(false);
               }
             } else {
               setProject(null);
