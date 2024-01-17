@@ -34,9 +34,9 @@ const allMessages = function(userOne, userTwo) {
     .query(`
       UPDATE direct_messages
       SET is_read = true
-      WHERE (sender_id = $1 AND receiver_id = $2) OR (sender_id = $2 AND receiver_id = $1)
+      WHERE receiver_id = $1
       AND is_read = false;
-    `, [userOne, userTwo])
+    `, [userOne])
     .then(() => {
       return db.query(`    
         SELECT dm.*, sender.image AS sender_image, receiver.image AS receiver_image
