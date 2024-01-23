@@ -19,7 +19,7 @@
  + The quick search function will automatically sort developers for projects based on how many tags they have in common.
     + Developers have the same feature but to sort projects.
 
-## Photos
+## Screenshots
 ![The Hompage With The Developer Search Selected](./public/homePageWithSearch.jpg)
 
 ![The Main Messaging Page](./public/messagingPage.jpg)
